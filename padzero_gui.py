@@ -378,7 +378,7 @@ class App:
         self._details("\n".join(lines))
 
     # ------------------------------------------------------------ widgets
-    def _bars(self, counters):
+    def _bars(self, counters, previous=None):
         """Render counters as bars where we have percentages, and as a
         readable card where we only have raw values.
 
@@ -395,13 +395,21 @@ class App:
         raw_only = [c for c in counters if c.get("percent") is None
                     and "values" in c]
 
+        prev = {}
+        if previous:
+            prev = {c["name"]: c.get("percent") for c in previous
+                    if c.get("percent") is not None}
+
         if readable:
-            tk.Label(self.levels, text="HOW FULL THE COUNTER IS",
-                     font=("Segoe UI", 9, "bold"), bg=BG, fg=FAINT,
+            heading = "BEFORE AND AFTER" if prev else "HOW FULL THE COUNTER IS"
+            tk.Label(self.levels, text=heading,
+                     font=("Segoe UI", 9, "bold"), bg=BG,
+                     fg=ACCENT if prev else FAINT,
                      anchor="w").pack(fill="x", pady=(0, 8))
 
         for c in readable:
             pct = c["percent"]
+            was = prev.get(c["name"])
             row = tk.Frame(self.levels, bg=BG)
             row.pack(fill="x", pady=4)
 
@@ -409,8 +417,20 @@ class App:
             tk.Label(row, text=label.title(), font=F_BODY, bg=BG, fg=DIM,
                      width=17, anchor="w").pack(side="left")
 
+            # When we have a previous reading, show it struck through on the
+            # left so the change is visible at a glance on a recording.
+            if was is not None and abs(was - pct) > 0.005:
+                old = BAD if was >= 100 else (WARN if was >= 85 else GOOD)
+                tk.Label(row, text="%.1f%%" % was,
+                         font=("Consolas", 11, "overstrike"),
+                         bg=BG, fg=FAINT).pack(side="left", padx=(0, 6))
+                tk.Label(row, text="→", font=F_BODY, bg=BG,
+                         fg=FAINT).pack(side="left", padx=(0, 8))
+                del old
+
             colour = BAD if pct >= 100 else (WARN if pct >= 85 else GOOD)
-            track = tk.Frame(row, bg=RULE, height=18, width=330)
+            width = 330 if was is None else 210
+            track = tk.Frame(row, bg=RULE, height=18, width=width)
             track.pack(side="left")
             track.pack_propagate(False)
             tk.Frame(track, bg=colour).place(
@@ -550,15 +570,16 @@ class App:
         self._run(lambda: self._reset_work(plan), "reset")
 
     def _reset_work(self, plan):
+        before = self.printer.counters()
         path = self.printer.save_dump(tag="pre-reset")
         ok = True
         for addr, value in plan:
             ok = bool(self.printer.ep.write_eeprom((addr, value))) and ok
-        return path, ok, self.printer.counters()
+        return path, ok, self.printer.counters(), before
 
     def after_reset(self, res):
-        path, ok, counters = res
-        self._bars(counters)
+        path, ok, counters, before = res
+        self._bars(counters, previous=before)
         if ok:
             self.status("Done. Turn the printer off and on again.", GOOD)
             messagebox.showinfo(
@@ -569,7 +590,8 @@ class App:
                 "Then order a replacement pad. The ink is still inside the "
                 "printer and this will happen again.\n\n"
                 "Backup saved to:\n%s" % path)
-            self.scan()
+            # deliberately not re-scanning: that would wipe the before/after
+            # comparison off the screen, which is the proof it worked
         else:
             self.status("Some changes were refused", BAD)
             messagebox.showerror(

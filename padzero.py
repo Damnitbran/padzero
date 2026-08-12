@@ -274,6 +274,51 @@ def show_counters(rows):
             print("  %-22s : raw %s" % (r["name"], r.get("raw")))
 
 
+def show_before_after(before, after):
+    """Print each counter's old and new value side by side.
+
+    This is the proof that the reset did something, so it is worth showing
+    plainly rather than making someone compare two separate readouts.
+    """
+    if not after:
+        print("  (no counter information for this model)")
+        return
+
+    old = {}
+    for r in (before or []):
+        if r.get("percent") is not None:
+            old[r["name"]] = ("pct", r["percent"])
+        elif "values" in r:
+            old[r["name"]] = ("raw", list(r["values"]))
+
+    for r in after:
+        name = r["name"]
+        if r.get("error"):
+            print("  %-22s : %s" % (name, r["error"]))
+            continue
+
+        if r.get("percent") is not None:
+            was = old.get(name)
+            if was and was[0] == "pct":
+                arrow = "->" if abs(was[1] - r["percent"]) > 0.005 else "= "
+                print("  %-22s : %6.2f%%  %s  %6.2f%%"
+                      % (name, was[1], arrow, r["percent"]))
+            else:
+                print("  %-22s : %6.2f%%" % (name, r["percent"]))
+            continue
+
+        if "values" in r:
+            was = old.get(name)
+            if was and was[0] == "raw":
+                pairs = []
+                for a, o, n in zip(r["addrs"], was[1], r["values"]):
+                    pairs.append("%d:%s%s" % (a, o, "" if o == n else "->%s" % n))
+                print("  %-22s : %s" % (name, "  ".join(pairs)))
+            else:
+                print("  %-22s : %s" % (name, ", ".join(
+                    "%d=%s" % (a, v) for a, v in zip(r["addrs"], r["values"]))))
+
+
 EXPLAIN = """
 What this tool does, and what it does not
 
@@ -374,9 +419,11 @@ def main():
         print("  Reading is still safe - run --dump and open an issue with")
         print("  the file so this printer can be added properly.")
 
+    before = None
     if args.info or args.reset:
         print("\n--- WASTE COUNTERS ---")
-        show_counters(pr.counters())
+        before = pr.counters()
+        show_counters(before)
 
     if args.dump:
         path = pr.save_dump()
@@ -411,8 +458,8 @@ def main():
         ok = pr.apply(plan)
         print("\n  Reset %s" % ("complete" if ok else "had FAILURES - see above"))
 
-        print("\n--- COUNTERS AFTER ---")
-        show_counters(pr.counters())
+        print("\n--- BEFORE AND AFTER ---")
+        show_before_after(before, pr.counters())
         print("\n  Power-cycle the printer for this to take effect.")
         print("  Remember: the pads are exactly as full as they were.")
         print("  Run --explain if that needs unpacking.")

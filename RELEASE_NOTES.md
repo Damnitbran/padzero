@@ -22,8 +22,8 @@ something absorbent under the printer meanwhile.
 
 No installer, no Python, nothing to set up.
 
-    PadZero.exe      3331B93857C6D2766C035EAF50E6353B6D3F372D08A3323A185697AFFE4A882D
-    padzero-cli.exe  C5E46E43F8494804F595CC784C0A1619B9E1A40D9A8F36DF86CE5C602E9972D9
+    PadZero.exe      FCD028BCF6F0DE6E70A1F01DE217F6404C15113BCE03B3CD5D1D28CA72CBCDAC
+    padzero-cli.exe  C409C59D346A1334F01E59F96D803CB8A53A8D1F6BD0581A22D78A68DC53FCC0
 
 Verify before running:
 
@@ -33,6 +33,20 @@ Verify before running:
 is exactly what antivirus heuristics look for. You'll see "Windows protected
 your PC". Click *More info*, then *Run anyway*. Or check the hash above. Or
 build it yourself from source.
+
+## Before and after
+
+After a reset, both the window and the CLI show what each counter was and
+what it is now, so you can see it worked rather than taking it on trust:
+
+    main_waste             :  79.85%  ->    0.00%
+    borderless_waste       :  79.98%  ->    0.00%
+    third_waste            :  80.00%  ->    0.00%
+
+Models that report raw values instead of percentages mark the addresses that
+changed:
+
+    Platen pad counters    : 28:0  47:0  50:0  51:0  55:94  252:25->0  253:0
 
 ## What's new in this release
 
