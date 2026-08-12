@@ -114,7 +114,7 @@ class App:
 
         root.title("Pad Zero")
         root.configure(bg=BG)
-        root.geometry("720x680")
+        root.geometry("720x700")
         root.minsize(660, 620)
 
         self._build()
@@ -366,20 +366,29 @@ class App:
 
     # ------------------------------------------------------------ widgets
     def _bars(self, counters):
+        """Render counters as bars where we have percentages, and as a
+        readable card where we only have raw values.
+
+        Plenty of models (the ET-4810 among them) have known reset addresses
+        but no divider to convert bytes into a percentage. Showing nothing at
+        all leaves a hole in the window and makes the tool look broken, so
+        say plainly what is and isn't known.
+        """
         self._clear(self.levels)
         if not counters:
             return
 
         readable = [c for c in counters if c.get("percent") is not None]
+        raw_only = [c for c in counters if c.get("percent") is None
+                    and "values" in c]
+
         if readable:
             tk.Label(self.levels, text="HOW FULL THE COUNTER IS",
                      font=("Segoe UI", 9, "bold"), bg=BG, fg=FAINT,
                      anchor="w").pack(fill="x", pady=(0, 8))
 
-        for c in counters:
-            pct = c.get("percent")
-            if pct is None:
-                continue
+        for c in readable:
+            pct = c["percent"]
             row = tk.Frame(self.levels, bg=BG)
             row.pack(fill="x", pady=4)
 
@@ -395,6 +404,38 @@ class App:
                 relwidth=max(0.0, min(pct / 100.0, 1.0)), relheight=1)
             tk.Label(row, text="%5.1f%%" % pct, font=("Consolas", 11, "bold"),
                      bg=BG, fg=colour).pack(side="left", padx=(12, 0))
+
+        if raw_only and not readable:
+            box = tk.Frame(self.levels, bg=CARD)
+            box.pack(fill="x")
+            tk.Label(box, text="COUNTER READINGS",
+                     font=("Segoe UI", 9, "bold"), bg=CARD, fg=FAINT,
+                     anchor="w").pack(fill="x", padx=16, pady=(14, 2))
+            tk.Label(box,
+                     text=("This model stores its counters in a form Pad Zero "
+                           "can read and reset, but cannot turn into a "
+                           "percentage yet. The raw values are below."),
+                     font=F_SMALL, bg=CARD, fg=DIM, anchor="w",
+                     justify="left", wraplength=600).pack(
+                fill="x", padx=16, pady=(0, 10))
+
+            for c in raw_only:
+                name = c["name"].replace("_", " ").title()
+                tk.Label(box, text=name, font=("Segoe UI", 10, "bold"),
+                         bg=CARD, fg=FG, anchor="w").pack(
+                    fill="x", padx=16, pady=(4, 0))
+                grid = tk.Frame(box, bg=CARD)
+                grid.pack(fill="x", padx=16, pady=(2, 10))
+                for i, (a, v) in enumerate(zip(c["addrs"], c["values"])):
+                    cell = tk.Frame(grid, bg=CARD2)
+                    cell.grid(row=i // 5, column=i % 5, padx=3, pady=3,
+                              sticky="w")
+                    tk.Label(cell, text="%d" % a, font=("Consolas", 8),
+                             bg=CARD2, fg=FAINT).pack(padx=10, pady=(5, 0))
+                    tk.Label(cell, text=str(v), font=("Consolas", 12, "bold"),
+                             bg=CARD2, fg=ACCENT if v else DIM).pack(
+                        padx=10, pady=(0, 5))
+            tk.Frame(box, bg=CARD, height=6).pack()
 
     def _steps(self, parent, steps, button=None):
         for i, (title, body) in enumerate(steps, 1):

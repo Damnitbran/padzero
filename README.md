@@ -7,6 +7,8 @@ Free, open source, no paid tier, no nag screens.
 
 **→ [Start here: Quick start guide](QUICKSTART.md)**
 
+![The Pad Zero window showing a connected Epson ET-4810](docs/screenshot.png)
+
 ---
 
 ## Read this first

@@ -1,4 +1,4 @@
-**Pad Zero now has a window.** Double-click and go, no command line needed.
+﻿**Pad Zero now has a window.** Double-click and go, no command line needed.
 
 New here? Read the [Quick start guide](../../blob/main/QUICKSTART.md). It
 assumes you know nothing technical and takes about five minutes.
@@ -22,7 +22,7 @@ something absorbent under the printer meanwhile.
 
 No installer, no Python, nothing to set up.
 
-    PadZero.exe      ED9D65207BB4763BC498E36976591F593416E34A8DAA92910F52A3CCDD4B4673
+    PadZero.exe      61B7F180BA55264913415836E646C50228A41BC0D32DE73E3EF6132C68C4C9AA
     padzero-cli.exe  C5E46E43F8494804F595CC784C0A1619B9E1A40D9A8F36DF86CE5C602E9972D9
 
 Verify before running:
