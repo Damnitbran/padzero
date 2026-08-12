@@ -1,7 +1,7 @@
 First release.
 
 Reads and resets the waste ink counter on Epson inkjet printers over USB on
-Windows. No driver replacement — no Zadig, no WinUSB, no WSL, no admin.
+Windows. No driver replacement: no Zadig, no WinUSB, no WSL, no admin.
 
 ## Read this first
 
@@ -16,7 +16,7 @@ the same thing.
 
 ## Download
 
-`padzero.exe` — 10.6 MB, single file, no Python needed.
+`padzero.exe`, 10.6 MB, single file, no Python needed.
 
     SHA-256  39162ED5E39E0877439801E7987854E4F16112289E289DE4FD9D093426AC915F
 
@@ -26,8 +26,8 @@ Verify before running:
 
 **Windows will warn you.** The binary is unsigned, and resetting counters is
 exactly what antivirus heuristics look for. You'll see "Windows protected
-your PC" — *More info* → *Run anyway*, or verify the hash above, or build it
-yourself from source.
+your PC". Click *More info*, then *Run anyway*. Or verify the hash above. Or
+build it yourself from source.
 
 ## Usage
 
@@ -45,19 +45,19 @@ Power-cycle the printer afterwards.
 1. **Install the manufacturer's printer driver.** Windows' generic IPP class
    driver is enough to print but not enough to talk to the printer. Without
    it, this and every other reset tool will appear to hang.
-2. **Plug USB into the printer's USB port** — not `LINE` or `EXT`, which are
+2. **Plug USB into the printer's USB port**, not `LINE` or `EXT`, which are
    the fax telephone jacks.
 
 ## Verified hardware
 
 | Model | Key group | Coverage | Status |
 |---|---|---|---|
-| ET-4800 | `0x364A` | full | reset verified 79.85% → 0.00% |
+| ET-4800 | `0x364A` | full | reset verified 79.85% to 0.00% |
 | ET-4810 | `0x574B` | partial | detected and read |
 
 `models.json` carries data for 110 models, but listed is not verified. If
-yours works, please open an issue — that's how the table grows. If it
-reports `coverage: none`, run `padzero --dump` and attach the JSON.
+yours works, please open an issue. That's how the table grows. If it reports
+`coverage: none`, run `padzero --dump` and attach the JSON.
 
 ## Safety
 
