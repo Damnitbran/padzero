@@ -1,7 +1,7 @@
-First release.
+**Pad Zero now has a window.** Double-click and go, no command line needed.
 
-Reads and resets the waste ink counter on Epson inkjet printers over USB on
-Windows. No driver replacement: no Zadig, no WinUSB, no WSL, no admin.
+New here? Read the [Quick start guide](../../blob/main/QUICKSTART.md). It
+assumes you know nothing technical and takes about five minutes.
 
 ## Read this first
 
@@ -11,42 +11,53 @@ saturated, a reset means the printer keeps pumping ink into full foam and
 eventually it weeps out of the bottom.
 
 Reset to get printing again, then replace the pad or fit a waste tank. Put
-something absorbent under the printer meanwhile. `padzero --explain` says
-the same thing.
+something absorbent under the printer meanwhile.
 
 ## Download
 
-`padzero.exe`, 10.6 MB, single file, no Python needed.
+| File | Who it's for |
+|---|---|
+| **PadZero.exe** | Everyone. Double-click, a window opens. 13.6 MB |
+| `padzero-cli.exe` | Command line, for people who want one. 10.6 MB |
 
-    SHA-256  39162ED5E39E0877439801E7987854E4F16112289E289DE4FD9D093426AC915F
+No installer, no Python, nothing to set up.
+
+    PadZero.exe      ED9D65207BB4763BC498E36976591F593416E34A8DAA92910F52A3CCDD4B4673
+    padzero-cli.exe  C5E46E43F8494804F595CC784C0A1619B9E1A40D9A8F36DF86CE5C602E9972D9
 
 Verify before running:
 
-    certutil -hashfile padzero.exe SHA256
+    certutil -hashfile PadZero.exe SHA256
 
-**Windows will warn you.** The binary is unsigned, and resetting counters is
-exactly what antivirus heuristics look for. You'll see "Windows protected
-your PC". Click *More info*, then *Run anyway*. Or verify the hash above. Or
+**Windows will warn you.** The binaries are unsigned, and resetting counters
+is exactly what antivirus heuristics look for. You'll see "Windows protected
+your PC". Click *More info*, then *Run anyway*. Or check the hash above. Or
 build it yourself from source.
 
-## Usage
+## What's new in this release
 
-    padzero --list          list connected printers
-    padzero --info          model, key group, waste counters
-    padzero --dump          save a full EEPROM backup
-    padzero --reset         show what would change (writes nothing)
-    padzero --reset --yes   apply it
-    padzero --explain       what a reset does and does not fix
-
-Power-cycle the printer afterwards.
+- **Window front end.** Coloured status (green / amber / red), a plain
+  English verdict, a bar per counter, and one button.
+- **Troubleshooting built in.** If no printer is found, the window shows the
+  two things that are almost always responsible, with instructions, rather
+  than an error message.
+- **Automatic backup** before any change, in both the window and the CLI.
+- **Technical details are hidden by default** behind a panel that starts
+  closed. Key groups and EEPROM addresses are there when you want them.
+- **Quick start guide** written for people who have never heard of an EEPROM.
+- CLI renamed to `padzero-cli.exe` so it can't be confused with the window
+  version.
 
 ## Two things that cause most failures
 
-1. **Install the manufacturer's printer driver.** Windows' generic IPP class
-   driver is enough to print but not enough to talk to the printer. Without
-   it, this and every other reset tool will appear to hang.
+1. **Install Epson's own printer driver.** Windows' generic driver is enough
+   to print but not enough to talk to the printer. Without it, this and every
+   other reset tool will say it can't find your printer.
 2. **Plug USB into the printer's USB port**, not `LINE` or `EXT`, which are
    the fax telephone jacks.
+
+Don't accept firmware updates while you're on Epson's site. Epson has
+shipped firmware that permanently blocks resets, and it can't be rolled back.
 
 ## Verified hardware
 
@@ -57,13 +68,13 @@ Power-cycle the printer afterwards.
 
 `models.json` carries data for 110 models, but listed is not verified. If
 yours works, please open an issue. That's how the table grows. If it reports
-`coverage: none`, run `padzero --dump` and attach the JSON.
+`coverage: none`, click **Save a backup** and attach the file.
 
 ## Safety
 
-Dry run is the default. A full EEPROM dump is written to `dumps\` before any
-write. Unknown models are read-only with no override. Every write is read
-back and verified.
+Unknown models are read-only with no override. A full backup is written
+before any change. Every write is read back and verified. The CLI defaults to
+a dry run.
 
 ## Credits
 

@@ -1,7 +1,11 @@
 # Pad Zero
 
-Read and reset the waste ink counter on Epson inkjet printers. Free, open
-source, no paid tier.
+Your Epson stopped printing and says something about **ink pads** or
+**service required**? This fixes that in about five minutes.
+
+Free, open source, no paid tier, no nag screens.
+
+**→ [Start here: Quick start guide](QUICKSTART.md)**
 
 ---
 
@@ -25,87 +29,61 @@ weeps out of the bottom onto whatever the printer is sitting on.
 the pad, or fit an external waste tank. Both are cheap and widely available.
 Put something absorbent under the printer in the meantime.
 
-Run `padzero --explain` and the tool will tell you the same thing.
+---
+
+## Download
+
+From the [Releases page](../../releases):
+
+| File | Who it's for |
+|---|---|
+| **PadZero.exe** | Everyone. Double-click it, a window opens. |
+| `padzero-cli.exe` | Command line, for people who want one. |
+
+No installer, no Python, nothing to set up. Single file, run it from anywhere.
+
+Windows will likely show **"Windows protected your PC"**, because the binary
+is unsigned and counter-resetting is exactly the behaviour antivirus
+heuristics look for. Click *More info*, then *Run anyway*. Or verify the
+SHA-256 published with each release. Or build it from source yourself, below.
 
 ---
 
-## Install
+## What the window shows
 
-Download `padzero.exe` from [Releases](../../releases). No installer, no
-Python needed.
+A coloured dot and a plain sentence:
 
-Windows will likely show **"Windows protected your PC"**. The binary is
-unsigned, and counter-resetting is exactly the behaviour antivirus
-heuristics look for. Click *More info*, then *Run anyway*. Or verify the
-SHA-256 published with the release. Or build from source yourself.
+| Dot | Meaning |
+|---|---|
+| Green | Everything is fine. Nothing to do. |
+| Amber | Getting full. The printer will stop soon. |
+| Red | Full. This is why it stopped printing. |
 
-## Use
+Under that, a bar per counter showing how full it is, and one button to reset.
+Anything technical (key groups, EEPROM addresses, raw byte values) is tucked
+behind a **Technical details** panel that starts closed.
 
-```
-padzero --list          list connected printers
-padzero --info          model, key group, waste counters
-padzero --dump          save a full EEPROM backup
-padzero --reset         show what would change (writes nothing)
-padzero --reset --yes   apply the reset
-padzero --explain       what a reset does and does not fix
-```
-
-Typical session:
-
-```
-> padzero --info
-==============================================================
-  ET-4800
-==============================================================
-  serial     : X8GN172325
-  key group  : 0x364a / b'Nbsjcbzb'
-  coverage   : full - percentages and reset available
-
---- WASTE COUNTERS ---
-  main_waste             :  79.85%  [###########################.......]
-  borderless_waste       :  79.98%  [###########################.......]
-  third_waste            :  80.00%  [###########################.......]
-
-> padzero --reset --yes
-```
-
-Power-cycle the printer afterwards.
+---
 
 ## Requirements
 
-- Windows
-- The **manufacturer's printer driver** installed. Windows' generic IPP
-  class driver is enough to print but not enough to talk to the printer. If
-  you skip this, the tool (and every other reset tool) will appear to hang.
-- A **USB cable in the printer's USB port**. Not `LINE` or `EXT`, which are
-  the fax telephone jacks.
+Two things, and they cause almost every "it doesn't work" report:
 
-Those two account for most "it doesn't work" reports.
+1. **Epson's own printer driver installed.** Windows' generic driver is
+   enough to print but not enough to talk to the printer. Without it, this
+   tool and every other reset tool will say they can't find your printer.
+2. **The USB cable in the printer's USB port.** Not `LINE` or `EXT`, which
+   are the fax telephone jacks.
 
-## How it works
+Windows only, for now. Linux users can use
+[reinkpy](https://codeberg.org/atufi/reinkpy) directly.
 
-Epson permits the `||` factory commands over USB but blocks them on the
-network interface. SNMP answers status queries and refuses EEPROM reads with
-`:NA;`, and raw port 9100 accepts writes but never replies. So USB it is.
-
-On Windows the bidirectional USB pipe is the `GUID_DEVINTERFACE_USBPRINT`
-device interface, opened with `CreateFileW` and
-`FILE_SHARE_READ|FILE_SHARE_WRITE`. Python's `open()` can't do it, because
-it passes no share flags and the spooler already holds the device, so the
-handle comes from `ctypes`.
-
-[reinkpy](https://codeberg.org/atufi/reinkpy) layers IEEE 1284.4 (D4) on
-top of that pipe and supplies per-model keys and reset addresses.
-`models.json`, built from
-[epson_print_conf](https://github.com/Ircama/epson_print_conf), adds the
-dividers that turn raw bytes into percentages.
-
-**No driver replacement required.** No Zadig, no WinUSB, no WSL, no admin.
+---
 
 ## Model coverage
 
 Neither upstream database covers every printer, so the tool reports what it
-actually knows:
+actually knows rather than guessing:
 
 | Coverage | Meaning |
 |---|---|
@@ -124,27 +102,51 @@ Verified on real hardware:
 verified**. If yours works, please open an issue and say so. That's how this
 table grows.
 
+### Adding your printer
+
+If it reports `coverage: none`, click **Save a backup** in the window (or run
+`padzero-cli --dump`) and open an [issue](../../issues) with the file and your
+exact model name.
+
+Coverage grows from real hardware, never from guessing at similar-looking
+models. The ET-4800 and ET-4810 differ by one digit and use entirely
+different keys.
+
+---
+
 ## Safety
 
-- Dry run is the default; writing needs `--yes`
-- A full EEPROM dump is written to `dumps\` before any write, always
+- Dry run is the default in the CLI; writing needs `--yes`
+- A full backup is written to `dumps\` before any write, always
 - Unknown models are read-only, with no override
 - Every write is read back and verified
 
-Writing wrong values to EEPROM can corrupt head alignment or model identity,
-and there is no undo. Hence the rails. Please don't remove them in a fork.
+Writing wrong values can corrupt head alignment or model identity, and there
+is no undo. Hence the rails. Please don't remove them in a fork.
 
-## Adding your printer
+---
 
-If your model reports `coverage: none`:
+## How it works
 
-```
-padzero --dump
-```
+Epson permits the `||` factory commands over USB but blocks them on the
+network interface. SNMP answers status queries and refuses EEPROM reads with
+`:NA;`, and raw port 9100 accepts writes but never replies. So USB it is.
 
-Open an issue with the resulting JSON and your exact model name. Coverage
-grows from real hardware, never from guessing at similar-looking models. The
-ET-4800 and ET-4810 differ by one digit and use entirely different keys.
+On Windows the bidirectional USB pipe is the `GUID_DEVINTERFACE_USBPRINT`
+device interface, opened with `CreateFileW` and
+`FILE_SHARE_READ|FILE_SHARE_WRITE`. Python's `open()` can't do it, because it
+passes no share flags and the spooler already holds the device, so the handle
+comes from `ctypes`.
+
+[reinkpy](https://codeberg.org/atufi/reinkpy) layers IEEE 1284.4 (D4) on top
+of that pipe and supplies per-model keys and reset addresses. `models.json`,
+built from
+[epson_print_conf](https://github.com/Ircama/epson_print_conf), adds the
+dividers that turn raw bytes into percentages.
+
+**No driver replacement required.** No Zadig, no WinUSB, no WSL, no admin.
+
+---
 
 ## Build from source
 
@@ -152,7 +154,15 @@ ET-4800 and ET-4810 differ by one digit and use entirely different keys.
 pip install pyinstaller pywin32
 pip install "reinkpy @ git+https://codeberg.org/atufi/reinkpy"
 
-python -m PyInstaller --onefile --name padzero --console ^
+REM window version
+python -m PyInstaller --onefile --windowed --name PadZero ^
+  --add-data "models.json;." ^
+  --add-data "reinkpy\reinkpy\epson.toml;reinkpy" ^
+  --hidden-import reinkpy --hidden-import reinkpy.epson ^
+  --hidden-import reinkpy.d4 --hidden-import padzero padzero_gui.py
+
+REM command line version
+python -m PyInstaller --onefile --console --name padzero-cli ^
   --add-data "models.json;." ^
   --add-data "reinkpy\reinkpy\epson.toml;reinkpy" ^
   --hidden-import reinkpy --hidden-import reinkpy.epson ^
@@ -162,16 +172,29 @@ python -m PyInstaller --onefile --name padzero --console ^
 `epson.toml` must land *inside* the `reinkpy` package directory, because
 reinkpy loads it through `importlib.resources` rather than a relative path.
 
+### Files
+
+| File | What it is |
+|---|---|
+| `padzero_gui.py` | the window |
+| `padzero.py` | core logic and CLI |
+| `usb_direct.py` | SetupAPI enumeration and `CreateFileW` transport |
+| `models.json` | per-model waste counter data |
+| `build_modeldb.py` | regenerates `models.json` from epson_print_conf |
+| `find_key.py` | brute-force search for an unknown model's read key |
+
+---
+
 ## Credits
 
 Standing entirely on:
 
-- [reinkpy](https://codeberg.org/atufi/reinkpy) for IEEE 1284.4 and the
-  model database
+- [reinkpy](https://codeberg.org/atufi/reinkpy) for IEEE 1284.4 and the model
+  database
 - [epson_print_conf](https://github.com/Ircama/epson_print_conf) for waste
   counter parameters
-- [ReInk](https://github.com/lion-simba/reink), the original work, roughly
-  15 years ago
+- [ReInk](https://github.com/lion-simba/reink), the original work, roughly 15
+  years ago
 
 ## Licence
 
