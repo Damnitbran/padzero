@@ -1,0 +1,9 @@
+# Runtime
+reinkpy @ git+https://codeberg.org/atufi/reinkpy
+
+# Build only (for producing padzero.exe)
+pyinstaller
+
+# Only needed to regenerate models.json from epson_print_conf
+# pyyaml
+# pysnmp>=7.1.20

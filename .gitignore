@@ -1,0 +1,20 @@
+# build output
+build/
+dist/
+*.spec
+
+# EEPROM dumps contain your printer's serial number
+dumps/
+*.json.bak
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# editors
+.vscode/
+.idea/
+*.swp

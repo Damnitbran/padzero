@@ -1,0 +1,7408 @@
+{
+ "Artisan 720": {
+  "_alias_of": "Stylus Photo PX720WD",
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   54,
+   6
+  ],
+  "stats": {
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total CD-R tray open/close counter": [
+    163,
+    162
+   ],
+   "Total print CD-R counter": [
+    75,
+    74
+   ],
+   "Total print page counter": [
+    159,
+    158
+   ],
+   "Total print page counter - duplex": [
+    161,
+    160
+   ],
+   "Total print pass counter": [
+    47,
+    46,
+    45,
+    44
+   ],
+   "Total scan counter": [
+    477,
+    476,
+    475,
+    474
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.84,
+    "oids": [
+     16,
+     17
+    ]
+   },
+   "main_waste": {
+    "divider": 79.23,
+    "oids": [
+     14,
+     15
+    ]
+   }
+  },
+  "write_key": "IhroroQU"
+ },
+ "Artisan 730": {
+  "_alias_of": "Stylus Photo PX730WD",
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "60": 0,
+   "61": 94,
+   "62": 94,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   119,
+   8
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    61
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    62
+   ],
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total print CD-R counter": [
+    74,
+    75
+   ],
+   "Total print CD-R tray open/close counter": [
+    162,
+    163
+   ],
+   "Total print page counter": [
+    158,
+    159
+   ],
+   "Total print page counter (duplex)": [
+    160,
+    161
+   ],
+   "Total print pass counter": [
+    44,
+    45,
+    46,
+    47
+   ],
+   "Total scan counter": [
+    474,
+    475,
+    476,
+    477
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.88,
+    "oids": [
+     16,
+     17,
+     60
+    ]
+   },
+   "main_waste": {
+    "divider": 81.82,
+    "oids": [
+     14,
+     15,
+     60
+    ]
+   }
+  },
+  "write_key": "Cattleya"
+ },
+ "ET-2400": {
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2401": {
+  "_alias_of": "ET-2400",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2403": {
+  "_alias_of": "ET-2400",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2405": {
+  "_alias_of": "ET-2400",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2500": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "46": 94
+  },
+  "read_key": [
+   68,
+   1
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ]
+  },
+  "waste": {
+   "main_waste": {
+    "divider": 62.07,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Gerbera*"
+ },
+ "ET-2550": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "46": 94
+  },
+  "read_key": [
+   68,
+   1
+  ],
+  "stats": {
+   "Maintenance required level of waste ink counter": [
+    46
+   ]
+  },
+  "waste": {
+   "main_waste": {
+    "divider": 62.06,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Gazania*"
+ },
+ "ET-2600": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "46": 94
+  },
+  "read_key": [
+   16,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "main_waste": {
+    "divider": 62.06,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Sinabung"
+ },
+ "ET-2650": {
+  "_alias_of": "ET-2600",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "46": 94
+  },
+  "read_key": [
+   16,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "main_waste": {
+    "divider": 62.06,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Sinabung"
+ },
+ "ET-2700": {
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter - rear feed": [
+    755,
+    754,
+    753,
+    752
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "ET-2701": {
+  "_alias_of": "ET-2700",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter - rear feed": [
+    755,
+    754,
+    753,
+    752
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "ET-2703": {
+  "_alias_of": "ET-2700",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter - rear feed": [
+    755,
+    754,
+    753,
+    752
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "ET-2705": {
+  "_alias_of": "ET-2700",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter - rear feed": [
+    755,
+    754,
+    753,
+    752
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "ET-2714": {
+  "_alias_of": "ET-2720",
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.15,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.45,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2720": {
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.15,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.45,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2721": {
+  "_alias_of": "ET-2720",
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.15,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.45,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2723": {
+  "_alias_of": "ET-2720",
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.15,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.45,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2725": {
+  "_alias_of": "ET-2720",
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.15,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.45,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2750": {
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter - rear feed": [
+    755,
+    754,
+    753,
+    752
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "ET-2751": {
+  "_alias_of": "ET-2750",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter - rear feed": [
+    755,
+    754,
+    753,
+    752
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "ET-2756": {
+  "_alias_of": "ET-2750",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter - rear feed": [
+    755,
+    754,
+    753,
+    752
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "ET-2800": {
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2801": {
+  "_alias_of": "ET-2800",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2803": {
+  "_alias_of": "ET-2800",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2805": {
+  "_alias_of": "ET-2800",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2810": {
+  "_alias_of": "ET-2812",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2811": {
+  "_alias_of": "ET-2812",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2812": {
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2813": {
+  "_alias_of": "ET-2812",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2814": {
+  "_alias_of": "ET-2812",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2815": {
+  "_alias_of": "ET-2812",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2816": {
+  "_alias_of": "ET-2812",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-2818": {
+  "_alias_of": "ET-2812",
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-4700": {
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   151,
+   7
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ],
+   "Total scan counter % (ADF)": [
+    1855,
+    1854,
+    1853,
+    1852
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "ET-4800": {
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   74,
+   54
+  ],
+  "stats": {
+   "Ink replacement counter %-- Black": [
+    554
+   ],
+   "Ink replacement counter %-- Cyan": [
+    555
+   ],
+   "Ink replacement counter %-- Magenta": [
+    556
+   ],
+   "Ink replacement counter %-- Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Maintenance required level of 3rd waste ink counter": [
+    255
+   ],
+   "Manual cleaning counter": [
+    90
+   ],
+   "Power cleaning counter": [
+    91
+   ],
+   "Timer cleaning counter": [
+    89
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ],
+   "Total scan counter % (ADF)": [
+    1855,
+    1854,
+    1853,
+    1852
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "L3060": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94
+  },
+  "read_key": [
+   149,
+   3
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Ink replacement counter - Black": [
+    242
+   ],
+   "Ink replacement counter - Cyan": [
+    243
+   ],
+   "Ink replacement counter - Magenta": [
+    245
+   ],
+   "Ink replacement counter - Yellow": [
+    244
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter - rear feed": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 24.2,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 62.07,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Maninjau"
+ },
+ "L3150": {
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "L3151": {
+  "_alias_of": "L3150",
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "L3160": {
+  "_alias_of": "L3150",
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "L3166": {
+  "_alias_of": "L3150",
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "L3168": {
+  "_alias_of": "L3150",
+  "read_key": [
+   151,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Maribaya"
+ },
+ "L355": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "46": 94
+  },
+  "read_key": [
+   65,
+   9
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Ink replacement counter - Black": [
+    242
+   ],
+   "Ink replacement counter - Cyan": [
+    243
+   ],
+   "Ink replacement counter - Magenta": [
+    245
+   ],
+   "Ink replacement counter - Yellow": [
+    244
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print page counter - Black": [
+    435,
+    434,
+    433,
+    432
+   ],
+   "Total print page counter - Blank": [
+    443,
+    442,
+    441,
+    440
+   ],
+   "Total print page counter - Color": [
+    439,
+    438,
+    437,
+    436
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "main_waste": {
+    "divider": 65.0,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Wakatobi"
+ },
+ "L366": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   130,
+   2
+  ],
+  "stats": {
+   "Ink replacement counter - Black": [
+    242
+   ],
+   "Ink replacement counter - Cyan": [
+    244
+   ],
+   "Ink replacement counter - Magenta": [
+    245
+   ],
+   "Ink replacement counter - Yellow": [
+    243
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 24.2,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 62.0625,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Gerbera*"
+ },
+ "L386": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   16,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Power off timer": [
+    359,
+    358
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 24.2,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 62.07,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Sinabung"
+ },
+ "L395": {
+  "_alias_of": "ET-2600",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "46": 94
+  },
+  "read_key": [
+   16,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "main_waste": {
+    "divider": 62.06,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Sinabung"
+ },
+ "L405": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "46": 94
+  },
+  "read_key": [
+   149,
+   3
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Ink replacement counter - Black": [
+    242
+   ],
+   "Ink replacement counter - Cyan": [
+    243
+   ],
+   "Ink replacement counter - Magenta": [
+    245
+   ],
+   "Ink replacement counter - Yellow": [
+    244
+   ],
+   "Maintenance required level of waste ink counter": [
+    46
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "main_waste": {
+    "divider": 62.07,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Maninjau"
+ },
+ "L4150": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4152": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4154": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4156": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4158": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4160": {
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4162": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4164": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4166": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "L4168": {
+  "_alias_of": "L4160",
+  "raw_waste_reset": {
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  },
+  "read_key": [
+   73,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    54
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    55
+   ],
+   "Total print page counter": [
+    776,
+    775,
+    774,
+    773
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 16.31,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 109.13,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   }
+  },
+  "write_key": "Arantifo"
+ },
+ "PX720WD": {
+  "_alias_of": "Stylus Photo PX720WD",
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   54,
+   6
+  ],
+  "stats": {
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total CD-R tray open/close counter": [
+    163,
+    162
+   ],
+   "Total print CD-R counter": [
+    75,
+    74
+   ],
+   "Total print page counter": [
+    159,
+    158
+   ],
+   "Total print page counter - duplex": [
+    161,
+    160
+   ],
+   "Total print pass counter": [
+    47,
+    46,
+    45,
+    44
+   ],
+   "Total scan counter": [
+    477,
+    476,
+    475,
+    474
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.84,
+    "oids": [
+     16,
+     17
+    ]
+   },
+   "main_waste": {
+    "divider": 79.23,
+    "oids": [
+     14,
+     15
+    ]
+   }
+  },
+  "write_key": "IhroroQU"
+ },
+ "PX730WD": {
+  "_alias_of": "Stylus Photo PX730WD",
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "60": 0,
+   "61": 94,
+   "62": 94,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   119,
+   8
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    61
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    62
+   ],
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total print CD-R counter": [
+    74,
+    75
+   ],
+   "Total print CD-R tray open/close counter": [
+    162,
+    163
+   ],
+   "Total print page counter": [
+    158,
+    159
+   ],
+   "Total print page counter (duplex)": [
+    160,
+    161
+   ],
+   "Total print pass counter": [
+    44,
+    45,
+    46,
+    47
+   ],
+   "Total scan counter": [
+    474,
+    475,
+    476,
+    477
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.88,
+    "oids": [
+     16,
+     17,
+     60
+    ]
+   },
+   "main_waste": {
+    "divider": 81.82,
+    "oids": [
+     14,
+     15,
+     60
+    ]
+   }
+  },
+  "write_key": "Cattleya"
+ },
+ "R2000": {
+  "raw_waste_reset": {
+   "58": 0,
+   "59": 0,
+   "83": 0,
+   "84": 0,
+   "85": 0,
+   "86": 0,
+   "87": 0,
+   "88": 0,
+   "89": 0,
+   "90": 0
+  },
+  "read_key": [
+   1,
+   0
+  ],
+  "stats": {
+   "Ink replacement cleaning counter": [
+    363
+   ],
+   "Ink replacement counter - Cyan": [
+    407
+   ],
+   "Ink replacement counter - Gloss Optimizer": [
+    406
+   ],
+   "Ink replacement counter - Magenta": [
+    401
+   ],
+   "Ink replacement counter - Matte Black": [
+    402
+   ],
+   "Ink replacement counter - Orange": [
+    404
+   ],
+   "Ink replacement counter - Photo Black": [
+    405
+   ],
+   "Ink replacement counter - Red": [
+    403
+   ],
+   "Ink replacement counter - Yellow": [
+    400
+   ],
+   "Manual cleaning counter": [
+    362
+   ],
+   "Timer cleaning counter": [
+    364
+   ],
+   "Total print CD-R counter": [
+    185,
+    184
+   ],
+   "Total print page counter": [
+    179,
+    178,
+    177,
+    176
+   ],
+   "Total print page counter - board paper": [
+    193,
+    192
+   ],
+   "Total print page counter - fine paper": [
+    211,
+    210,
+    209,
+    208
+   ],
+   "Total print page counter - roll paper": [
+    397,
+    396,
+    395,
+    394
+   ],
+   "Total print pass counter": [
+    183,
+    182,
+    181,
+    180
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 70.3,
+    "oids": [
+     89,
+     90
+    ]
+   },
+   "main_waste": {
+    "divider": 215.0,
+    "oids": [
+     87,
+     88
+    ]
+   }
+  },
+  "write_key": "Yutamori"
+ },
+ "Stylus Photo PX720WD": {
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   54,
+   6
+  ],
+  "stats": {
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total CD-R tray open/close counter": [
+    163,
+    162
+   ],
+   "Total print CD-R counter": [
+    75,
+    74
+   ],
+   "Total print page counter": [
+    159,
+    158
+   ],
+   "Total print page counter - duplex": [
+    161,
+    160
+   ],
+   "Total print pass counter": [
+    47,
+    46,
+    45,
+    44
+   ],
+   "Total scan counter": [
+    477,
+    476,
+    475,
+    474
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.84,
+    "oids": [
+     16,
+     17
+    ]
+   },
+   "main_waste": {
+    "divider": 79.23,
+    "oids": [
+     14,
+     15
+    ]
+   }
+  },
+  "write_key": "IhroroQU"
+ },
+ "Stylus Photo PX730": {
+  "_alias_of": "Stylus Photo PX730WD",
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "60": 0,
+   "61": 94,
+   "62": 94,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   119,
+   8
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    61
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    62
+   ],
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total print CD-R counter": [
+    74,
+    75
+   ],
+   "Total print CD-R tray open/close counter": [
+    162,
+    163
+   ],
+   "Total print page counter": [
+    158,
+    159
+   ],
+   "Total print page counter (duplex)": [
+    160,
+    161
+   ],
+   "Total print pass counter": [
+    44,
+    45,
+    46,
+    47
+   ],
+   "Total scan counter": [
+    474,
+    475,
+    476,
+    477
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.88,
+    "oids": [
+     16,
+     17,
+     60
+    ]
+   },
+   "main_waste": {
+    "divider": 81.82,
+    "oids": [
+     14,
+     15,
+     60
+    ]
+   }
+  },
+  "write_key": "Cattleya"
+ },
+ "Stylus Photo PX730WD": {
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "60": 0,
+   "61": 94,
+   "62": 94,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   119,
+   8
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    61
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    62
+   ],
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total print CD-R counter": [
+    74,
+    75
+   ],
+   "Total print CD-R tray open/close counter": [
+    162,
+    163
+   ],
+   "Total print page counter": [
+    158,
+    159
+   ],
+   "Total print page counter (duplex)": [
+    160,
+    161
+   ],
+   "Total print pass counter": [
+    44,
+    45,
+    46,
+    47
+   ],
+   "Total scan counter": [
+    474,
+    475,
+    476,
+    477
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.88,
+    "oids": [
+     16,
+     17,
+     60
+    ]
+   },
+   "main_waste": {
+    "divider": 81.82,
+    "oids": [
+     14,
+     15,
+     60
+    ]
+   }
+  },
+  "write_key": "Cattleya"
+ },
+ "TX720WD": {
+  "_alias_of": "Stylus Photo PX720WD",
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   54,
+   6
+  ],
+  "stats": {
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total CD-R tray open/close counter": [
+    163,
+    162
+   ],
+   "Total print CD-R counter": [
+    75,
+    74
+   ],
+   "Total print page counter": [
+    159,
+    158
+   ],
+   "Total print page counter - duplex": [
+    161,
+    160
+   ],
+   "Total print pass counter": [
+    47,
+    46,
+    45,
+    44
+   ],
+   "Total scan counter": [
+    477,
+    476,
+    475,
+    474
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.84,
+    "oids": [
+     16,
+     17
+    ]
+   },
+   "main_waste": {
+    "divider": 79.23,
+    "oids": [
+     14,
+     15
+    ]
+   }
+  },
+  "write_key": "IhroroQU"
+ },
+ "TX730WD": {
+  "_alias_of": "Stylus Photo PX730WD",
+  "raw_waste_reset": {
+   "12": 0,
+   "13": 0,
+   "14": 0,
+   "15": 0,
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "60": 0,
+   "61": 94,
+   "62": 94,
+   "8": 0,
+   "9": 0
+  },
+  "read_key": [
+   119,
+   8
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    61
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    62
+   ],
+   "Manual cleaning counter": [
+    126
+   ],
+   "Timer cleaning counter": [
+    97
+   ],
+   "Total print CD-R counter": [
+    74,
+    75
+   ],
+   "Total print CD-R tray open/close counter": [
+    162,
+    163
+   ],
+   "Total print page counter": [
+    158,
+    159
+   ],
+   "Total print page counter (duplex)": [
+    160,
+    161
+   ],
+   "Total print pass counter": [
+    44,
+    45,
+    46,
+    47
+   ],
+   "Total scan counter": [
+    474,
+    475,
+    476,
+    477
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 122.88,
+    "oids": [
+     16,
+     17,
+     60
+    ]
+   },
+   "main_waste": {
+    "divider": 81.82,
+    "oids": [
+     14,
+     15,
+     60
+    ]
+   }
+  },
+  "write_key": "Cattleya"
+ },
+ "WF-7515": {
+  "_alias_of": "WF-7525",
+  "raw_waste_reset": {
+   "20": 0,
+   "21": 0,
+   "22": 0,
+   "23": 0,
+   "24": 0,
+   "25": 0,
+   "59": 0,
+   "60": 94,
+   "61": 94
+  },
+  "read_key": [
+   101,
+   0
+  ],
+  "stats": {
+   "Ink replacement cleaning counter": [
+    133
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    60
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    61
+   ],
+   "Manual cleaning counter": [
+    131
+   ],
+   "Timer cleaning counter": [
+    134
+   ],
+   "Total print page counter": [
+    147,
+    146,
+    145,
+    144
+   ],
+   "Total print pass counter": [
+    159,
+    158,
+    157,
+    156
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ],
+   "Total scan counter % (ADF)": [
+    475,
+    474,
+    473,
+    472
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 52.05,
+    "oids": [
+     22,
+     23,
+     59
+    ]
+   },
+   "main_waste": {
+    "divider": 196.5,
+    "oids": [
+     20,
+     21,
+     59
+    ]
+   }
+  },
+  "write_key": "Sasanqua"
+ },
+ "WF-7525": {
+  "raw_waste_reset": {
+   "20": 0,
+   "21": 0,
+   "22": 0,
+   "23": 0,
+   "24": 0,
+   "25": 0,
+   "59": 0,
+   "60": 94,
+   "61": 94
+  },
+  "read_key": [
+   101,
+   0
+  ],
+  "stats": {
+   "Ink replacement cleaning counter": [
+    133
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    60
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    61
+   ],
+   "Manual cleaning counter": [
+    131
+   ],
+   "Timer cleaning counter": [
+    134
+   ],
+   "Total print page counter": [
+    147,
+    146,
+    145,
+    144
+   ],
+   "Total print pass counter": [
+    159,
+    158,
+    157,
+    156
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ],
+   "Total scan counter % (ADF)": [
+    475,
+    474,
+    473,
+    472
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 52.05,
+    "oids": [
+     22,
+     23,
+     59
+    ]
+   },
+   "main_waste": {
+    "divider": 196.5,
+    "oids": [
+     20,
+     21,
+     59
+    ]
+   }
+  },
+  "write_key": "Sasanqua"
+ },
+ "XP-200": {
+  "_alias_of": "XP-205",
+  "read_key": [
+   25,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.34,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 73.5,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  }
+ },
+ "XP-205": {
+  "read_key": [
+   25,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.34,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 73.5,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  }
+ },
+ "XP-207": {
+  "_alias_of": "XP-205",
+  "read_key": [
+   25,
+   7
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.34,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 73.5,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  }
+ },
+ "XP-2100": {
+  "_alias_of": "XP-2150",
+  "raw_waste_reset": {
+   "28": 0,
+   "336": 0,
+   "337": 0,
+   "338": 0,
+   "339": 0,
+   "340": 0,
+   "341": 0,
+   "342": 0,
+   "343": 94,
+   "344": 94
+  },
+  "read_key": [
+   80,
+   9
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    343
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    344
+   ],
+   "Manual cleaning counter": [
+    203
+   ],
+   "Timer cleaning counter": [
+    205
+   ],
+   "Total print page counter": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 30.49,
+    "oids": [
+     339,
+     340,
+     336
+    ]
+   },
+   "main_waste": {
+    "divider": 69.0,
+    "oids": [
+     337,
+     338,
+     336
+    ]
+   }
+  },
+  "write_key": "Bidadari"
+ },
+ "XP-2150": {
+  "raw_waste_reset": {
+   "28": 0,
+   "336": 0,
+   "337": 0,
+   "338": 0,
+   "339": 0,
+   "340": 0,
+   "341": 0,
+   "342": 0,
+   "343": 94,
+   "344": 94
+  },
+  "read_key": [
+   80,
+   9
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    343
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    344
+   ],
+   "Manual cleaning counter": [
+    203
+   ],
+   "Timer cleaning counter": [
+    205
+   ],
+   "Total print page counter": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 30.49,
+    "oids": [
+     339,
+     340,
+     336
+    ]
+   },
+   "main_waste": {
+    "divider": 69.0,
+    "oids": [
+     337,
+     338,
+     336
+    ]
+   }
+  },
+  "write_key": "Bidadari"
+ },
+ "XP-2151": {
+  "_alias_of": "XP-2150",
+  "raw_waste_reset": {
+   "28": 0,
+   "336": 0,
+   "337": 0,
+   "338": 0,
+   "339": 0,
+   "340": 0,
+   "341": 0,
+   "342": 0,
+   "343": 94,
+   "344": 94
+  },
+  "read_key": [
+   80,
+   9
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    343
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    344
+   ],
+   "Manual cleaning counter": [
+    203
+   ],
+   "Timer cleaning counter": [
+    205
+   ],
+   "Total print page counter": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 30.49,
+    "oids": [
+     339,
+     340,
+     336
+    ]
+   },
+   "main_waste": {
+    "divider": 69.0,
+    "oids": [
+     337,
+     338,
+     336
+    ]
+   }
+  },
+  "write_key": "Bidadari"
+ },
+ "XP-2155": {
+  "_alias_of": "XP-2150",
+  "raw_waste_reset": {
+   "28": 0,
+   "336": 0,
+   "337": 0,
+   "338": 0,
+   "339": 0,
+   "340": 0,
+   "341": 0,
+   "342": 0,
+   "343": 94,
+   "344": 94
+  },
+  "read_key": [
+   80,
+   9
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    343
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    344
+   ],
+   "Manual cleaning counter": [
+    203
+   ],
+   "Timer cleaning counter": [
+    205
+   ],
+   "Total print page counter": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 30.49,
+    "oids": [
+     339,
+     340,
+     336
+    ]
+   },
+   "main_waste": {
+    "divider": 69.0,
+    "oids": [
+     337,
+     338,
+     336
+    ]
+   }
+  },
+  "write_key": "Bidadari"
+ },
+ "XP-2200": {
+  "raw_waste_reset": {
+   "28": 0,
+   "336": 0,
+   "337": 0,
+   "338": 0,
+   "339": 0,
+   "340": 0,
+   "341": 0,
+   "342": 0,
+   "343": 94,
+   "344": 94
+  },
+  "read_key": [
+   75,
+   54
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    343
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    344
+   ],
+   "Manual cleaning counter": [
+    203
+   ],
+   "Power off timer 1": [
+    230,
+    229
+   ],
+   "Power off timer 2": [
+    231,
+    230
+   ],
+   "Power off timer 3": [
+    262,
+    261
+   ],
+   "Timer cleaning counter": [
+    205
+   ],
+   "Total print page counter": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 30.49,
+    "oids": [
+     339,
+     340,
+     336
+    ]
+   },
+   "main_waste": {
+    "divider": 69.0,
+    "oids": [
+     337,
+     338,
+     336
+    ]
+   }
+  },
+  "write_key": "Kenjeran"
+ },
+ "XP-2205": {
+  "_alias_of": "XP-2200",
+  "raw_waste_reset": {
+   "28": 0,
+   "336": 0,
+   "337": 0,
+   "338": 0,
+   "339": 0,
+   "340": 0,
+   "341": 0,
+   "342": 0,
+   "343": 94,
+   "344": 94
+  },
+  "read_key": [
+   75,
+   54
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    343
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    344
+   ],
+   "Manual cleaning counter": [
+    203
+   ],
+   "Power off timer 1": [
+    230,
+    229
+   ],
+   "Power off timer 2": [
+    231,
+    230
+   ],
+   "Power off timer 3": [
+    262,
+    261
+   ],
+   "Timer cleaning counter": [
+    205
+   ],
+   "Total print page counter": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 30.49,
+    "oids": [
+     339,
+     340,
+     336
+    ]
+   },
+   "main_waste": {
+    "divider": 69.0,
+    "oids": [
+     337,
+     338,
+     336
+    ]
+   }
+  },
+  "write_key": "Kenjeran"
+ },
+ "XP-225": {
+  "_alias_of": "XP-422",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   85,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 52.05,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 196.5,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Muscari."
+ },
+ "XP-235": {
+  "_alias_of": "XP-432",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   133,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.55,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 39.9,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Polyxena"
+ },
+ "XP-312": {
+  "_alias_of": "XP-315",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   129,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Ink replacement cleaning counter": [
+    148
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power off timer": [
+    359,
+    358
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.53,
+    "oids": [
+     26,
+     27
+    ]
+   },
+   "main_waste": {
+    "divider": 69,
+    "oids": [
+     24,
+     25
+    ]
+   }
+  },
+  "write_key": "Wakatobi"
+ },
+ "XP-313": {
+  "_alias_of": "XP-315",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   129,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Ink replacement cleaning counter": [
+    148
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power off timer": [
+    359,
+    358
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.53,
+    "oids": [
+     26,
+     27
+    ]
+   },
+   "main_waste": {
+    "divider": 69,
+    "oids": [
+     24,
+     25
+    ]
+   }
+  },
+  "write_key": "Wakatobi"
+ },
+ "XP-315": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   129,
+   8
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Ink replacement cleaning counter": [
+    148
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power off timer": [
+    359,
+    358
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.53,
+    "oids": [
+     26,
+     27
+    ]
+   },
+   "main_waste": {
+    "divider": 69,
+    "oids": [
+     24,
+     25
+    ]
+   }
+  },
+  "write_key": "Wakatobi"
+ },
+ "XP-3150": {
+  "read_key": [
+   80,
+   9
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance_box_replacement_counter": [
+    558
+   ],
+   "Paper count color": [
+    788,
+    787,
+    786,
+    785
+   ],
+   "Paper count monochrome": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print page counter": [
+    763,
+    762,
+    761,
+    760
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "write_key": "Bidadari"
+ },
+ "XP-3151": {
+  "_alias_of": "XP-3150",
+  "read_key": [
+   80,
+   9
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance_box_replacement_counter": [
+    558
+   ],
+   "Paper count color": [
+    788,
+    787,
+    786,
+    785
+   ],
+   "Paper count monochrome": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print page counter": [
+    763,
+    762,
+    761,
+    760
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "write_key": "Bidadari"
+ },
+ "XP-3155": {
+  "_alias_of": "XP-3150",
+  "read_key": [
+   80,
+   9
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter - Black": [
+    554
+   ],
+   "Ink replacement counter - Cyan": [
+    555
+   ],
+   "Ink replacement counter - Magenta": [
+    556
+   ],
+   "Ink replacement counter - Yellow": [
+    557
+   ],
+   "Maintenance_box_replacement_counter": [
+    558
+   ],
+   "Paper count color": [
+    788,
+    787,
+    786,
+    785
+   ],
+   "Paper count monochrome": [
+    792,
+    791,
+    790,
+    789
+   ],
+   "Total print page counter": [
+    763,
+    762,
+    761,
+    760
+   ],
+   "Total print pass counter": [
+    133,
+    132,
+    131,
+    130
+   ],
+   "Total scan counter": [
+    1843,
+    1842,
+    1841,
+    1840
+   ]
+  },
+  "write_key": "Bidadari"
+ },
+ "XP-342": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   1,
+   5
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.55,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 39.9,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Suramadu"
+ },
+ "XP-343": {
+  "_alias_of": "XP-342",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   1,
+   5
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.55,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 39.9,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Suramadu"
+ },
+ "XP-345": {
+  "_alias_of": "XP-342",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   1,
+   5
+  ],
+  "stats": {
+   "First TI received time": [
+    173,
+    172
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ],
+   "Manual cleaning counter": [
+    147
+   ],
+   "Power cleaning counter": [
+    148
+   ],
+   "Timer cleaning counter": [
+    149
+   ],
+   "Total print page counter": [
+    167,
+    166,
+    165,
+    164
+   ],
+   "Total print pass counter": [
+    171,
+    170,
+    169,
+    168
+   ],
+   "Total scan counter": [
+    471,
+    470,
+    469,
+    468
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.55,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 39.9,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Suramadu"
+ },
+ "XP-422": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   85,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 52.05,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 196.5,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Muscari."
+ },
+ "XP-423": {
+  "_alias_of": "XP-422",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   85,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 52.05,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 196.5,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Muscari."
+ },
+ "XP-425": {
+  "_alias_of": "XP-422",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   85,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 52.05,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 196.5,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Muscari."
+ },
+ "XP-432": {
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   133,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.55,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 39.9,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Polyxena"
+ },
+ "XP-433": {
+  "_alias_of": "XP-432",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   133,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.55,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 39.9,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Polyxena"
+ },
+ "XP-435": {
+  "_alias_of": "XP-432",
+  "raw_waste_reset": {
+   "24": 0,
+   "25": 0,
+   "26": 0,
+   "27": 0,
+   "28": 0,
+   "29": 0,
+   "30": 0,
+   "34": 0,
+   "46": 94,
+   "47": 94,
+   "49": 0
+  },
+  "read_key": [
+   133,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    46
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    47
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 32.55,
+    "oids": [
+     26,
+     27,
+     34
+    ]
+   },
+   "main_waste": {
+    "divider": 39.9,
+    "oids": [
+     24,
+     25,
+     30
+    ]
+   }
+  },
+  "write_key": "Polyxena"
+ },
+ "XP-540": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   20,
+   4
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ],
+   "Total scan counter": [
+    453,
+    452,
+    451,
+    450
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 20.82,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 48.06,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Firmiana"
+ },
+ "XP-610": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   121,
+   4
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 29.03,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Gossypiu"
+ },
+ "XP-611": {
+  "_alias_of": "XP-610",
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   121,
+   4
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 29.03,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Gossypiu"
+ },
+ "XP-615": {
+  "_alias_of": "XP-610",
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   121,
+   4
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 29.03,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Gossypiu"
+ },
+ "XP-620": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   87,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 33.7,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Althaea."
+ },
+ "XP-621": {
+  "_alias_of": "XP-620",
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   87,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 33.7,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Althaea."
+ },
+ "XP-625": {
+  "_alias_of": "XP-620",
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   87,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 33.7,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Althaea."
+ },
+ "XP-700": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   40,
+   0
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 29.03,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Hibiscus"
+ },
+ "XP-701": {
+  "_alias_of": "XP-700",
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   40,
+   0
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 29.03,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Hibiscus"
+ },
+ "XP-702": {
+  "_alias_of": "XP-700",
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   40,
+   0
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 29.03,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Hibiscus"
+ },
+ "XP-7100": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   40,
+   5
+  ],
+  "stats": {
+   "First TI received time": [
+    9,
+    8
+   ],
+   "Ink replacement counter % PB": [
+    705
+   ],
+   "Ink replacement counter - Black": [
+    701
+   ],
+   "Ink replacement counter - Cyan": [
+    702
+   ],
+   "Ink replacement counter - Magenta": [
+    703
+   ],
+   "Ink replacement counter - Yellow": [
+    704
+   ],
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print page counter - duplex": [
+    752,
+    751,
+    750,
+    749
+   ],
+   "Total print page counter - front feed lower": [
+    696,
+    695,
+    694,
+    693
+   ],
+   "Total print page counter - front feed upper": [
+    744,
+    743,
+    742,
+    741
+   ],
+   "Total print page counter - rear": [
+    748,
+    747,
+    746,
+    745
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ],
+   "Total scan counter": [
+    453,
+    452,
+    451,
+    450
+   ],
+   "Total scan counter (ADF)": [
+    457,
+    456,
+    455,
+    454
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 33.7,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Leucojum"
+ },
+ "XP-760": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   87,
+   5
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 33.7,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Althaea."
+ },
+ "XP-820": {
+  "read_key": [
+   87,
+   5
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 33.7,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   }
+  },
+  "write_key": "Althaea."
+ },
+ "XP-821": {
+  "_alias_of": "XP-820",
+  "read_key": [
+   87,
+   5
+  ],
+  "waste": {
+   "borderless_waste": {
+    "divider": 33.7,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   }
+  },
+  "write_key": "Althaea."
+ },
+ "XP-830": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   40,
+   9
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ],
+   "Total scan counter": [
+    453,
+    452,
+    451,
+    450
+   ],
+   "Total scan counter % (ADF)": [
+    457,
+    456,
+    455,
+    454
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 33.7,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Irisgarm"
+ },
+ "XP-850": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   40,
+   0
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 29.03,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 84.5,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Hibiscus"
+ },
+ "XP-960": {
+  "raw_waste_reset": {
+   "16": 0,
+   "17": 0,
+   "18": 0,
+   "19": 0,
+   "20": 0,
+   "21": 0,
+   "493": 0,
+   "52": 94,
+   "53": 94,
+   "6": 0
+  },
+  "read_key": [
+   40,
+   9
+  ],
+  "stats": {
+   "Maintenance required level of 1st waste ink counter": [
+    52
+   ],
+   "Maintenance required level of 2nd waste ink counter": [
+    53
+   ],
+   "Timer cleaning counter": [
+    245
+   ],
+   "Total print CD-R counter": [
+    255,
+    254
+   ],
+   "Total print pass counter": [
+    99,
+    98,
+    97,
+    96
+   ],
+   "Total scan counter": [
+    453,
+    452,
+    451,
+    450
+   ]
+  },
+  "waste": {
+   "borderless_waste": {
+    "divider": 29.77,
+    "oids": [
+     18,
+     19,
+     6
+    ]
+   },
+   "main_waste": {
+    "divider": 93.85,
+    "oids": [
+     16,
+     17,
+     6
+    ]
+   }
+  },
+  "write_key": "Irisgarm"
+ }
+}
