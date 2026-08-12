@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 r"""
 padzero_gui.py - window front end for Pad Zero.
 
@@ -213,8 +213,21 @@ class App:
 
     def _buttons(self, on):
         state = "normal" if on else "disabled"
-        for b in (self.b_refresh, self.b_backup, self.b_reset):
-            b.configure(state=state)
+        self.b_refresh.configure(state=state)
+        self.b_backup.configure(state=state)
+        self._reset_enabled(on)
+
+    def _reset_enabled(self, on):
+        """Enable or disable the reset button, and make it look it.
+
+        tk keeps a button's background when you disable it, so the accent
+        colour would stay bright and the control would still read as
+        clickable. Repaint it so disabled actually looks disabled.
+        """
+        if on:
+            self.b_reset.configure(state="normal", bg=ACCENT, fg="#0B1417")
+        else:
+            self.b_reset.configure(state="disabled", bg=CARD2, fg=FAINT)
 
     def status(self, text, colour=FAINT):
         self.l_status.configure(text=text, fg=colour)
@@ -269,8 +282,8 @@ class App:
         self.l_model.configure(text="No printer found")
         self.l_verdict.configure(
             text="Nothing is answering on USB. It is almost always one of "
-                 "these two things.", fg=DIM)
-        self.b_reset.configure(state="disabled")
+                 "the things below, and they are quick to check.", fg=DIM)
+        self._reset_enabled(False)
         self.b_backup.configure(state="disabled")
         self._details("")
 
@@ -299,7 +312,7 @@ class App:
                 text="This printer works, but Pad Zero has never been tested "
                      "on this model, so it will not change anything on it.",
                 fg=WARN)
-            self.b_reset.configure(state="disabled")
+            self._reset_enabled(False)
             self._steps(self.advice, [
                 ("Help get your model added",
                  "Click Save a backup, then send the file that appears. It "
@@ -313,7 +326,7 @@ class App:
             self.l_verdict.configure(
                 text="Connected and working. This model does not report a "
                      "percentage, but the counter can still be reset.", fg=DIM)
-            self.b_reset.configure(state="normal")
+            self._reset_enabled(True)
             self.status("Ready", GOOD)
 
         elif worst >= 100:
@@ -321,7 +334,7 @@ class App:
             self.l_verdict.configure(
                 text="The waste ink counter is full. This is why your printer "
                      "has stopped printing.", fg=BAD)
-            self.b_reset.configure(state="normal")
+            self._reset_enabled(True)
             self._pad_advice(urgent=True)
             self.status("Counter full", BAD)
 
@@ -330,7 +343,7 @@ class App:
             self.l_verdict.configure(
                 text="Nearly full. Your printer will stop printing soon.",
                 fg=WARN)
-            self.b_reset.configure(state="normal")
+            self._reset_enabled(True)
             self._pad_advice(urgent=False)
             self.status("Nearly full", WARN)
 
@@ -339,7 +352,7 @@ class App:
             self.l_verdict.configure(
                 text="Everything looks fine. There is nothing you need to do.",
                 fg=GOOD)
-            self.b_reset.configure(state="normal")
+            self._reset_enabled(True)
             self.status("Healthy", GOOD)
 
         self._bars(counters)

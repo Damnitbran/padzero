@@ -9,6 +9,11 @@ Free, open source, no paid tier, no nag screens.
 
 ![The Pad Zero window showing a connected Epson ET-4810](docs/screenshot.png)
 
+If nothing is plugged in, it tells you what to check rather than showing an
+error:
+
+![The Pad Zero window listing three things to check when no printer is found](docs/no-printer.png)
+
 ---
 
 ## Read this first
