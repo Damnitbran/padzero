@@ -94,16 +94,24 @@ actually knows rather than guessing:
 
 | Coverage | Meaning |
 |---|---|
-| `full` | percentages and reset both available |
-| `partial` | reset available; raw byte values shown instead of percentages |
+| `full` | percentages and reset both available, from this model's own data |
+| `approx` | reset available; percentages estimated from models that store their counters at the same addresses, and labelled as approximate |
+| `partial` | reset available; no percentages could be worked out |
 | `none` | read-only. The tool refuses to write to a model it doesn't know |
+
+`approx` exists because "1 stored value" is not an answer to "how full is
+it". The estimate is only used when models sharing this printer's reset
+addresses agree unanimously on a layout, and any counter reading an address
+absent from this model's own reset map is dropped rather than shown as a
+confident 0%. A divider only scales a number on screen and is never written
+to the printer, so a wrong estimate misinforms but cannot damage anything.
 
 Verified on real hardware:
 
 | Model | Key group | Coverage | Status |
 |---|---|---|---|
 | ET-4800 | `0x364A` | full | reset verified 79.85% to 0.00% |
-| ET-4810 | `0x574B` | partial | detected and read |
+| ET-4810 | `0x574B` | approx | detected, read, write path verified |
 
 `models.json` carries data for 110 models, but **listed is not the same as
 verified**. If yours works, please open an issue and say so. That's how this
