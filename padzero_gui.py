@@ -60,6 +60,7 @@ import queue                      # noqa: E402
 import threading                  # noqa: E402
 import tkinter as tk              # noqa: E402
 import webbrowser                 # noqa: E402
+from datetime import datetime     # noqa: E402
 from tkinter import messagebox    # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -111,6 +112,10 @@ class App:
         self.printer = None
         self.busy = False
         self.details_open = False
+        self._known_paths = None
+        # Every reading taken this session, so a reset shows as a visible
+        # change over time rather than a number you have to have memorised.
+        self.history = []
 
         root.title("Pad Zero")
         root.configure(bg=BG)
@@ -119,6 +124,7 @@ class App:
 
         self._build()
         self.root.after(80, self._pump)
+        self.root.after(1500, self._watch)
         self.scan()
 
     # ---------------------------------------------------------- structure
@@ -126,8 +132,8 @@ class App:
         bar = tk.Frame(self.root, bg=BG)
         bar.pack(fill="x", padx=24, pady=(18, 0))
         tk.Label(bar, text="Pad Zero", font=F_APP, bg=BG, fg=FG).pack(side="left")
-        self.b_refresh = flat_button(bar, "Check again", self.scan,
-                                     padx=14, pady=6)
+        self.b_refresh = flat_button(bar, "Check level now", self.scan,
+                                     bg=CARD2, fg=FG, padx=16, pady=7)
         self.b_refresh.pack(side="right")
         self.b_help = flat_button(bar, "What is this?", self.show_explain,
                                   bg=BG, fg=DIM, padx=10, pady=6)
@@ -149,37 +155,42 @@ class App:
                                   wraplength=600)
         self.l_verdict.pack(fill="x", padx=26, pady=(6, 22))
 
-        # levels
-        self.levels = tk.Frame(self.root, bg=BG)
-        self.levels.pack(fill="x", padx=24, pady=(18, 0))
+        # Everything below is packed to the BOTTOM edge first, before the
+        # expanding content above it. With pack(), whatever is added last
+        # gets clipped when the window is short, and the button that does
+        # the actual job must never be the thing that disappears.
+        self.l_status = tk.Label(self.root, text="", font=F_SMALL, bg=BG,
+                                 fg=FAINT, anchor="w")
+        self.l_status.pack(side="bottom", fill="x", padx=24, pady=(6, 12))
 
-        # advice / troubleshooting
-        self.advice = tk.Frame(self.root, bg=BG)
-        self.advice.pack(fill="both", expand=True, padx=24, pady=(14, 0))
-
-        # actions
-        act = tk.Frame(self.root, bg=BG)
-        act.pack(fill="x", padx=24, pady=(6, 0))
-        self.b_reset = flat_button(act, "Reset the counter", self.do_reset,
-                                   bg=ACCENT, fg="#0B1417", font=F_BTN,
-                                   padx=22, pady=12)
-        self.b_reset.pack(side="left")
-        self.b_backup = flat_button(act, "Save a backup", self.do_backup)
-        self.b_backup.pack(side="left", padx=(10, 0))
-
-        # details toggle
+        self.details = tk.Frame(self.root, bg=CARD2)
         self.b_details = flat_button(self.root, "▸  Technical details",
                                      self.toggle_details, bg=BG, fg=FAINT,
                                      font=F_SMALL, padx=0, pady=6)
-        self.b_details.pack(anchor="w", padx=24, pady=(16, 0))
-        self.details = tk.Frame(self.root, bg=CARD2)
+        self.b_details.pack(side="bottom", anchor="w", padx=24)
         self.l_details = tk.Label(self.details, text="", font=F_MONO, bg=CARD2,
                                   fg=DIM, anchor="w", justify="left")
         self.l_details.pack(fill="x", padx=16, pady=12)
 
-        self.l_status = tk.Label(self.root, text="", font=F_SMALL, bg=BG,
-                                 fg=FAINT, anchor="w")
-        self.l_status.pack(fill="x", padx=24, pady=(10, 14))
+        act = tk.Frame(self.root, bg=BG)
+        act.pack(side="bottom", fill="x", padx=24, pady=(12, 10))
+        self.b_reset = flat_button(act, "Reset the counter", self.do_reset,
+                                   bg=ACCENT, fg="#0B1417", font=F_BTN,
+                                   padx=26, pady=14)
+        self.b_reset.pack(side="left")
+        self.b_backup = flat_button(act, "Save a backup", self.do_backup)
+        self.b_backup.pack(side="left", padx=(10, 0))
+
+        # reading history, also pinned so it stays put as content changes
+        self.hist_frame = tk.Frame(self.root, bg=BG)
+        self.hist_frame.pack(side="bottom", fill="x", padx=24, pady=(0, 4))
+
+        # scrolling content above the pinned controls
+        self.levels = tk.Frame(self.root, bg=BG)
+        self.levels.pack(fill="x", padx=24, pady=(18, 0))
+
+        self.advice = tk.Frame(self.root, bg=BG)
+        self.advice.pack(fill="both", expand=True, padx=24, pady=(14, 0))
 
     # ------------------------------------------------------------ threads
     def _run(self, fn, tag):
@@ -210,6 +221,78 @@ class App:
         except queue.Empty:
             pass
         self.root.after(80, self._pump)
+
+    @staticmethod
+    def _summarise(counters):
+        """One line describing a reading, for the history list."""
+        if not counters:
+            return "no counter data"
+        pcts = [c for c in counters if c.get("percent") is not None]
+        if pcts:
+            return "   ".join("%s %.2f%%"
+                              % (c["name"].split("_")[0], c["percent"])
+                              for c in pcts)
+        parts = []
+        for c in counters:
+            if "values" in c:
+                nz = [(a, v) for a, v in zip(c["addrs"], c["values"]) if v]
+                parts.append(", ".join("%d=%s" % (a, v) for a, v in nz)
+                             or "all zero")
+        return "   ".join(parts) or "no readable counters"
+
+    def _log_reading(self, counters, note=""):
+        stamp = datetime.now().strftime("%H:%M:%S")
+        self.history.append((stamp, self._summarise(counters), note))
+        self._render_history()
+
+    def _render_history(self):
+        self._clear(self.hist_frame)
+        if len(self.history) < 2:
+            return  # a single reading is not a history
+
+        tk.Label(self.hist_frame, text="READINGS THIS SESSION",
+                 font=("Segoe UI", 9, "bold"), bg=BG, fg=FAINT,
+                 anchor="w").pack(fill="x", pady=(6, 4))
+
+        for stamp, summary, note in self.history[-4:]:
+            row = tk.Frame(self.hist_frame, bg=BG)
+            row.pack(fill="x")
+            tk.Label(row, text=stamp, font=("Consolas", 9), bg=BG,
+                     fg=FAINT).pack(side="left")
+            colour = ACCENT if note else DIM
+            tk.Label(row, text=summary, font=("Consolas", 9), bg=BG,
+                     fg=colour, anchor="w").pack(side="left", padx=(10, 0))
+            if note:
+                tk.Label(row, text=note, font=("Segoe UI", 9, "bold"), bg=BG,
+                         fg=GOOD).pack(side="left", padx=(8, 0))
+
+    def _watch(self):
+        """Notice the cable being plugged or unplugged, and rescan.
+
+        Without this the window keeps showing a healthy printer after you
+        unplug it, which is worse than showing nothing: it says everything
+        is fine about a device that is no longer there.
+
+        Enumeration is a PnP lookup, not device I/O, and measures about
+        0.08 ms, so polling it costs nothing. The expensive part (opening
+        the device and negotiating D4) only happens when the set of
+        interfaces actually changes.
+        """
+        try:
+            if not self.busy:
+                paths = tuple(sorted(core.list_usb_printers()))
+                if self._known_paths is None:
+                    self._known_paths = paths
+                elif paths != self._known_paths:
+                    self._known_paths = paths
+                    if paths:
+                        self.status("Printer connected, checking...", ACCENT)
+                    else:
+                        self.status("Printer unplugged", WARN)
+                    self.scan()
+        except Exception:
+            pass  # never let the watchdog kill the window
+        self.root.after(1500, self._watch)
 
     def _buttons(self, on):
         state = "normal" if on else "disabled"
@@ -269,6 +352,7 @@ class App:
 
         worst = self._worst(counters)
         self._state_found(pr, counters, worst)
+        self._log_reading(counters)
 
     @staticmethod
     def _worst(counters):
@@ -515,7 +599,8 @@ class App:
     def toggle_details(self):
         self.details_open = not self.details_open
         if self.details_open:
-            self.details.pack(fill="x", padx=24, pady=(6, 0))
+            self.details.pack(side="bottom", fill="x", padx=24, pady=(6, 0),
+                              before=self.b_details)
             self.b_details.configure(text="▾  Technical details")
         else:
             self.details.pack_forget()
@@ -580,6 +665,7 @@ class App:
     def after_reset(self, res):
         path, ok, counters, before = res
         self._bars(counters, previous=before)
+        self._log_reading(counters, note="<- after reset" if ok else "")
         if ok:
             self.status("Done. Turn the printer off and on again.", GOOD)
             messagebox.showinfo(
