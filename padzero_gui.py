@@ -54,7 +54,45 @@ def _fix_tcl():
             return
 
 
+def _dpi_aware():
+    """Tell Windows we will handle scaling ourselves, and report the factor.
+
+    Without this, tkinter renders at 96 DPI and Windows bitmap-stretches the
+    result to the display's actual scaling. On a 125% display every glyph is
+    resampled, which looks soft and cheap. Declaring awareness makes Tk draw
+    at native resolution; we then scale fonts and sizes to match so the
+    window is the same physical size, just sharp.
+
+    Must run before the first Tk window is created.
+    """
+    import ctypes
+    try:
+        # 2 = PROCESS_PER_MONITOR_DPI_AWARE
+        ctypes.windll.shcore.SetProcessDpiAwareness(2)
+    except Exception:
+        try:
+            ctypes.windll.user32.SetProcessDPIAware()
+        except Exception:
+            return 1.0
+    try:
+        hdc = ctypes.windll.user32.GetDC(0)
+        dpi = ctypes.windll.gdi32.GetDeviceCaps(hdc, 88)  # LOGPIXELSX
+        ctypes.windll.user32.ReleaseDC(0, hdc)
+        if dpi:
+            return max(1.0, dpi / 96.0)
+    except Exception:
+        pass
+    return 1.0
+
+
 _fix_tcl()
+SCALE = _dpi_aware()
+
+
+def S(n):
+    """Scale a pixel measurement for this display."""
+    return int(round(n * SCALE))
+
 
 import queue                      # noqa: E402
 import threading                  # noqa: E402
@@ -119,8 +157,15 @@ class App:
 
         root.title("Pad Zero")
         root.configure(bg=BG)
-        root.geometry("720x700")
-        root.minsize(660, 620)
+        root.geometry("%dx%d" % (S(720), S(720)))
+        root.minsize(S(660), S(640))
+        # Tk sizes point-based fonts using this factor. Setting it from the
+        # real DPI makes every font in the window scale correctly now that
+        # we have told Windows not to stretch us.
+        try:
+            root.tk.call("tk", "scaling", (96.0 * SCALE) / 72.0)
+        except Exception:
+            pass
 
         self._build()
         self.root.after(80, self._pump)
@@ -130,30 +175,27 @@ class App:
     # ---------------------------------------------------------- structure
     def _build(self):
         bar = tk.Frame(self.root, bg=BG)
-        bar.pack(fill="x", padx=24, pady=(18, 0))
+        bar.pack(fill="x", padx=S(24), pady=(S(18), 0))
         tk.Label(bar, text="Pad Zero", font=F_APP, bg=BG, fg=FG).pack(side="left")
-        self.b_refresh = flat_button(bar, "Check level now", self.scan,
-                                     bg=CARD2, fg=FG, padx=16, pady=7)
-        self.b_refresh.pack(side="right")
         self.b_help = flat_button(bar, "What is this?", self.show_explain,
-                                  bg=BG, fg=DIM, padx=10, pady=6)
-        self.b_help.pack(side="right", padx=(0, 8))
+                                  bg=BG, fg=DIM, padx=S(10), pady=S(6))
+        self.b_help.pack(side="right")
 
         # main card
         self.card = tk.Frame(self.root, bg=CARD)
-        self.card.pack(fill="x", padx=24, pady=(16, 0))
+        self.card.pack(fill="x", padx=S(24), pady=(S(16), 0))
 
         self.l_dot = tk.Label(self.card, text="", font=("Segoe UI", 30),
                               bg=CARD, fg=DIM)
-        self.l_dot.pack(anchor="w", padx=26, pady=(20, 0))
+        self.l_dot.pack(anchor="w", padx=S(26), pady=(S(20), 0))
         self.l_model = tk.Label(self.card, text="Looking for your printer...",
                                 font=F_BIG, bg=CARD, fg=FG, anchor="w",
-                                justify="left", wraplength=600)
-        self.l_model.pack(fill="x", padx=26)
+                                justify="left", wraplength=S(600))
+        self.l_model.pack(fill="x", padx=S(26))
         self.l_verdict = tk.Label(self.card, text="", font=F_STATUS, bg=CARD,
                                   fg=DIM, anchor="w", justify="left",
-                                  wraplength=600)
-        self.l_verdict.pack(fill="x", padx=26, pady=(6, 22))
+                                  wraplength=S(600))
+        self.l_verdict.pack(fill="x", padx=S(26), pady=(S(6), S(22)))
 
         # Everything below is packed to the BOTTOM edge first, before the
         # expanding content above it. With pack(), whatever is added last
@@ -161,36 +203,43 @@ class App:
         # the actual job must never be the thing that disappears.
         self.l_status = tk.Label(self.root, text="", font=F_SMALL, bg=BG,
                                  fg=FAINT, anchor="w")
-        self.l_status.pack(side="bottom", fill="x", padx=24, pady=(6, 12))
+        self.l_status.pack(side="bottom", fill="x", padx=S(24), pady=(S(6), S(12)))
 
         self.details = tk.Frame(self.root, bg=CARD2)
         self.b_details = flat_button(self.root, "▸  Technical details",
                                      self.toggle_details, bg=BG, fg=FAINT,
                                      font=F_SMALL, padx=0, pady=6)
-        self.b_details.pack(side="bottom", anchor="w", padx=24)
+        self.b_details.pack(side="bottom", anchor="w", padx=S(24))
         self.l_details = tk.Label(self.details, text="", font=F_MONO, bg=CARD2,
                                   fg=DIM, anchor="w", justify="left")
         self.l_details.pack(fill="x", padx=16, pady=12)
 
+        # All three actions live together at the bottom. The check button
+        # used to sit in the top-right corner and people looked for it here.
         act = tk.Frame(self.root, bg=BG)
-        act.pack(side="bottom", fill="x", padx=24, pady=(12, 10))
+        act.pack(side="bottom", fill="x", padx=S(24), pady=(S(12), S(10)))
         self.b_reset = flat_button(act, "Reset the counter", self.do_reset,
                                    bg=ACCENT, fg="#0B1417", font=F_BTN,
-                                   padx=26, pady=14)
+                                   padx=S(26), pady=S(14))
         self.b_reset.pack(side="left")
-        self.b_backup = flat_button(act, "Save a backup", self.do_backup)
-        self.b_backup.pack(side="left", padx=(10, 0))
+        self.b_refresh = flat_button(act, "Check level now", self.scan,
+                                     bg=CARD2, fg=FG, font=F_BTN,
+                                     padx=S(20), pady=S(14))
+        self.b_refresh.pack(side="left", padx=(S(10), 0))
+        self.b_backup = flat_button(act, "Save a backup", self.do_backup,
+                                    padx=S(16), pady=S(14))
+        self.b_backup.pack(side="left", padx=(S(10), 0))
 
         # reading history, also pinned so it stays put as content changes
         self.hist_frame = tk.Frame(self.root, bg=BG)
-        self.hist_frame.pack(side="bottom", fill="x", padx=24, pady=(0, 4))
+        self.hist_frame.pack(side="bottom", fill="x", padx=S(24), pady=(0, S(4)))
 
         # scrolling content above the pinned controls
         self.levels = tk.Frame(self.root, bg=BG)
-        self.levels.pack(fill="x", padx=24, pady=(18, 0))
+        self.levels.pack(fill="x", padx=S(24), pady=(S(18), 0))
 
         self.advice = tk.Frame(self.root, bg=BG)
-        self.advice.pack(fill="both", expand=True, padx=24, pady=(14, 0))
+        self.advice.pack(fill="both", expand=True, padx=S(24), pady=(S(14), 0))
 
     # ------------------------------------------------------------ threads
     def _run(self, fn, tag):
@@ -513,8 +562,8 @@ class App:
                 del old
 
             colour = BAD if pct >= 100 else (WARN if pct >= 85 else GOOD)
-            width = 330 if was is None else 210
-            track = tk.Frame(row, bg=RULE, height=18, width=width)
+            width = S(330) if was is None else S(210)
+            track = tk.Frame(row, bg=RULE, height=S(18), width=width)
             track.pack(side="left")
             track.pack_propagate(False)
             tk.Frame(track, bg=colour).place(
@@ -523,36 +572,60 @@ class App:
                      bg=BG, fg=colour).pack(side="left", padx=(12, 0))
 
         if raw_only and not readable:
-            box = tk.Frame(self.levels, bg=CARD)
-            box.pack(fill="x")
-            tk.Label(box, text="COUNTER READINGS",
-                     font=("Segoe UI", 9, "bold"), bg=CARD, fg=FAINT,
-                     anchor="w").pack(fill="x", padx=16, pady=(14, 2))
-            tk.Label(box,
-                     text=("This model stores its counters in a form Pad Zero "
-                           "can read and reset, but cannot turn into a "
-                           "percentage yet. The raw values are below."),
-                     font=F_SMALL, bg=CARD, fg=DIM, anchor="w",
-                     justify="left", wraplength=600).pack(
-                fill="x", padx=16, pady=(0, 10))
+            # No divider is known for this model, so there is no honest
+            # percentage to show. Say in words whether a reset would change
+            # anything; the raw addresses live in Technical details, where
+            # someone who wants them can find them.
+            self._raw_summary(raw_only)
 
-            for c in raw_only:
-                name = c["name"].replace("_", " ").title()
-                tk.Label(box, text=name, font=("Segoe UI", 10, "bold"),
-                         bg=CARD, fg=FG, anchor="w").pack(
-                    fill="x", padx=16, pady=(4, 0))
-                grid = tk.Frame(box, bg=CARD)
-                grid.pack(fill="x", padx=16, pady=(2, 10))
-                for i, (a, v) in enumerate(zip(c["addrs"], c["values"])):
-                    cell = tk.Frame(grid, bg=CARD2)
-                    cell.grid(row=i // 5, column=i % 5, padx=3, pady=3,
-                              sticky="w")
-                    tk.Label(cell, text="%d" % a, font=("Consolas", 8),
-                             bg=CARD2, fg=FAINT).pack(padx=10, pady=(5, 0))
-                    tk.Label(cell, text=str(v), font=("Consolas", 12, "bold"),
-                             bg=CARD2, fg=ACCENT if v else DIM).pack(
-                        padx=10, pady=(0, 5))
-            tk.Frame(box, bg=CARD, height=6).pack()
+    def _raw_summary(self, raw_only):
+        """Plain-English state for models with no percentage available.
+
+        Compares what the counters hold now against what a reset would write.
+        If they already match, there is genuinely nothing to clear, and
+        saying so is far more use than a row of hex addresses.
+        """
+        pending = None
+        try:
+            plan, _src = self.printer.reset_plan()
+            if plan:
+                current = self.printer.read([a for a, _ in plan])
+                pending = sum(1 for a, v in plan if current.get(a) != v)
+        except Exception:
+            pending = None
+
+        box = tk.Frame(self.levels, bg=CARD)
+        box.pack(fill="x")
+
+        tk.Label(box, text="WASTE COUNTER", font=("Segoe UI", 9, "bold"),
+                 bg=CARD, fg=FAINT, anchor="w").pack(
+            fill="x", padx=S(18), pady=(S(14), S(4)))
+
+        if pending == 0:
+            headline, colour = "Nothing to clear", GOOD
+            body = ("This printer's waste counter is already at its lowest "
+                    "setting. There is nothing for Pad Zero to reset, and "
+                    "nothing you need to do.")
+        elif pending:
+            headline, colour = "Some usage recorded", ACCENT
+            body = ("Resetting would clear %d stored value%s. This printer "
+                    "does not report a percentage, so Pad Zero cannot show "
+                    "you a bar, but the reset works the same way."
+                    % (pending, "" if pending == 1 else "s"))
+        else:
+            headline, colour = "Counter read successfully", DIM
+            body = ("This printer does not report its level as a percentage. "
+                    "Pad Zero can still read and reset it.")
+
+        tk.Label(box, text=headline, font=("Segoe UI", 15, "bold"), bg=CARD,
+                 fg=colour, anchor="w").pack(fill="x", padx=S(18))
+        tk.Label(box, text=body, font=F_BODY, bg=CARD, fg=DIM, anchor="w",
+                 justify="left", wraplength=S(600)).pack(
+            fill="x", padx=S(18), pady=(S(4), S(8)))
+        tk.Label(box,
+                 text="The exact numbers are under Technical details below.",
+                 font=F_SMALL, bg=CARD, fg=FAINT, anchor="w").pack(
+            fill="x", padx=S(18), pady=(0, S(16)))
 
     def _steps(self, parent, steps, button=None):
         for i, (title, body) in enumerate(steps, 1):
@@ -565,7 +638,7 @@ class App:
             tk.Label(head, text=title, font=("Segoe UI", 11, "bold"), bg=CARD,
                      fg=FG, anchor="w").pack(side="left", padx=(12, 0))
             tk.Label(box, text=body, font=F_SMALL, bg=CARD, fg=DIM,
-                     anchor="w", justify="left", wraplength=580).pack(
+                     anchor="w", justify="left", wraplength=S(580)).pack(
                 fill="x", padx=(44, 16), pady=(2, 12))
         if button:
             text, cmd = button
@@ -587,7 +660,7 @@ class App:
                        "Put a towel or tray under the printer, and order a "
                        "replacement pad or a waste tank kit."),
                  font=F_SMALL, bg=CARD, fg=DIM, anchor="w", justify="left",
-                 wraplength=580).pack(fill="x", padx=16, pady=(0, 10))
+                 wraplength=S(580)).pack(fill="x", padx=16, pady=(0, 10))
         flat_button(box, "Where to buy a pad",
                     lambda: webbrowser.open(PADS_URL),
                     bg=CARD2, fg=FG, font=F_SMALL, padx=14, pady=7).pack(
@@ -599,7 +672,7 @@ class App:
     def toggle_details(self):
         self.details_open = not self.details_open
         if self.details_open:
-            self.details.pack(side="bottom", fill="x", padx=24, pady=(6, 0),
+            self.details.pack(side="bottom", fill="x", padx=S(24), pady=(S(6), 0),
                               before=self.b_details)
             self.b_details.configure(text="▾  Technical details")
         else:
