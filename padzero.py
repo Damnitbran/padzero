@@ -231,16 +231,40 @@ class Printer:
         return dict(self.ep.read_eeprom(*addrs))
 
     @property
+    def reset_addrs(self):
+        """Every address this model's own spec says a reset touches."""
+        addrs = []
+        for m in getattr(self.ep.spec, "mem", []) or []:
+            addrs.extend(m.get("addr", []))
+        return addrs
+
+    @property
     def inferred(self):
-        """Probable waste layout when this model has no entry of its own."""
+        """Probable waste layout when this model has no entry of its own.
+
+        Counters whose addresses are not in this printer's own reset map are
+        dropped. Borrowing a layout wholesale would otherwise invent counters
+        the machine does not have: the ET-4810 resets 47/50/51/252/253/254
+        but never 48/49, so a "main waste" counter reading those two would
+        always show 0% and look like a real, empty counter rather than one
+        that does not apply.
+        """
         if not hasattr(self, "_inferred"):
             self._inferred = None
             if not self.extra.get("waste") and self.has_specs:
-                addrs = []
-                for m in getattr(self.ep.spec, "mem", []) or []:
-                    addrs.extend(m.get("addr", []))
+                addrs = self.reset_addrs
                 if addrs:
-                    self._inferred = infer_waste(addrs, self.models)
+                    guess = infer_waste(addrs, self.models)
+                    if guess:
+                        known = set(addrs)
+                        kept = {n: c for n, c in guess["waste"].items()
+                                if set(c["oids"]) <= known}
+                        if kept:
+                            guess["waste"] = kept
+                            guess["dropped"] = sorted(
+                                set(guess["waste"]) ^ set(
+                                    infer_waste(addrs, self.models)["waste"]))
+                            self._inferred = guess
         return self._inferred
 
     def counters(self):
