@@ -271,23 +271,37 @@ class App:
             pass
         self.root.after(80, self._pump)
 
-    @staticmethod
-    def _summarise(counters):
-        """One line describing a reading, for the history list."""
+    def _summarise(self, counters):
+        """One plain-English line describing a reading, for the history.
+
+        Percentages when we have them. Otherwise a count of how many stored
+        values a reset would clear, which is the thing someone actually
+        wants to know. Never raw EEPROM addresses: several of those are
+        fixed threshold markers rather than counters, so showing them makes
+        a healthy printer look alarming.
+        """
         if not counters:
             return "no counter data"
+
         pcts = [c for c in counters if c.get("percent") is not None]
         if pcts:
             return "   ".join("%s %.2f%%"
                               % (c["name"].split("_")[0], c["percent"])
                               for c in pcts)
-        parts = []
-        for c in counters:
-            if "values" in c:
-                nz = [(a, v) for a, v in zip(c["addrs"], c["values"]) if v]
-                parts.append(", ".join("%d=%s" % (a, v) for a, v in nz)
-                             or "all zero")
-        return "   ".join(parts) or "no readable counters"
+
+        if not any("values" in c for c in counters):
+            return "no readable counters"
+
+        try:
+            plan, _src = self.printer.reset_plan()
+            current = self.printer.read([a for a, _ in plan])
+            pending = sum(1 for a, v in plan if current.get(a) != v)
+        except Exception:
+            return "counter read OK"
+
+        if pending == 0:
+            return "nothing to clear"
+        return "%d stored value%s" % (pending, "" if pending == 1 else "s")
 
     def _log_reading(self, counters, note=""):
         stamp = datetime.now().strftime("%H:%M:%S")
