@@ -503,6 +503,26 @@ class App:
             self.status("Healthy", GOOD)
 
         self._bars(counters)
+
+        if pr.coverage == "approx" and any(
+                c.get("percent") is not None for c in (counters or [])):
+            note = tk.Frame(self.advice, bg=CARD)
+            note.pack(fill="x")
+            tk.Label(note, text="About these percentages",
+                     font=("Segoe UI", 10, "bold"), bg=CARD, fg=DIM,
+                     anchor="w").pack(fill="x", padx=S(18), pady=(S(12), S(2)))
+            basis = (pr.inferred or {}).get("basis") or []
+            tk.Label(note,
+                     text=("This exact model is not in the percentage database "
+                           "yet, so the figures above are worked out from %d "
+                           "closely matching Epson models that store their "
+                           "counters at the same places. Treat them as a good "
+                           "estimate rather than an exact reading. The reset "
+                           "itself is not affected."
+                           % len(basis)),
+                     font=F_SMALL, bg=CARD, fg=FAINT, anchor="w",
+                     justify="left", wraplength=S(600)).pack(
+                fill="x", padx=S(18), pady=(0, S(14)))
         rk = getattr(pr.ep.spec, "rkey", None)
         lines = ["model      %s" % pr.model,
                  "serial     %s" % (pr.serial or "?"),
@@ -549,6 +569,8 @@ class App:
 
         if readable:
             heading = "BEFORE AND AFTER" if prev else "HOW FULL THE COUNTER IS"
+            if any(c.get("approx") for c in readable) and not prev:
+                heading += "   (APPROXIMATE)"
             tk.Label(self.levels, text=heading,
                      font=("Segoe UI", 9, "bold"), bg=BG,
                      fg=ACCENT if prev else FAINT,

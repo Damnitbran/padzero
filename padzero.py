@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 r"""
 padzero.py - read and reset Epson waste ink counters.
 
@@ -133,6 +133,60 @@ def load_models():
         return json.load(fh)
 
 
+def infer_waste(reset_addrs, models):
+    """Work out a probable waste layout for a model with no divider data.
+
+    Some printers (the ET-4810 among them) have known reset addresses but no
+    entry in the percentage database, so there is no divider and no bar to
+    show. That is unhelpful: "1 stored value" tells a person nothing.
+
+    A divider only affects a displayed number, never a write, so a careful
+    inference here cannot damage a printer the way a guessed key or address
+    could. The rule is deliberately strict:
+
+      * only consider models whose waste addresses overlap this model's
+        reset addresses by at least three
+      * take the layout with the highest overlap
+      * refuse unless exactly one distinct layout ties for that best score
+
+    For the ET-4810 that lands on the 17 models with a third counter at
+    252/253/254, which agree unanimously on 63.46 / 34.16 / 13.0. If any of
+    them disagreed this returns None, and we say nothing rather than print a
+    number we cannot stand behind.
+
+    Returns {"waste": ..., "basis": [model names]} or None.
+    """
+    reset_set = set(reset_addrs)
+    if len(reset_set) < 3:
+        return None
+
+    groups = {}
+    for name, entry in models.items():
+        waste = entry.get("waste")
+        if not waste:
+            continue
+        oids = set()
+        for cfg in waste.values():
+            oids |= set(cfg["oids"])
+        overlap = len(oids & reset_set)
+        if overlap < 3:
+            continue
+        sig = json.dumps(waste, sort_keys=True)
+        g = groups.setdefault(sig, {"waste": waste, "models": [], "overlap": 0})
+        g["models"].append(name)
+        g["overlap"] = max(g["overlap"], overlap)
+
+    if not groups:
+        return None
+
+    best = max(g["overlap"] for g in groups.values())
+    tied = [g for g in groups.values() if g["overlap"] == best]
+    if len(tied) != 1:
+        return None  # candidate layouts disagree, so do not guess
+
+    return {"waste": tied[0]["waste"], "basis": sorted(tied[0]["models"])}
+
+
 # ----------------------------------------------------------------- printer
 class Printer:
     def __init__(self, path, models):
@@ -168,19 +222,43 @@ class Printer:
     def coverage(self):
         if not self.has_specs:
             return "none"
-        return "full" if self.extra.get("waste") else "partial"
+        if self.extra.get("waste"):
+            return "full"
+        return "approx" if self.inferred else "partial"
 
     # -- reading ----------------------------------------------------------
     def read(self, addrs):
         return dict(self.ep.read_eeprom(*addrs))
 
+    @property
+    def inferred(self):
+        """Probable waste layout when this model has no entry of its own."""
+        if not hasattr(self, "_inferred"):
+            self._inferred = None
+            if not self.extra.get("waste") and self.has_specs:
+                addrs = []
+                for m in getattr(self.ep.spec, "mem", []) or []:
+                    addrs.extend(m.get("addr", []))
+                if addrs:
+                    self._inferred = infer_waste(addrs, self.models)
+        return self._inferred
+
     def counters(self):
         """
         Percentages where a divider is known, otherwise raw byte values.
         Returns a list of dicts so the caller can render either shape.
+
+        Entries carry approx=True when the layout was inferred from models
+        that share this printer's reset addresses rather than read from its
+        own database entry.
         """
         out = []
         waste = self.extra.get("waste")
+        approx = False
+        if not waste and self.inferred:
+            waste = self.inferred["waste"]
+            approx = True
+
         if waste:
             for name, cfg in waste.items():
                 vals = self.read(cfg["oids"])
@@ -191,10 +269,11 @@ class Printer:
                 raw = int("".join("%02X" % v for v in reversed(b)), 16)
                 div = cfg.get("divider")
                 out.append({"name": name, "bytes": b, "raw": raw,
+                            "approx": approx,
                             "percent": round(raw / div, 2) if div else None})
             return out
 
-        # no divider data - report the raw bytes reinkpy would reset
+        # no divider data at all - report the raw bytes reinkpy would reset
         for m in getattr(self.ep.spec, "mem", []) or []:
             addrs = list(m.get("addr", []))
             if not addrs:
@@ -410,6 +489,7 @@ def main():
     print("  key group  : %s / %r" % (hex(rk) if rk else "?",
                                       getattr(pr.ep.spec, "wkey", None)))
     cov = {"full": "full - percentages and reset available",
+           "approx": "approximate - percentages estimated from matching models",
            "partial": "partial - reset available, no percentage data",
            "none": "NONE - this model is not in either database"}[pr.coverage]
     print("  coverage   : %s" % cov)
