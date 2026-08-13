@@ -1,10 +1,14 @@
-﻿## Just want it working? Download **PadZero.exe**
+﻿## Just want it working? Download **PadZero.zip**
 
-That's the one. Double-click it, a window opens, done. No install, no Python,
-nothing to set up.
+Unzip it, double-click `PadZero.exe`, a window opens. Done. No install, no
+Python, nothing to set up. A short README is in the zip too.
 
-(`padzero-cli.exe` is the same thing for the command line. If you're not sure
-you want it, you don't. Ignore it.)
+The zip is there because Chrome and Edge make you click through several
+warnings to download a bare `.exe`. If your browser doesn't mind, plain
+`PadZero.exe` is right there as well.
+
+(`padzero-cli.exe` is the same tool for the command line. If you're not sure
+you want it, you don't.)
 
 ---
 
@@ -27,11 +31,13 @@ something absorbent under the printer meanwhile.
 
 | File | Who it's for |
 |---|---|
-| **PadZero.exe** | Everyone. Double-click, a window opens. 13.6 MB |
+| **PadZero.zip** | Everyone. Unzip, double-click. Avoids browser warnings. 13.4 MB |
+| PadZero.exe | Same program, no zip. 13.6 MB |
 | `padzero-cli.exe` | Command line, for people who want one. 10.6 MB |
 
 No installer, no Python, nothing to set up.
 
+    PadZero.zip      A02DB7BC069ED2D1221639501EF9083E406E060E053D9DD42772D16B93D97810
     PadZero.exe      C49DED3AFCCF15F89C4E5AF2A58EDA035F8148D34EA3BA28E770C8339D0C22F4
     padzero-cli.exe  F36E51ED972FDEF975837220EA6E4DD7E2D5A83C8025F848CA34ECFF8D1E2290
 
@@ -87,12 +93,15 @@ shipped firmware that permanently blocks resets, and it can't be rolled back.
 
 | Model | Key group | Coverage | Status |
 |---|---|---|---|
-| ET-4800 | `0x364A` | full | reset verified 79.85% to 0.00% |
-| ET-4810 | `0x574B` | partial | detected and read |
+| ET-4800 | `0x364A` | exact | reset verified 79.85% to 0.00% |
+| ET-4810 | `0x574B` | approx | detected, read, write path verified |
 
-`models.json` carries data for 110 models, but listed is not verified. If
-yours works, please open an issue. That's how the table grows. If it reports
-`coverage: none`, click **Save a backup** and attach the file.
+**1,423 Epson models can be reset.** Check yours in
+[COVERAGE.md](../../blob/main/COVERAGE.md).
+
+Listed is not the same as verified: only the two above have been confirmed on
+real hardware. If yours works, please open an issue and it moves up. If it
+reports `coverage: none`, click **Save a backup** and attach the file.
 
 ## Safety
 
