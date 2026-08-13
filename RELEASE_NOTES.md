@@ -1,4 +1,14 @@
-﻿**Pad Zero now has a window.** Double-click and go, no command line needed.
+﻿## Just want it working? Download **PadZero.exe**
+
+That's the one. Double-click it, a window opens, done. No install, no Python,
+nothing to set up.
+
+(`padzero-cli.exe` is the same thing for the command line. If you're not sure
+you want it, you don't. Ignore it.)
+
+---
+
+**Pad Zero now has a window.** Double-click and go, no command line needed.
 
 New here? Read the [Quick start guide](../../blob/main/QUICKSTART.md). It
 assumes you know nothing technical and takes about five minutes.

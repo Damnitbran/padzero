@@ -40,14 +40,13 @@ Put something absorbent under the printer in the meantime.
 
 ## Download
 
-From the [Releases page](../../releases):
+Go to the [Releases page](../../releases) and download **`PadZero.exe`**.
 
-| File | Who it's for |
-|---|---|
-| **PadZero.exe** | Everyone. Double-click it, a window opens. |
-| `padzero-cli.exe` | Command line, for people who want one. |
+That's the one you want. Double-click it, a window opens, done. No installer,
+no Python, nothing to set up, run it from anywhere.
 
-No installer, no Python, nothing to set up. Single file, run it from anywhere.
+The other file, `padzero-cli.exe`, is the same tool for the command line. If
+you're not sure whether you want it, you don't.
 
 Windows will likely show **"Windows protected your PC"**, because the binary
 is unsigned and counter-resetting is exactly the behaviour antivirus
