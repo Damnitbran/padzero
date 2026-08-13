@@ -79,10 +79,49 @@ def quiet():
     with contextlib.redirect_stderr(buf), contextlib.redirect_stdout(buf):
         yield buf
 
-from usb_direct import UsbPrinter, list_usb_printers
+WINDOWS = sys.platform == "win32"
+
+if WINDOWS:
+    from usb_direct import UsbPrinter, list_usb_printers
+else:
+    # usb_direct binds setupapi/kernel32, so it cannot even be imported
+    # elsewhere. See list_printers() / open_transport() below.
+    UsbPrinter = None
+
+    def list_usb_printers():
+        return []
 
 MODELS_JSON = os.path.join(BUNDLE, "models.json")
 DUMP_DIR = os.path.join(APPDIR, "dumps")
+
+
+def list_printers():
+    """Paths to every printer we might be able to talk to.
+
+    Windows: GUID_DEVINTERFACE_USBPRINT device-interface paths.
+    Elsewhere: the usblp character devices reinkpy already speaks to.
+
+    UNTESTED ON LINUX. reinkpy itself is developed on Linux and its FileIO
+    transport is what everything here was modelled on, so this should work,
+    but nobody has confirmed it. Reports welcome.
+    """
+    if WINDOWS:
+        return list_usb_printers()
+    import glob
+    return sorted(set(glob.glob("/dev/usb/lp*") + glob.glob("/dev/lp*")))
+
+
+def open_transport(path):
+    """Return a reinkpy-compatible IO object for this platform.
+
+    The only Windows-specific part of Pad Zero is this function. Everything
+    above and below it (model database, percentage inference, reset planner,
+    safety rails, GUI) is plain Python.
+    """
+    if WINDOWS:
+        return WinUsbPrintIO(path)
+    from reinkpy import FileIO
+    return FileIO(path)
 
 
 # --------------------------------------------------------------- transport
@@ -189,10 +228,10 @@ def infer_waste(reset_addrs, models):
 
 # ----------------------------------------------------------------- printer
 class Printer:
-    def __init__(self, path, models):
+    def __init__(self, path, models, io=None):
         import reinkpy
         self.path = path
-        self.io = WinUsbPrintIO(path)
+        self.io = io if io is not None else open_transport(path)
         self.dev = reinkpy.UsbDevice(self.io)
         self.ep = self.dev.epson
         self.models = models
@@ -473,7 +512,7 @@ def main():
         args.info = True
 
     models = load_models()
-    paths = list_usb_printers()
+    paths = list_printers()
     if not paths:
         print("No USB printer found.")
         print("  * check the cable is in the printer's USB port, not LINE or EXT")
