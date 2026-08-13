@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+"""
+generate_coverage.py - build COVERAGE.md, the "will it work on mine" list.
+
+People keep asking model by model in comments. This turns the two upstream
+databases into one page they can search.
+
+Tiers:
+  verified   confirmed on real hardware by someone
+  reset      keys and reset addresses known; the reset works
+  approx     as above, plus percentages estimated from matching models
+  exact      as above, with this model's own percentage data
+  read-only  recognised but no reset data, so writes are refused
+
+Run:  python generate_coverage.py
+"""
+import json
+import os
+import sys
+import tomllib
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(HERE, "reinkpy"))
+
+import padzero
+
+# Confirmed on real hardware. Only add a model here when someone has
+# actually run it, never because the database implies it should work.
+VERIFIED = {
+    "ET-4800": "reset verified 79.85% to 0.00%",
+    "ET-4810": "detected, read, write path verified",
+}
+
+TOML = os.path.join(HERE, "reinkpy", "reinkpy", "epson.toml")
+with open(TOML, "rb") as fh:
+    specs = tomllib.load(fh)["EPSON"]
+
+models = padzero.load_models()
+
+rows = {}
+for spec in specs:
+    rkey = spec.get("rkey")
+    mem = spec.get("mem") or []
+    addrs = []
+    for m in mem:
+        addrs.extend(m.get("addr", []))
+
+    for name in spec.get("models", []) or []:
+        entry = models.get(name, {})
+        has_exact = bool(entry.get("waste"))
+        can_reset = rkey is not None and bool(addrs)
+
+        if not can_reset:
+            tier, pct = "read-only", "no"
+        elif has_exact:
+            tier, pct = "exact", "yes"
+        else:
+            guess = padzero.infer_waste(addrs, models) if addrs else None
+            if guess:
+                kept = {n: c for n, c in guess["waste"].items()
+                        if set(c["oids"]) <= set(addrs)}
+                if kept:
+                    tier, pct = "approx", "estimated"
+                else:
+                    tier, pct = "reset", "no"
+            else:
+                tier, pct = "reset", "no"
+
+        rows[name] = {
+            "rkey": "0x%04X" % rkey if rkey is not None else "-",
+            "tier": tier,
+            "pct": pct,
+            "verified": VERIFIED.get(name),
+        }
+
+order = {"verified": 0, "exact": 1, "approx": 2, "reset": 3, "read-only": 4}
+counts = {}
+for r in rows.values():
+    key = "verified" if r["verified"] else r["tier"]
+    counts[key] = counts.get(key, 0) + 1
+
+LABEL = {
+    "exact": "Reset + exact %",
+    "approx": "Reset + estimated %",
+    "reset": "Reset only",
+    "read-only": "Read only",
+}
+
+out = []
+out.append("# Model coverage\n")
+out.append("Search this page for your model (Ctrl+F).\n")
+out.append("**%d Epson models can be reset.** The percentage display varies, "
+           "but that is cosmetic: the reset is the part that gets your printer "
+           "printing again.\n" % sum(v for k, v in counts.items()
+                                     if k != "read-only"))
+
+out.append("\n## What the columns mean\n")
+out.append("| Level | Meaning |")
+out.append("|---|---|")
+out.append("| **Verified** | Someone has actually run it on this printer |")
+out.append("| **Reset + exact %** | Reset works, percentages from this model's own data |")
+out.append("| **Reset + estimated %** | Reset works, percentages estimated from models storing counters at the same addresses, shown as approximate |")
+out.append("| **Reset only** | Reset works, no percentage available |")
+out.append("| **Read only** | Recognised, but no reset data, so writing is refused |")
+
+out.append("\n**Listed is not the same as verified.** Only two models below have "
+           "been confirmed on real hardware. The rest come from the upstream "
+           "databases and should work, but nobody has proven it. If yours "
+           "works, [open an issue](../../issues) and it moves to Verified.\n")
+
+out.append("\n## Totals\n")
+out.append("| Level | Models |")
+out.append("|---|---:|")
+out.append("| Verified on hardware | %d |" % counts.get("verified", 0))
+for t in ("exact", "approx", "reset", "read-only"):
+    out.append("| %s | %d |" % (LABEL[t], counts.get(t, 0)))
+out.append("| **Total recognised** | **%d** |" % len(rows))
+
+out.append("\n## Verified on real hardware\n")
+out.append("| Model | Key | Notes |")
+out.append("|---|---|---|")
+for name in sorted(VERIFIED):
+    r = rows.get(name)
+    out.append("| **%s** | `%s` | %s |"
+               % (name, r["rkey"] if r else "?", VERIFIED[name]))
+
+out.append("\n## Every recognised model\n")
+out.append("| Model | Key | Reset | Percentage |")
+out.append("|---|---|---|---|")
+for name in sorted(rows, key=lambda n: (order[rows[n]["tier"]], n)):
+    r = rows[name]
+    reset = "no" if r["tier"] == "read-only" else "yes"
+    star = " ✅" if r["verified"] else ""
+    out.append("| %s%s | `%s` | %s | %s |"
+               % (name, star, r["rkey"], reset, r["pct"]))
+
+out.append("\n---\n")
+out.append("Generated by `generate_coverage.py` from "
+           "[reinkpy](https://codeberg.org/atufi/reinkpy) and "
+           "[epson_print_conf](https://github.com/Ircama/epson_print_conf).\n")
+out.append("Model missing? Run `padzero-cli --dump` and "
+           "[open an issue](../../issues) with the file.\n")
+
+path = os.path.join(HERE, "COVERAGE.md")
+with open(path, "w", encoding="utf-8") as fh:
+    fh.write("\n".join(out))
+
+print("wrote %s" % path)
+print("  %d models total" % len(rows))
+for t in ("verified", "exact", "approx", "reset", "read-only"):
+    print("  %-10s %d" % (t, counts.get(t, 0)))
+for probe in ("L8050", "ET-3950", "ET-4800", "ET-4810", "L3110", "XP-4100"):
+    r = rows.get(probe)
+    print("  %-9s %s" % (probe, "%s / %s" % (r["tier"], r["pct"]) if r else "NOT LISTED"))

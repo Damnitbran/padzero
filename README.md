@@ -86,6 +86,14 @@ Windows only, for now. Linux users can use
 
 ---
 
+## Will it work on my printer?
+
+**[Check the coverage list](COVERAGE.md)** and search for your model.
+
+**1,423 Epson models can be reset.** Some also show a percentage, some
+don't, but that part is cosmetic: the reset is what gets your printer
+printing again.
+
 ## Model coverage
 
 Neither upstream database covers every printer, so the tool reports what it
