@@ -37,7 +37,7 @@ something absorbent under the printer meanwhile.
 
 No installer, no Python, nothing to set up.
 
-    PadZero.zip      A02DB7BC069ED2D1221639501EF9083E406E060E053D9DD42772D16B93D97810
+    PadZero.zip      127F017F73FBA399F9468C8103CE0E25617B0ABFB5CACD5680BACA2A091F8E89
     PadZero.exe      C49DED3AFCCF15F89C4E5AF2A58EDA035F8148D34EA3BA28E770C8339D0C22F4
     padzero-cli.exe  F36E51ED972FDEF975837220EA6E4DD7E2D5A83C8025F848CA34ECFF8D1E2290
 
@@ -95,12 +95,13 @@ shipped firmware that permanently blocks resets, and it can't be rolled back.
 |---|---|---|---|
 | ET-4800 | `0x364A` | exact | reset verified 79.85% to 0.00% |
 | ET-4810 | `0x574B` | approx | detected, read, write path verified |
+| ET-2800 | `0x364A` | exact | reported working by a user |
 
 **1,423 Epson models can be reset.** Check yours in
 [COVERAGE.md](../../blob/main/COVERAGE.md).
 
-Listed is not the same as verified: only the two above have been confirmed on
-real hardware. If yours works, please open an issue and it moves up. If it
+Listed is not the same as verified: only the three above have been confirmed
+on real hardware. If yours works, please open an issue and it moves up. If it
 reports `coverage: none`, click **Save a backup** and attach the file.
 
 ## Safety

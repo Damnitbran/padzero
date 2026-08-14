@@ -29,6 +29,7 @@ import padzero
 VERIFIED = {
     "ET-4800": "reset verified 79.85% to 0.00%",
     "ET-4810": "detected, read, write path verified",
+    "ET-2800": "reported working by a user on Reddit",
 }
 
 TOML = os.path.join(HERE, "reinkpy", "reinkpy", "epson.toml")

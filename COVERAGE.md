@@ -22,8 +22,8 @@ Search this page for your model (Ctrl+F).
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 2 |
-| Reset + exact % | 103 |
+| Verified on hardware | 3 |
+| Reset + exact % | 102 |
 | Reset + estimated % | 219 |
 | Reset only | 1099 |
 | Read only | 165 |
@@ -33,6 +33,7 @@ Search this page for your model (Ctrl+F).
 
 | Model | Key | Notes |
 |---|---|---|
+| **ET-2800** | `0x364A` | reported working by a user on Reddit |
 | **ET-4800** | `0x364A` | reset verified 79.85% to 0.00% |
 | **ET-4810** | `0x574B` | detected, read, write path verified |
 
@@ -62,7 +63,7 @@ Search this page for your model (Ctrl+F).
 | ET-2750 | `0x0849` | yes | yes |
 | ET-2751 | `0x0849` | yes | yes |
 | ET-2756 | `0x0849` | yes | yes |
-| ET-2800 | `0x364A` | yes | yes |
+| ET-2800 ✅ | `0x364A` | yes | yes |
 | ET-2801 | `0x364A` | yes | yes |
 | ET-2803 | `0x364A` | yes | yes |
 | ET-2805 | `0x364A` | yes | yes |

@@ -27,6 +27,16 @@ and all the source code is on GitHub. Verify with:
     certutil -hashfile PadZero.exe SHA256
 
 
+YOU ONLY NEED THE USB CABLE FOR THIS
+------------------------------------
+Pad Zero talks to your printer over USB, so the cable has to be plugged in
+while you use it.
+
+That does NOT change how you print. If you printed over wi-fi before, you
+still do. Unplug the cable when you're done and carry on as normal. You
+only need to plug back in if you ever have to reset the counter again.
+
+
 BEFORE IT CAN SEE YOUR PRINTER
 ------------------------------
 Two things cause nearly every "no printer found" report:

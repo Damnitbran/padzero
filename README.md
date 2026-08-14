@@ -117,8 +117,9 @@ Verified on real hardware:
 
 | Model | Key group | Coverage | Status |
 |---|---|---|---|
-| ET-4800 | `0x364A` | full | reset verified 79.85% to 0.00% |
+| ET-4800 | `0x364A` | exact | reset verified 79.85% to 0.00% |
 | ET-4810 | `0x574B` | approx | detected, read, write path verified |
+| ET-2800 | `0x364A` | exact | reported working by a user |
 
 `models.json` carries data for 110 models, but **listed is not the same as
 verified**. If yours works, please open an issue and say so. That's how this
