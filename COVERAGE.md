@@ -15,17 +15,17 @@ Search this page for your model (Ctrl+F).
 | **Reset only** | Reset works, no percentage available |
 | **Read only** | Recognised, but no reset data, so writing is refused |
 
-**Listed is not the same as verified.** Only two models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
+**Listed is not the same as verified.** Only 4 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
 
 
 ## Totals
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 3 |
+| Verified on hardware | 4 |
 | Reset + exact % | 102 |
 | Reset + estimated % | 219 |
-| Reset only | 1099 |
+| Reset only | 1098 |
 | Read only | 165 |
 | **Total recognised** | **1588** |
 
@@ -33,8 +33,9 @@ Search this page for your model (Ctrl+F).
 
 | Model | Key | Notes |
 |---|---|---|
-| **ET-2800** | `0x364A` | reported working by a user on Reddit |
-| **ET-4800** | `0x364A` | reset verified 79.85% to 0.00% |
+| **ET-2710** | `0x0797` | reported working by a user |
+| **ET-2800** | `0x364A` | reported working by two users independently |
+| **ET-4800** | `0x364A` | reset verified 79.85% to 0.00%; also confirmed by a user whose firmware defeated the other reset tools |
 | **ET-4810** | `0x574B` | detected, read, write path verified |
 
 ## Every recognised model
@@ -566,7 +567,7 @@ Search this page for your model (Ctrl+F).
 | ET-2704 | `0x0849` | yes | no |
 | ET-2706 | `0x0849` | yes | no |
 | ET-2708 | `0x0849` | yes | no |
-| ET-2710 | `0x0797` | yes | no |
+| ET-2710 ✅ | `0x0797` | yes | no |
 | ET-2711 | `0x0797` | yes | no |
 | ET-2712 | `0x0797` | yes | no |
 | ET-2713 | `0x0797` | yes | no |

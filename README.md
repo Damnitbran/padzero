@@ -5,6 +5,12 @@ Your Epson stopped printing and says something about **ink pads** or
 
 Free, open source, no paid tier, no nag screens.
 
+**Been told your firmware is too new?** Try this anyway. Pad Zero talks to the
+printer over the USB device interface directly, not through the channel WIC
+Reset and InkChip use, and users who found those tools unable to touch their
+printer have reported Pad Zero resetting it without trouble. Not a promise,
+but it costs nothing to check.
+
 **→ [Start here: Quick start guide](QUICKSTART.md)**
 
 ![The Pad Zero window showing a connected Epson ET-4810](docs/screenshot.png)
@@ -45,6 +51,10 @@ Go to the [Releases page](../../releases) and download **`PadZero.exe`**.
 That's the one you want. Double-click it, a window opens, done. No installer,
 no Python, nothing to set up, run it from anywhere.
 
+If your browser refuses to download a bare `.exe`, and most now do, take
+**`PadZero.zip`** instead. Same program: unzip it anywhere and double-click
+`PadZero.exe` inside.
+
 The other file, `padzero-cli.exe`, is the same tool for the command line. If
 you're not sure whether you want it, you don't.
 
@@ -80,6 +90,10 @@ Two things, and they cause almost every "it doesn't work" report:
    tool and every other reset tool will say they can't find your printer.
 2. **The USB cable in the printer's USB port.** Not `LINE` or `EXT`, which
    are the fax telephone jacks.
+
+The cable is only needed while the reset runs. It does not change how you
+print. If you printed over wi-fi before, you still will afterwards, and you
+only need to plug in again if the counter ever has to be reset a second time.
 
 Windows only, for now. Linux users can use
 [reinkpy](https://codeberg.org/atufi/reinkpy) directly.
@@ -117,9 +131,10 @@ Verified on real hardware:
 
 | Model | Key group | Coverage | Status |
 |---|---|---|---|
-| ET-4800 | `0x364A` | exact | reset verified 79.85% to 0.00% |
+| ET-4800 | `0x364A` | full | reset verified 79.85% to 0.00%; also confirmed by a user whose firmware defeated other tools |
 | ET-4810 | `0x574B` | approx | detected, read, write path verified |
-| ET-2800 | `0x364A` | exact | reported working by a user |
+| ET-2800 | `0x364A` | full | reported working by two users independently |
+| ET-2710 | `0x0797` | partial | reported working by a user |
 
 `models.json` carries data for 110 models, but **listed is not the same as
 verified**. If yours works, please open an issue and say so. That's how this

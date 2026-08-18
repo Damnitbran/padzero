@@ -27,9 +27,11 @@ import padzero
 # Confirmed on real hardware. Only add a model here when someone has
 # actually run it, never because the database implies it should work.
 VERIFIED = {
-    "ET-4800": "reset verified 79.85% to 0.00%",
+    "ET-4800": "reset verified 79.85% to 0.00%; also confirmed by a user "
+               "whose firmware defeated the other reset tools",
     "ET-4810": "detected, read, write path verified",
-    "ET-2800": "reported working by a user on Reddit",
+    "ET-2800": "reported working by two users independently",
+    "ET-2710": "reported working by a user",
 }
 
 TOML = os.path.join(HERE, "reinkpy", "reinkpy", "epson.toml")
@@ -104,10 +106,11 @@ out.append("| **Reset + estimated %** | Reset works, percentages estimated from 
 out.append("| **Reset only** | Reset works, no percentage available |")
 out.append("| **Read only** | Recognised, but no reset data, so writing is refused |")
 
-out.append("\n**Listed is not the same as verified.** Only two models below have "
+out.append("\n**Listed is not the same as verified.** Only %d models below have "
            "been confirmed on real hardware. The rest come from the upstream "
            "databases and should work, but nobody has proven it. If yours "
-           "works, [open an issue](../../issues) and it moves to Verified.\n")
+           "works, [open an issue](../../issues) and it moves to Verified.\n"
+           % counts.get("verified", 0))
 
 out.append("\n## Totals\n")
 out.append("| Level | Models |")
