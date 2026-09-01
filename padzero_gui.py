@@ -256,13 +256,39 @@ class App:
 
         threading.Thread(target=worker, daemon=True).start()
 
+    @staticmethod
+    def _is_comms_glitch(err):
+        """A cold or stuck USB channel makes reinkpy's D4 handshake return
+        None, which then fails to unpack ("cannot unpack non-iterable
+        NoneType object"). It is transient - unplugging the cable or
+        restarting clears it - so it deserves a retry message, not a raw
+        Python error. Matched narrowly so real bugs still surface.
+        """
+        text = str(err).lower()
+        return isinstance(err, TypeError) and (
+            "unpack" in text or "nonetype" in text)
+
     def _pump(self):
         try:
             while True:
                 tag, res, err = self.q.get_nowait()
                 self.busy = False
                 self._buttons(True)
-                if err:
+                if err and self._is_comms_glitch(err):
+                    self.status("Lost the connection to the printer", BAD)
+                    messagebox.showwarning(
+                        "Pad Zero",
+                        "PadZero couldn't get a clean connection to the "
+                        "printer.\n\n"
+                        "This is almost always a stuck USB connection, not a "
+                        "problem with your printer.\n\n"
+                        "Try this:\n"
+                        "1. Unplug the USB cable, wait a few seconds, then "
+                        "plug it back in.\n"
+                        "2. Click Reset again.\n\n"
+                        "If it still fails, restart your PC and try once more "
+                        "- that clears the USB connection completely.")
+                elif err:
                     self.status("Something went wrong: %s" % err, BAD)
                     messagebox.showerror("Pad Zero", str(err))
                 else:
