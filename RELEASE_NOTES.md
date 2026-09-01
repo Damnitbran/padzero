@@ -31,15 +31,17 @@ something absorbent under the printer meanwhile.
 
 | File | Who it's for |
 |---|---|
-| **PadZero.zip** | Everyone. Unzip, double-click. Avoids browser warnings. 13.4 MB |
-| PadZero.exe | Same program, no zip. 13.6 MB |
-| `padzero-cli.exe` | Command line, for people who want one. 10.6 MB |
+| **PadZero.zip** | Everyone. Unzip, double-click. Avoids browser warnings. 12.6 MB |
+| PadZero.exe | Same program, no zip. 12.8 MB |
+| `padzero-cli.exe` | Command line, for people who want one. 9.8 MB |
+| `find_key_usb.exe` | Only if your model isn't listed yet. Finds its key over USB. 9.0 MB |
 
 No installer, no Python, nothing to set up.
 
-    PadZero.zip      127F017F73FBA399F9468C8103CE0E25617B0ABFB5CACD5680BACA2A091F8E89
-    PadZero.exe      C49DED3AFCCF15F89C4E5AF2A58EDA035F8148D34EA3BA28E770C8339D0C22F4
-    padzero-cli.exe  F36E51ED972FDEF975837220EA6E4DD7E2D5A83C8025F848CA34ECFF8D1E2290
+    PadZero.zip       0A4398825936489475131702A3F75640C5E593DF3739550CA0D1554008FB826C
+    PadZero.exe       EA5487BBD15D638861C7BB44F9AA541F66A3AAEA264B27DCAA5CD6D3976E669E
+    padzero-cli.exe   FA10D8307C15DFC7F63F538C155A2F80A51C0DA47D5E494B18654EF0CC0A3ED2
+    find_key_usb.exe  A3E5F3C165577C1747291006A3875C85E9D15802932AAB76B133EB1815AF4845
 
 Verify before running:
 
@@ -64,7 +66,19 @@ changed:
 
     Platen pad counters    : 28:0  47:0  50:0  51:0  55:94  252:25->0  253:0
 
-## What's new in this release
+## What's new in v0.3.0
+
+- **Clearer message when the USB connection drops.** If the printer stops
+  responding mid-reset (almost always a stuck USB connection, not a fault),
+  the window now tells you to unplug the cable and try again, instead of
+  showing a confusing internal error. Reported by an L120 user whose reset
+  worked after a restart.
+- **New tool for unlisted models: `find_key_usb.exe`.** If your printer
+  isn't in the list yet, this searches for the key it needs over USB. It's
+  read-only and never changes anything. If it finds a key, open an issue
+  with the result and the model can be added for everyone.
+
+## What was new in v0.2.0
 
 - **Window front end.** Coloured status (green / amber / red), a plain
   English verdict, a bar per counter, and one button.
