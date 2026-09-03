@@ -90,6 +90,39 @@ kernel32.ReadFile.argtypes = [
 kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
 
 
+EPSON_VID = "04b8"
+
+_ID_RE = re.compile(r"vid_([0-9a-f]{4})&pid_([0-9a-f]{4})(?:&mi_([0-9a-f]{2}))?",
+                    re.I)
+
+
+def parse_ids(path):
+    """Pull (vid, pid, interface) out of a device-interface path.
+    Any element that isn't present comes back as None."""
+    m = _ID_RE.search(path)
+    if not m:
+        return None, None, None
+    vid, pid, mi = m.groups()
+    return vid.lower(), pid.lower(), (mi.lower() if mi else None)
+
+
+def is_epson(path):
+    """True if this interface path belongs to an Epson device (VID 04B8)."""
+    return parse_ids(path)[0] == EPSON_VID
+
+
+def describe(path):
+    """Short human-readable label for an interface path."""
+    vid, pid, mi = parse_ids(path)
+    if vid is None:
+        return "unrecognised path"
+    who = "EPSON" if vid == EPSON_VID else "VID %s" % vid.upper()
+    label = "%s  PID %s" % (who, pid.upper())
+    if mi is not None:
+        label += "  interface %s" % mi.upper()
+    return label
+
+
 def list_usb_printers():
     """Return the device-interface paths of all present USB printers."""
     paths = []
@@ -185,6 +218,15 @@ def factory(letter: str, payload: bytes, rkey: int = RKEY) -> bytes:
     return b"||" + struct.pack("<H", len(body)) + body
 
 
+def remote(cmd: str, payload: bytes = b"") -> bytes:
+    """Build a plain (non-factory) REMOTE1 command such as 'st'.
+
+    Factory commands are the '||' ones built by factory(); these are the
+    ordinary two-letter remote-mode commands, which are not key-protected.
+    """
+    return cmd.encode("ascii") + struct.pack("<H", len(payload)) + payload
+
+
 def wrap(*cmds: bytes) -> bytes:
     return INIT + INIT + REMOTE_MODE + b"".join(cmds) + EXIT_REMOTE + INIT
 
@@ -213,6 +255,27 @@ def exchange(dev: UsbPrinter, data: bytes, want: bytes = b"", tries: int = 6):
     return seen
 
 
+def status(dev: UsbPrinter, tries: int = 6) -> bytes:
+    """Send the 'st' status query and return whatever came back.
+
+    Every Epson answers 'st' with an '@BDC ST2' payload regardless of the
+    read key, and regardless of whether EEPROM access is permitted. That
+    makes it the one command that tests the *channel* rather than the key.
+    """
+    return exchange(dev, wrap(remote("st", b"\x01")), want=b"@BDC", tries=tries)
+
+
+def check_channel(dev: UsbPrinter):
+    """Preflight. Returns (alive, reply).
+
+    alive=True means this interface really is a printer that talks back, so
+    any later silence is the printer refusing a command rather than us
+    holding a handle onto the wrong device.
+    """
+    reply = status(dev)
+    return (b"@BDC" in reply), reply
+
+
 def read_eeprom(dev: UsbPrinter, addr: int):
     reply = exchange(dev, wrap(factory("A", struct.pack("<H", addr))), want=b"EE:")
     m = re.search(r"EE:([0-9A-Fa-f]{6})", reply.decode("ascii", "replace"))
@@ -239,30 +302,56 @@ if __name__ == "__main__":
         sys.exit("SetupAPI enumeration failed: %s" % e)
 
     if not paths:
-        sys.exit("No USB printers found. Is the cable connected?")
+        sys.exit("No USB printers found. Is the cable connected, and is the "
+                 "printer installed as a USB printer rather than a network one?")
 
     for i, p in enumerate(paths):
-        print("  [%d] %s" % (i, p))
+        print("  [%d] %s" % (i, describe(p)))
+        print("      %s" % p)
+
+    if not any(is_epson(p) for p in paths):
+        print("")
+        print("  NOTE: none of these are Epson (VID 04B8). Whatever this")
+        print("  tool opens, it will not be your printer.")
 
     which = int(sys.argv[1]) if len(sys.argv) > 1 else 0
     addr = int(sys.argv[2]) if len(sys.argv) > 2 else 0
 
-    print("\nOpening [%d] ..." % which)
+    print("")
+    print("Opening [%d] %s ..." % (which, describe(paths[which])))
     try:
         dev = UsbPrinter(paths[which])
     except OSError as e:
-        sys.exit("CreateFile failed: %s\n(The spooler may hold it exclusively.)" % e)
+        sys.exit("CreateFile failed: %s (the spooler may hold it exclusively)" % e)
 
     with dev:
-        print("Opened OK.\n")
+        print("Opened OK.")
+        print("")
+        print("--- channel preflight ('st' status query) ---")
+        alive, reply = check_channel(dev)
+        print("  raw : %r" % reply[:200])
+        if alive:
+            print("")
+            print("  Channel OK - the printer answered.")
+        else:
+            print("")
+            print("  NO ANSWER. This interface accepted a handle but never")
+            print("  replied, so it is almost certainly not your printer.")
+            print("  Try the other index numbers listed above.")
+
+        print("")
         print("--- read EEPROM[%d] ---" % addr)
         val, raw = read_eeprom(dev, addr)
         print("  raw : %r" % raw[:200])
         if val is None:
             txt = raw.decode("ascii", "replace")
             if ":NA;" in txt:
-                print("\n  Refused (:NA;) over USB as well.")
+                print("")
+                print("  Refused (:NA;) - channel fine, read key is wrong.")
+                print("  This is the GOOD failure. Run find_key_usb.py next.")
             else:
-                print("\n  No EE: payload.")
+                print("")
+                print("  No EE: payload.")
         else:
-            print("\n  *** EEPROM[%d] = %d - USB BIDIRECTIONAL WORKS ***" % (addr, val))
+            print("")
+            print("  *** EEPROM[%d] = %d - USB BIDIRECTIONAL WORKS ***" % (addr, val))

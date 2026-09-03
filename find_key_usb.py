@@ -12,6 +12,19 @@ How it tells a wrong key from a right one:
   * right key  -> the printer replies "EE:AAAAVV" (address echo + value)
 So we sweep candidate keys and stop at the first that yields an EE: payload.
 
+Before sweeping anything, it runs a PREFLIGHT: it sends the plain 'st'
+status query, which every Epson answers regardless of read key. If the
+printer answers, the channel is proven good and any later silence is a real
+result. If it does not answer, we are holding a handle onto the wrong
+device and no key would ever have worked - so we move on and try the next
+USB interface instead of burning an hour on a dead pipe.
+
+Interface selection is automatic. Multifunction printers publish more than
+one USB printer interface (the print function and the scan function), and
+other USB printers may be attached as well, so "the first one Windows lists"
+is frequently not your Epson. Epson interfaces (VID 04B8) are tried first.
+Override with -d N if you want a specific one.
+
 Two modes:
   (default)  try the ~170 read keys already known from the reinkpy and
              epson_print_conf databases - about a minute. If the model is
@@ -31,7 +44,8 @@ import struct
 import sys
 import time
 
-from usb_direct import list_usb_printers, UsbPrinter, factory, wrap, exchange
+from usb_direct import (list_usb_printers, UsbPrinter, factory, wrap, exchange,
+                        check_channel, describe, is_epson)
 
 # Distinct read keys harvested from reinkpy/reinkpy/epson.toml (rkey) and
 # epson_print_conf's printer dictionary (read_key). Kept in sync with the
@@ -75,54 +89,125 @@ def probe(dev, rkey, addr):
     return "other", txt.strip()[:60]
 
 
-def pick_printer(index):
+def enumerate_candidates(index):
+    """List the USB printer interfaces and decide which to try, in order.
+
+    Returns a list of (index, path), Epson first, or None if there is
+    nothing to try at all.
+    """
     try:
         paths = list_usb_printers()
     except OSError as e:
         print("SetupAPI enumeration failed: %s" % e)
         return None
+
     if not paths:
-        print("No USB printers found. Is the cable connected and the")
-        print("genuine Epson driver installed (not the IPP Class Driver)?")
+        print("No USB printers found at all.")
+        print("")
+        print("  * Is the USB cable plugged into both ends?")
+        print("  * Is the printer installed as a USB printer rather than a")
+        print("    network / WSD one? A network queue publishes no USB")
+        print("    interface for this tool to open.")
+        print("  * Is the genuine Epson driver installed, rather than the")
+        print("    generic Windows 'IPP Class Driver'? Check with:")
+        print("      Get-Printer | Select-Object Name, DriverName")
         return None
-    print("USB printer interfaces:")
+
+    print("USB printer interfaces found:")
     for i, p in enumerate(paths):
-        print("  [%d] %s" % (i, p))
-    if index >= len(paths):
-        print("\nNo interface at index %d." % index)
-        return None
-    print("\nOpening [%d] ..." % index)
-    try:
-        dev = UsbPrinter(paths[index])
-    except OSError as e:
-        print("CreateFile failed: %s" % e)
-        print("(The spooler may hold the device. Close other printer apps.)")
-        return None
-    return dev
+        print("  [%d] %s" % (i, describe(p)))
+        print("      %s" % p)
+    print("")
+
+    if index is not None:
+        if index >= len(paths):
+            print("No interface at index %d." % index)
+            return None
+        return [(index, paths[index])]
+
+    epson = [(i, p) for i, p in enumerate(paths) if is_epson(p)]
+    other = [(i, p) for i, p in enumerate(paths) if not is_epson(p)]
+    if not epson:
+        print("NOTE: none of these are Epson (VID 04B8). Trying them anyway,")
+        print("but your printer is probably not among them.")
+        print("")
+    return epson + other
+
+
+def open_live(order, skip_preflight=False):
+    """Open the first interface that actually answers. Returns (dev, index)
+    or (None, None)."""
+    for i, path in order:
+        print("Trying interface [%d]  %s" % (i, describe(path)))
+        try:
+            dev = UsbPrinter(path)
+        except OSError as e:
+            print("  cannot open: %s" % e)
+            print("  (another printer app may be holding it open)")
+            continue
+
+        if skip_preflight:
+            print("  preflight skipped by request.")
+            return dev, i
+
+        alive, reply = check_channel(dev)
+        if alive:
+            print("  preflight OK - the printer answered the status query.")
+            print("")
+            return dev, i
+
+        print("  no answer to the status query (%d bytes back) - not it."
+              % len(reply))
+        dev.close()
+
+    return None, None
 
 
 def main():
     ap = argparse.ArgumentParser(
         description="Find an Epson EEPROM read key over USB")
-    ap.add_argument("-d", "--device", type=int, default=0,
-                    help="index of the USB printer interface (default 0)")
+    ap.add_argument("-d", "--device", type=int, default=None,
+                    help="index of the USB printer interface "
+                         "(default: pick automatically, Epson first)")
     ap.add_argument("--addr", type=int, default=0,
                     help="EEPROM address to probe (default 0)")
     ap.add_argument("--full", action="store_true",
                     help="sweep all 65536 keys instead of the known list")
     ap.add_argument("--start", type=lambda s: int(s, 0), default=0,
                     help="with --full, resume from this key")
+    ap.add_argument("--skip-preflight", action="store_true",
+                    help="do not require a status reply before sweeping")
     args = ap.parse_args()
 
-    dev = pick_printer(args.device)
+    order = enumerate_candidates(args.device)
+    if not order:
+        return 1
+
+    dev, which = open_live(order, args.skip_preflight)
     if dev is None:
+        print("=" * 62)
+        print("NO USABLE INTERFACE - nothing answered the status query.")
+        print("")
+        print("The status query is not key-protected; every Epson replies to")
+        print("it. So this is NOT a 'wrong key' result and running --full")
+        print("would not help - there is nothing on the other end listening.")
+        print("")
+        print("Most likely, in order:")
+        print("  1. The printer is not among the interfaces listed above.")
+        print("     Check the VID: yours should say EPSON / VID 04B8.")
+        print("  2. The generic Windows 'IPP Class Driver' is installed")
+        print("     instead of Epson's own. It prints fine and looks correct")
+        print("     in Device Manager, but carries no back-channel. Check:")
+        print("       Get-Printer | Select-Object Name, DriverName")
+        print("  3. The printer is connected over the network, not USB.")
+        print("=" * 62)
         return 1
 
     keys = range(args.start, 0x10000) if args.full else KNOWN_KEYS
     total = (0x10000 - args.start) if args.full else len(keys)
 
     print("=" * 62)
-    print("USB READ KEY SEARCH   addr %d" % args.addr)
+    print("USB READ KEY SEARCH   interface [%d]   addr %d" % (which, args.addr))
     print("mode: %s   candidates: %d"
           % ("FULL SWEEP" if args.full else "known keys", total))
     print("=" * 62)
@@ -135,7 +220,8 @@ def main():
         for i, rkey in enumerate(keys):
             kind, data = probe(dev, rkey, args.addr)
             if kind == "hit":
-                print("\n*** HIT ***  read_key = 0x%04X  ->  EE:%s" % (rkey, data))
+                print("")
+                print("*** HIT ***  read_key = 0x%04X  ->  EE:%s" % (rkey, data))
                 print("    address 0x%s  value 0x%s (%d)"
                       % (data[:4], data[4:], int(data[4:], 16)))
                 hits.append(rkey)
@@ -155,24 +241,31 @@ def main():
             elif not args.full and i and i % 25 == 0:
                 print("  tried %d/%d ..." % (i, total))
 
-        print("\n" + "=" * 62)
+        print("")
+        print("=" * 62)
         if hits:
             print("FOUND %d working key(s): %s"
                   % (len(hits), ", ".join("0x%04X" % k for k in hits)))
-            print("\nPost this key on the thread so the model can be added.")
+            print("")
+            print("Post this key on the thread so the model can be added.")
         elif empty_count and empty_count >= na_count:
-            print("The printer never replied (%d empty reads)." % empty_count)
-            print("USB comms look dead - wrong device index, or the stock")
-            print("Epson driver isn't installed. This is NOT a key result.")
+            print("The printer passed the status preflight but then went")
+            print("silent for %d of %d key probes." % (empty_count, total))
+            print("It is talking, but it is not answering the EEPROM command")
+            print("at all - which usually means firmware has that command")
+            print("switched off rather than that the key is wrong.")
         else:
             print("NO WORKING KEY FOUND among %d candidates (%d refused)."
                   % (total, na_count))
+            print("")
+            print("Every probe got a clean ':NA;', so the channel is good and")
+            print("these keys are simply wrong for this model.")
             if args.full:
                 print("The full 16-bit space is exhausted -> the EEPROM read")
                 print("command is disabled in firmware on this unit.")
             else:
-                print("Not conclusive. Re-run with --full for the whole key")
-                print("space (about an hour) before concluding lockout.")
+                print("Re-run with --full for the whole key space (about an")
+                print("hour) before concluding lockout.")
         print("Elapsed: %.1f s" % (time.time() - t0))
         print("=" * 62)
     return 0
