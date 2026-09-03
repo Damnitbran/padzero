@@ -106,6 +106,7 @@ if not getattr(sys, "frozen", False):
     sys.path.insert(0, os.path.join(HERE, "reinkpy"))
 
 import padzero as core            # noqa: E402
+from i18n import t                # noqa: E402
 
 PADS_URL = "https://www.amazon.com/s?k=epson+waste+ink+pad+kit"
 ISSUES_URL = "https://github.com/Damnitbran/padzero/issues"
@@ -155,7 +156,7 @@ class App:
         # change over time rather than a number you have to have memorised.
         self.history = []
 
-        root.title("Pad Zero")
+        root.title(t("app_title"))
         root.configure(bg=BG)
         root.geometry("%dx%d" % (S(720), S(720)))
         root.minsize(S(660), S(640))
@@ -176,8 +177,8 @@ class App:
     def _build(self):
         bar = tk.Frame(self.root, bg=BG)
         bar.pack(fill="x", padx=S(24), pady=(S(18), 0))
-        tk.Label(bar, text="Pad Zero", font=F_APP, bg=BG, fg=FG).pack(side="left")
-        self.b_help = flat_button(bar, "What is this?", self.show_explain,
+        tk.Label(bar, text=t("app_title"), font=F_APP, bg=BG, fg=FG).pack(side="left")
+        self.b_help = flat_button(bar, t("what_is_this"), self.show_explain,
                                   bg=BG, fg=DIM, padx=S(10), pady=S(6))
         self.b_help.pack(side="right")
 
@@ -188,7 +189,7 @@ class App:
         self.l_dot = tk.Label(self.card, text="", font=("Segoe UI", 30),
                               bg=CARD, fg=DIM)
         self.l_dot.pack(anchor="w", padx=S(26), pady=(S(20), 0))
-        self.l_model = tk.Label(self.card, text="Looking for your printer...",
+        self.l_model = tk.Label(self.card, text=t("looking_for_printer"),
                                 font=F_BIG, bg=CARD, fg=FG, anchor="w",
                                 justify="left", wraplength=S(600))
         self.l_model.pack(fill="x", padx=S(26))
@@ -206,7 +207,7 @@ class App:
         self.l_status.pack(side="bottom", fill="x", padx=S(24), pady=(S(6), S(12)))
 
         self.details = tk.Frame(self.root, bg=CARD2)
-        self.b_details = flat_button(self.root, "▸  Technical details",
+        self.b_details = flat_button(self.root, t("technical_details_closed"),
                                      self.toggle_details, bg=BG, fg=FAINT,
                                      font=F_SMALL, padx=0, pady=6)
         self.b_details.pack(side="bottom", anchor="w", padx=S(24))
@@ -218,15 +219,15 @@ class App:
         # used to sit in the top-right corner and people looked for it here.
         act = tk.Frame(self.root, bg=BG)
         act.pack(side="bottom", fill="x", padx=S(24), pady=(S(12), S(10)))
-        self.b_reset = flat_button(act, "Reset the counter", self.do_reset,
+        self.b_reset = flat_button(act, t("reset_the_counter"), self.do_reset,
                                    bg=ACCENT, fg="#0B1417", font=F_BTN,
                                    padx=S(26), pady=S(14))
         self.b_reset.pack(side="left")
-        self.b_refresh = flat_button(act, "Check level now", self.scan,
+        self.b_refresh = flat_button(act, t("check_level_now"), self.scan,
                                      bg=CARD2, fg=FG, font=F_BTN,
                                      padx=S(20), pady=S(14))
         self.b_refresh.pack(side="left", padx=(S(10), 0))
-        self.b_backup = flat_button(act, "Save a backup", self.do_backup,
+        self.b_backup = flat_button(act, t("save_a_backup"), self.do_backup,
                                     padx=S(16), pady=S(14))
         self.b_backup.pack(side="left", padx=(S(10), 0))
 
@@ -275,22 +276,13 @@ class App:
                 self.busy = False
                 self._buttons(True)
                 if err and self._is_comms_glitch(err):
-                    self.status("Lost the connection to the printer", BAD)
+                    self.status(t("lost_connection_status"), BAD)
                     messagebox.showwarning(
-                        "Pad Zero",
-                        "PadZero couldn't get a clean connection to the "
-                        "printer.\n\n"
-                        "This is almost always a stuck USB connection, not a "
-                        "problem with your printer.\n\n"
-                        "Try this:\n"
-                        "1. Unplug the USB cable, wait a few seconds, then "
-                        "plug it back in.\n"
-                        "2. Click Reset again.\n\n"
-                        "If it still fails, restart your PC and try once more "
-                        "- that clears the USB connection completely.")
+                        t("app_title"),
+                        t("lost_connection_body"))
                 elif err:
-                    self.status("Something went wrong: %s" % err, BAD)
-                    messagebox.showerror("Pad Zero", str(err))
+                    self.status(t("something_went_wrong", error=err), BAD)
+                    messagebox.showerror(t("app_title"), str(err))
                 else:
                     getattr(self, "after_" + tag)(res)
         except queue.Empty:
@@ -307,7 +299,7 @@ class App:
         a healthy printer look alarming.
         """
         if not counters:
-            return "no counter data"
+            return t("no_counter_data")
 
         pcts = [c for c in counters if c.get("percent") is not None]
         if pcts:
@@ -316,18 +308,20 @@ class App:
                               for c in pcts)
 
         if not any("values" in c for c in counters):
-            return "no readable counters"
+            return t("no_readable_counters")
 
         try:
             plan, _src = self.printer.reset_plan()
             current = self.printer.read([a for a, _ in plan])
             pending = sum(1 for a, v in plan if current.get(a) != v)
         except Exception:
-            return "counter read OK"
+            return t("counter_read_ok")
 
         if pending == 0:
-            return "nothing to clear"
-        return "%d stored value%s" % (pending, "" if pending == 1 else "s")
+            return t("nothing_to_clear_short")
+        if pending == 1:
+            return t("stored_value_one", n=pending)
+        return t("stored_value_other", n=pending)
 
     def _log_reading(self, counters, note=""):
         stamp = datetime.now().strftime("%H:%M:%S")
@@ -339,7 +333,7 @@ class App:
         if len(self.history) < 2:
             return  # a single reading is not a history
 
-        tk.Label(self.hist_frame, text="READINGS THIS SESSION",
+        tk.Label(self.hist_frame, text=t("readings_this_session"),
                  font=("Segoe UI", 9, "bold"), bg=BG, fg=FAINT,
                  anchor="w").pack(fill="x", pady=(6, 4))
 
@@ -375,9 +369,9 @@ class App:
                 elif paths != self._known_paths:
                     self._known_paths = paths
                     if paths:
-                        self.status("Printer connected, checking...", ACCENT)
+                        self.status(t("printer_connected_checking"), ACCENT)
                     else:
-                        self.status("Printer unplugged", WARN)
+                        self.status(t("printer_unplugged"), WARN)
                     self.scan()
         except Exception:
             pass  # never let the watchdog kill the window
@@ -410,9 +404,9 @@ class App:
 
     # --------------------------------------------------------------- scan
     def scan(self):
-        self.status("Checking the USB connection...")
+        self.status(t("checking_usb"))
         self.l_dot.configure(text="●", fg=DIM)
-        self.l_model.configure(text="Looking for your printer...")
+        self.l_model.configure(text=t("looking_for_printer"))
         self.l_verdict.configure(text="", fg=DIM)
         self._clear(self.levels)
         self._clear(self.advice)
@@ -452,28 +446,22 @@ class App:
     # ------------------------------------------------------------- states
     def _state_no_printer(self):
         self.l_dot.configure(text="●", fg=BAD)
-        self.l_model.configure(text="No printer found")
+        self.l_model.configure(text=t("no_printer_found"))
         self.l_verdict.configure(
-            text="Nothing is answering on USB. It is almost always one of "
-                 "the things below, and they are quick to check.", fg=DIM)
+            text=t("no_printer_verdict"), fg=DIM)
         self._reset_enabled(False)
         self.b_backup.configure(state="disabled")
         self._details("")
 
         self._steps(self.advice, [
-            ("Check which socket the cable is in",
-             "The USB cable must go in the wide, flat USB socket. The two "
-             "small square sockets marked LINE and EXT are telephone jacks "
-             "for the fax and do nothing for this."),
-            ("Install Epson's own driver",
-             "Windows installs a basic driver that can print but cannot talk "
-             "to the printer properly. Download the driver for your model "
-             "from epson.com, install it, then click Check again."),
-            ("Make sure the printer is switched on",
-             "It needs to be powered up and finished starting, not asleep "
-             "mid-boot."),
+            (t("step_socket_title"),
+             t("step_socket_body")),
+            (t("step_driver_title"),
+             t("step_driver_body")),
+            (t("step_power_title"),
+             t("step_power_body")),
         ])
-        self.status("Not connected", BAD)
+        self.status(t("not_connected"), BAD)
 
     def _state_found(self, pr, counters, worst):
         self.l_model.configure(text=pr.model)
@@ -482,51 +470,47 @@ class App:
         if pr.coverage == "none":
             self.l_dot.configure(text="●", fg=WARN)
             self.l_verdict.configure(
-                text="This printer works, but Pad Zero has never been tested "
-                     "on this model, so it will not change anything on it.",
+                text=t("untested_verdict"),
                 fg=WARN)
             self._reset_enabled(False)
             self._steps(self.advice, [
-                ("Help get your model added",
-                 "Click Save a backup, then send the file that appears. It "
-                 "contains the settings needed to support your printer."),
-            ], button=("Open the issue tracker",
+                (t("help_add_model_title"),
+                 t("help_add_model_body")),
+            ], button=(t("open_issue_tracker"),
                        lambda: webbrowser.open(ISSUES_URL)))
-            self.status("Model not recognised. Reading only.", WARN)
+            self.status(t("model_not_recognised"), WARN)
 
         elif worst is None:
             self.l_dot.configure(text="●", fg=GOOD)
             self.l_verdict.configure(
-                text="Connected and working. This model does not report a "
-                     "percentage, but the counter can still be reset.", fg=DIM)
+                text=t("connected_no_percent"), fg=DIM)
             self._reset_enabled(True)
-            self.status("Ready", GOOD)
+            self.status(t("ready"), GOOD)
 
         elif worst >= 100:
             self.l_dot.configure(text="●", fg=BAD)
             self.l_verdict.configure(
-                text="The waste ink counter is full. This is why your printer "
-                     "has stopped printing.", fg=BAD)
+                text=t("counter_full_verdict"), fg=BAD)
             self._reset_enabled(True)
             self._pad_advice(urgent=True)
-            self.status("Counter full", BAD)
+            self.status(t("counter_full_status"), BAD)
 
         elif worst >= 85:
             self.l_dot.configure(text="●", fg=WARN)
             self.l_verdict.configure(
-                text="Nearly full. Your printer will stop printing soon.",
+                text=t("nearly_full_verdict"),
                 fg=WARN)
             self._reset_enabled(True)
             self._pad_advice(urgent=False)
-            self.status("Nearly full", WARN)
+            self.status(t("nearly_full_status"), WARN)
 
         else:
             self.l_dot.configure(text="●", fg=GOOD)
             self.l_verdict.configure(
-                text="Everything looks fine. There is nothing you need to do.",
+                text=t("everything_fine"),
                 fg=GOOD)
             self._reset_enabled(True)
-            self.status("Healthy", GOOD)
+            self.status(t("healthy"), GOOD)
 
         self._bars(counters)
 
@@ -534,18 +518,12 @@ class App:
                 c.get("percent") is not None for c in (counters or [])):
             note = tk.Frame(self.advice, bg=CARD)
             note.pack(fill="x")
-            tk.Label(note, text="About these percentages",
+            tk.Label(note, text=t("about_percentages"),
                      font=("Segoe UI", 10, "bold"), bg=CARD, fg=DIM,
                      anchor="w").pack(fill="x", padx=S(18), pady=(S(12), S(2)))
             basis = (pr.inferred or {}).get("basis") or []
             tk.Label(note,
-                     text=("This exact model is not in the percentage database "
-                           "yet, so the figures above are worked out from %d "
-                           "closely matching Epson models that store their "
-                           "counters at the same places. Treat them as a good "
-                           "estimate rather than an exact reading. The reset "
-                           "itself is not affected."
-                           % len(basis)),
+                     text=t("about_percentages_body", n=len(basis)),
                      font=F_SMALL, bg=CARD, fg=FAINT, anchor="w",
                      justify="left", wraplength=S(600)).pack(
                 fill="x", padx=S(18), pady=(0, S(14)))
@@ -594,9 +572,9 @@ class App:
                     if c.get("percent") is not None}
 
         if readable:
-            heading = "BEFORE AND AFTER" if prev else "HOW FULL THE COUNTER IS"
+            heading = t("before_and_after") if prev else t("how_full")
             if any(c.get("approx") for c in readable) and not prev:
-                heading += "   (APPROXIMATE)"
+                heading += t("approximate_suffix")
             tk.Label(self.levels, text=heading,
                      font=("Segoe UI", 9, "bold"), bg=BG,
                      fg=ACCENT if prev else FAINT,
@@ -659,25 +637,22 @@ class App:
         box = tk.Frame(self.levels, bg=CARD)
         box.pack(fill="x")
 
-        tk.Label(box, text="WASTE COUNTER", font=("Segoe UI", 9, "bold"),
+        tk.Label(box, text=t("waste_counter_heading"), font=("Segoe UI", 9, "bold"),
                  bg=CARD, fg=FAINT, anchor="w").pack(
             fill="x", padx=S(18), pady=(S(14), S(4)))
 
         if pending == 0:
-            headline, colour = "Nothing to clear", GOOD
-            body = ("This printer's waste counter is already at its lowest "
-                    "setting. There is nothing for Pad Zero to reset, and "
-                    "nothing you need to do.")
+            headline, colour = t("nothing_to_clear"), GOOD
+            body = t("nothing_to_clear_body")
         elif pending:
-            headline, colour = "Some usage recorded", ACCENT
-            body = ("Resetting would clear %d stored value%s. This printer "
-                    "does not report a percentage, so Pad Zero cannot show "
-                    "you a bar, but the reset works the same way."
-                    % (pending, "" if pending == 1 else "s"))
+            headline, colour = t("some_usage"), ACCENT
+            if pending == 1:
+                body = t("some_usage_body_one", n=pending)
+            else:
+                body = t("some_usage_body_other", n=pending)
         else:
-            headline, colour = "Counter read successfully", DIM
-            body = ("This printer does not report its level as a percentage. "
-                    "Pad Zero can still read and reset it.")
+            headline, colour = t("counter_read_successfully"), DIM
+            body = t("counter_read_successfully_body")
 
         tk.Label(box, text=headline, font=("Segoe UI", 15, "bold"), bg=CARD,
                  fg=colour, anchor="w").pack(fill="x", padx=S(18))
@@ -685,7 +660,7 @@ class App:
                  justify="left", wraplength=S(600)).pack(
             fill="x", padx=S(18), pady=(S(4), S(8)))
         tk.Label(box,
-                 text="The exact numbers are under Technical details below.",
+                 text=t("exact_numbers_hint"),
                  font=F_SMALL, bg=CARD, fg=FAINT, anchor="w").pack(
             fill="x", padx=S(18), pady=(0, S(16)))
 
@@ -710,51 +685,43 @@ class App:
         box = tk.Frame(self.advice, bg=CARD)
         box.pack(fill="x")
         tk.Label(box,
-                 text="Resetting will not empty the pads",
+                 text=t("resetting_will_not_empty"),
                  font=("Segoe UI", 11, "bold"), bg=CARD, fg=WARN,
                  anchor="w").pack(fill="x", padx=16, pady=(12, 2))
         tk.Label(box,
-                 text=("The counter is only an estimate of how much ink has "
-                       "soaked into the pads inside your printer. Resetting it "
-                       "gets you printing again, but the ink is still in there. "
-                       "If the pads are full it can eventually leak out of the "
-                       "bottom.\n\n"
-                       "Put a towel or tray under the printer, and order a "
-                       "replacement pad or a waste tank kit."),
+                 text=t("pad_advice_body"),
                  font=F_SMALL, bg=CARD, fg=DIM, anchor="w", justify="left",
                  wraplength=S(580)).pack(fill="x", padx=16, pady=(0, 10))
-        flat_button(box, "Where to buy a pad",
+        flat_button(box, t("where_to_buy_pad"),
                     lambda: webbrowser.open(PADS_URL),
                     bg=CARD2, fg=FG, font=F_SMALL, padx=14, pady=7).pack(
             anchor="w", padx=16, pady=(0, 14))
 
     def _details(self, text):
-        self.l_details.configure(text=text or "Nothing connected.")
+        self.l_details.configure(text=text or t("nothing_connected"))
 
     def toggle_details(self):
         self.details_open = not self.details_open
         if self.details_open:
             self.details.pack(side="bottom", fill="x", padx=S(24), pady=(S(6), 0),
                               before=self.b_details)
-            self.b_details.configure(text="▾  Technical details")
+            self.b_details.configure(text=t("technical_details_open"))
         else:
             self.details.pack_forget()
-            self.b_details.configure(text="▸  Technical details")
+            self.b_details.configure(text=t("technical_details_closed"))
 
     # ------------------------------------------------------------ actions
     def do_backup(self):
         if not self.printer:
             return
-        self.status("Reading the printer's memory, this takes a moment...")
+        self.status(t("reading_memory"))
         self._run(self.printer.save_dump, "backup")
 
     def after_backup(self, path):
-        self.status("Backup saved", GOOD)
+        self.status(t("backup_saved_status"), GOOD)
         messagebox.showinfo(
-            "Backup saved",
-            "A copy of your printer's settings was saved to:\n\n%s\n\n"
-            "Keep this. If anything ever goes wrong it can be used to put "
-            "things back." % path)
+            t("backup_saved_title"),
+            t("backup_saved_body", path=path))
 
     def do_reset(self):
         pr = self.printer
@@ -763,30 +730,22 @@ class App:
         try:
             plan, _src = pr.reset_plan()
         except Exception as exc:
-            messagebox.showerror("Pad Zero", str(exc))
+            messagebox.showerror(t("app_title"), str(exc))
             return
         if not plan:
             messagebox.showwarning(
-                "Pad Zero", "No reset is known for this model, so nothing "
-                            "will be changed.")
+                t("app_title"), t("no_reset_known"))
             return
 
         ok = messagebox.askyesno(
-            "Reset the waste ink counter?",
-            "This tells your %s that its waste ink pads are empty, so it will "
-            "start printing again.\n\n"
-            "IT DOES NOT EMPTY THE PADS.\n\n"
-            "The ink is still inside the printer. If the pads are full, ink "
-            "can leak out of the bottom onto whatever it is sitting on. Put a "
-            "towel underneath and fit a new pad when you can.\n\n"
-            "A backup is saved automatically before anything is changed.\n\n"
-            "Go ahead?" % pr.model,
+            t("reset_confirm_title"),
+            t("reset_confirm_body", model=pr.model),
             icon="warning", default="no")
         if not ok:
-            self.status("Cancelled")
+            self.status(t("cancelled"))
             return
 
-        self.status("Saving a backup, then resetting...")
+        self.status(t("saving_backup_then_resetting"))
         self._run(lambda: self._reset_work(plan), "reset")
 
     def _reset_work(self, plan):
@@ -800,31 +759,23 @@ class App:
     def after_reset(self, res):
         path, ok, counters, before = res
         self._bars(counters, previous=before)
-        self._log_reading(counters, note="<- after reset" if ok else "")
+        self._log_reading(counters, note=t("after_reset_note") if ok else "")
         if ok:
-            self.status("Done. Turn the printer off and on again.", GOOD)
+            self.status(t("done_power_cycle"), GOOD)
             messagebox.showinfo(
-                "Reset complete",
-                "The counter has been reset.\n\n"
-                "NEXT: turn the printer off, wait ten seconds, and turn it "
-                "back on. It should print again.\n\n"
-                "Then order a replacement pad. The ink is still inside the "
-                "printer and this will happen again.\n\n"
-                "Backup saved to:\n%s" % path)
+                t("reset_complete_title"),
+                t("reset_complete_body", path=path))
             # deliberately not re-scanning: that would wipe the before/after
             # comparison off the screen, which is the proof it worked
         else:
-            self.status("Some changes were refused", BAD)
+            self.status(t("some_changes_refused"), BAD)
             messagebox.showerror(
-                "Reset did not finish",
-                "The printer refused some of the changes.\n\n"
-                "Your backup is safe at:\n%s\n\n"
-                "This usually means the printer's firmware blocks resets. "
-                "Nothing has been damaged." % path)
+                t("reset_did_not_finish_title"),
+                t("reset_did_not_finish_body", path=path))
 
     def show_explain(self):
         win = tk.Toplevel(self.root, bg=BG)
-        win.title("What Pad Zero does")
+        win.title(t("what_pad_zero_does"))
         win.geometry("640x560")
         win.transient(self.root)
         frame = tk.Frame(win, bg=CARD)
@@ -833,9 +784,9 @@ class App:
                       relief="flat", padx=20, pady=20, bd=0,
                       highlightthickness=0)
         txt.pack(fill="both", expand=True)
-        txt.insert("1.0", core.EXPLAIN.strip())
+        txt.insert("1.0", t("explain_body"))
         txt.configure(state="disabled")
-        flat_button(win, "Close", win.destroy).pack(pady=(0, 16))
+        flat_button(win, t("close"), win.destroy).pack(pady=(0, 16))
 
 
 def main():
@@ -852,11 +803,10 @@ def main():
             import ctypes
             ctypes.windll.user32.MessageBoxW(
                 0,
-                "Pad Zero could not open its window.\n\n%s\n\n"
-                "This is usually a missing Tcl/Tk installation." % exc,
-                "Pad Zero", 0x10)
+                t("could_not_open_window", error=exc),
+                t("app_title"), 0x10)
         except Exception:
-            print("Could not start: %s" % exc)
+            print(t("could_not_start", error=exc))
         return 1
 
     try:
@@ -867,9 +817,8 @@ def main():
         detail = traceback.format_exc()
         try:
             messagebox.showerror(
-                "Pad Zero stopped unexpectedly",
-                "Something went wrong.\n\nPlease copy this and open an issue "
-                "at:\n%s\n\n%s" % (ISSUES_URL, detail[-1500:]))
+                t("stopped_unexpectedly_title"),
+                t("stopped_unexpectedly_body", url=ISSUES_URL, detail=detail[-1500:]))
         except Exception:
             print(detail)
         return 1
