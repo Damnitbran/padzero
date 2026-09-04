@@ -50,6 +50,7 @@ Requirements: the genuine Epson driver (not the generic Windows "IPP Class
 Driver") and a USB cable. No pysnmp, no Wi-Fi.
 """
 import argparse
+import io
 import re
 import struct
 import sys
@@ -185,6 +186,105 @@ class RawProbe:
 
 
 # ------------------------------------------------------------------ picking
+def parse_range(text):
+    """'0-255' or '0x00-0xff' -> (lo, hi)."""
+    try:
+        lo, hi = text.split("-", 1)
+        lo, hi = int(lo, 0), int(hi, 0)
+    except ValueError:
+        raise SystemExit("Bad --range %r, expected something like 0-255" % text)
+    if lo < 0 or hi < lo:
+        raise SystemExit("Bad --range %r" % text)
+    return lo, hi
+
+
+def dump_block(probe, rkey, lo, hi, which):
+    """Read every address in [lo, hi] with `rkey` and write a report.
+
+    Read-only. Returns the output path, or None if nothing could be read.
+    """
+    print("=" * 62)
+    print("EEPROM DUMP   interface [%d]   key 0x%04X   addr %d-%d"
+          % (which, rkey, lo, hi))
+    print("read-only: this only ever sends read commands")
+    print("=" * 62)
+
+    model = serial = "unknown"
+    dev = getattr(probe, "dev", None)
+    if dev is not None:
+        try:
+            with quiet():
+                model = probe.ep.detected_model or "unknown"
+        except Exception:
+            pass
+        try:
+            with quiet():
+                serial = dev.serial_number or "unknown"
+        except Exception:
+            pass
+
+    rows = []
+    refused = silent = 0
+    t0 = time.time()
+    for addr in range(lo, hi + 1):
+        kind, data = probe.probe(rkey, addr)
+        if kind == "hit":
+            echoed, value = int(data[:4], 16), int(data[4:], 16)
+            rows.append((addr, value, echoed == addr))
+        elif kind == "na":
+            refused += 1
+            rows.append((addr, None, True))
+        else:
+            silent += 1
+            rows.append((addr, None, True))
+        if addr and (addr - lo) % 64 == 0:
+            print("  read %d/%d ..." % (addr - lo, hi - lo + 1))
+
+    got = [r for r in rows if r[1] is not None]
+    if not got:
+        print("")
+        print("Nothing readable in that range with key 0x%04X." % rkey)
+        print("(%d refused, %d silent)" % (refused, silent))
+        return None
+
+    name = "eeprom-%s-%04X.txt" % (
+        re.sub(r"[^A-Za-z0-9._-]", "_", str(model)), rkey)
+    with io.open(name, "w", encoding="utf-8", newline="\n") as f:
+        f.write("Pad Zero EEPROM dump (read-only)\n")
+        f.write("model      : %s\n" % model)
+        f.write("serial     : %s\n" % serial)
+        f.write("read_key   : 0x%04X\n" % rkey)
+        f.write("range      : %d-%d\n" % (lo, hi))
+        f.write("readable   : %d of %d  (%d refused, %d no reply)\n"
+                % (len(got), hi - lo + 1, refused, silent))
+        f.write("\naddr(dec)  addr(hex)  value(dec)  value(hex)\n")
+        for addr, value, ok in rows:
+            if value is None:
+                f.write("%9d  %9s  %10s  %10s\n"
+                        % (addr, "0x%02X" % addr, "-", "-"))
+            else:
+                f.write("%9d  %9s  %10d  %10s%s\n"
+                        % (addr, "0x%02X" % addr, value, "0x%02X" % value,
+                           "" if ok else "   <- address echo mismatch"))
+
+    nonzero = [(a, v) for a, v, _ in rows if v]
+    print("")
+    print("Read %d of %d addresses (%d refused, %d no reply)."
+          % (len(got), hi - lo + 1, refused, silent))
+    print("Non-zero values: %d" % len(nonzero))
+    if nonzero:
+        preview = ", ".join("%d=%d" % (a, v) for a, v in nonzero[:12])
+        print("  %s%s" % (preview, " ..." if len(nonzero) > 12 else ""))
+    print("")
+    print("Saved to: %s" % name)
+    print("Elapsed: %.1f s" % (time.time() - t0))
+    print("=" * 62)
+    print("")
+    print("NOTE: this file contains your printer's serial number. If you'd")
+    print("rather not post that publicly, send it in a direct message.")
+    return name
+
+
 def reinkpy_missing():
     """The source ZIP does not ship reinkpy - it is vendored at build time
     (see .gitignore / requirements.txt). Running find_key_usb.py straight
@@ -305,7 +405,20 @@ def main():
                          "missing reinkpy.")
     ap.add_argument("--skip-preflight", action="store_true",
                     help="do not require a status reply before sweeping")
+    ap.add_argument("--dump", action="store_true",
+                    help="read a block of EEPROM with a known key and save "
+                         "it to a file (read-only). Needs --key.")
+    ap.add_argument("--key", type=lambda s: int(s, 0), default=None,
+                    help="read key for --dump, e.g. --key 0x364A")
+    ap.add_argument("--range", default="0-255", metavar="LO-HI",
+                    help="address range for --dump (default 0-255)")
     args = ap.parse_args()
+
+    if args.dump and args.key is None:
+        print("--dump needs a key. Run without --dump first to find it,")
+        print("then pass it back, e.g.:")
+        print("    python find_key_usb.py --dump --key 0x364A")
+        return 1
 
     if not args.raw and reinkpy_missing():
         explain_missing_reinkpy()
@@ -345,6 +458,12 @@ def main():
             print("rather than the 'IPP Class Driver'.")
         print("=" * 62)
         return 1
+
+    if args.dump:
+        lo, hi = parse_range(args.range)
+        with probe:
+            dump_block(probe, args.key, lo, hi, which)
+        return 0
 
     keys = range(args.start, 0x10000) if args.full else KNOWN_KEYS
     total = (0x10000 - args.start) if args.full else len(keys)
