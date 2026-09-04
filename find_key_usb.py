@@ -348,10 +348,20 @@ def try_wkeys(probe, rkey, addr, everything=False):
     if not cands:
         print("No candidate write keys found for read key 0x%04X." % rkey)
         return None
-    print("Trying %d candidate key(s)." % len(cands))
+
+    # Negative control. This key is deliberate nonsense and must be refused.
+    # If the printer accepts it, then ':OK;' is not evidence of a valid key
+    # on this model - most likely the firmware short-circuits a write whose
+    # value already matches, and answers before it ever checks the key.
+    CONTROL = "Qqqqqqqq"
+    cands = list(cands) + [(CONTROL, "CONTROL", "deliberate nonsense")]
+
+    print("Trying %d candidate(s), including one deliberate dud as a check."
+          % len(cands))
     print("")
 
     accepted = []
+    control_accepted = False
     for wk, wk1, model in cands:
         payload = struct.pack("<HB", addr, current) + wk.encode("ascii")
         try:
@@ -361,9 +371,11 @@ def try_wkeys(probe, rkey, addr, everything=False):
             print("  %-10s (%-10s) error: %s" % (wk1, model, type(e).__name__))
             continue
         ok = b":OK;" in (reply or b"")
-        print("  %-10s (as used by %-10s) -> %s"
+        print("  %-10s (as used by %-19s) -> %s"
               % (wk1, model, "ACCEPTED" if ok else "refused"))
-        if ok:
+        if ok and wk1 == "CONTROL":
+            control_accepted = True
+        elif ok:
             accepted.append((wk, wk1))
 
     print("")
@@ -378,10 +390,21 @@ def try_wkeys(probe, rkey, addr, everything=False):
         print("Could not re-read addr %d to confirm (%s)." % (addr, after))
 
     print("=" * 62)
+    if control_accepted:
+        print("INCONCLUSIVE - the deliberate dud key was accepted too.")
+        print("")
+        print("This printer answers ':OK;' to a write whose value already")
+        print("matches, without checking the key first. So 'ACCEPTED' here")
+        print("means nothing, and no-op probing cannot identify the key on")
+        print("this model. Ignore any result above.")
+        print("")
+        print("This is not a fault in your printer and nothing was changed.")
+        return None
     if accepted:
         print("WRITE KEY: %s" % ", ".join(
             "%s (wire: %s)" % (w1, w) for w, w1 in accepted))
         print("")
+        print("The dud key was correctly refused, so these are real results.")
         print("Post this on the thread along with the read key.")
     else:
         print("No candidate was accepted.")
