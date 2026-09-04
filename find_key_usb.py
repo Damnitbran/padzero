@@ -185,6 +185,38 @@ class RawProbe:
 
 
 # ------------------------------------------------------------------ picking
+def reinkpy_missing():
+    """The source ZIP does not ship reinkpy - it is vendored at build time
+    (see .gitignore / requirements.txt). Running find_key_usb.py straight
+    out of the ZIP therefore has no D4 layer. Say so properly instead of
+    surfacing a bare ModuleNotFoundError from inside the probe."""
+    try:
+        import reinkpy  # noqa: F401
+        return False
+    except ImportError:
+        return True
+
+
+def explain_missing_reinkpy():
+    print("=" * 62)
+    print("reinkpy is not installed, so the D4 control channel - the only")
+    print("channel that answers EEPROM commands - is unavailable.")
+    print("")
+    print("This is expected if you just downloaded the source ZIP. reinkpy")
+    print("is fetched at build time and is not included in it.")
+    print("")
+    print("EASIEST FIX: download find_key_usb.exe from the Releases page.")
+    print("It has reinkpy built in and needs no Python at all.")
+    print("")
+    print("Or, to keep running from source:")
+    print('    pip install "reinkpy @ git+https://codeberg.org/atufi/reinkpy"')
+    print("")
+    print("Do NOT use --raw to get around this. It cannot find a key the")
+    print("control channel can't, and it can leave the printer stuck in a")
+    print("'cancelling' loop until you power-cycle it.")
+    print("=" * 62)
+
+
 def enumerate_candidates(index):
     """List USB printer interfaces and decide which to try, Epson first."""
     try:
@@ -265,11 +297,29 @@ def main():
     ap.add_argument("--start", type=lambda s: int(s, 0), default=0,
                     help="with --full, resume from this key")
     ap.add_argument("--raw", action="store_true",
-                    help="use the old non-D4 raw pipe instead of the "
-                         "control channel (ET-4800 era behaviour)")
+                    help="DIAGNOSTIC ONLY. Use the old non-D4 raw pipe. "
+                         "This writes remote-mode bytes down the print data "
+                         "path, which some models mistake for a malformed "
+                         "print job and then sit in a 'cancelling' loop "
+                         "until power-cycled. Never a workaround for a "
+                         "missing reinkpy.")
     ap.add_argument("--skip-preflight", action="store_true",
                     help="do not require a status reply before sweeping")
     args = ap.parse_args()
+
+    if not args.raw and reinkpy_missing():
+        explain_missing_reinkpy()
+        return 1
+
+    if args.raw:
+        print("!" * 62)
+        print("--raw is a diagnostic, not a fallback. It writes to the print")
+        print("data path, which some models mistake for a malformed print")
+        print("job and then sit in a 'cancelling' loop until power-cycled.")
+        print("It is read-only and cannot alter your counters, but if the")
+        print("printer starts behaving oddly, power-cycle it and stop.")
+        print("!" * 62)
+        print("")
 
     order = enumerate_candidates(args.device)
     if not order:
@@ -285,11 +335,10 @@ def main():
         print("result and --full would not help.")
         print("")
         if not args.raw:
-            print("Worth trying once, for information:")
-            print("    python find_key_usb.py --raw")
-            print("If the raw pipe answers but the control channel doesn't,")
-            print("D4 negotiation is being blocked - tell me, that's a")
-            print("finding worth having.")
+            print("Do NOT reach for --raw to get past this. It talks down")
+            print("the print data path, which some printers mistake for a")
+            print("broken print job and then sit in a 'cancelling' loop.")
+            print("It cannot find a key that the control channel can't.")
         else:
             print("Check that the interface list above shows EPSON / VID")
             print("04B8, and that Get-Printer shows Epson's own driver")

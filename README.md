@@ -234,7 +234,7 @@ reinkpy loads it through `importlib.resources` rather than a relative path.
 | `models.json` | per-model waste counter data |
 | `build_modeldb.py` | regenerates `models.json` from epson_print_conf |
 | `find_key.py` | brute-force read-key search over SNMP (legacy) |
-| `find_key_usb.py` | brute-force read-key search over USB - use this one |
+| `find_key_usb.py` | brute-force read-key search over USB - use this one. Needs reinkpy, which the source ZIP does not include; the released `find_key_usb.exe` bundles it |
 
 ---
 
