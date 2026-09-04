@@ -1,48 +1,64 @@
 """
 find_key_usb.py - locate an unknown Epson model's EEPROM read key over USB.
 
-This is the USB counterpart to find_key.py. find_key.py talks over SNMP /
-Wi-Fi Direct, but these Epsons refuse the '||' factory commands on the
-network (":NA;") and only answer them over USB. So for a model that isn't
-in the databases, the network brute-forcer will report NA no matter what
-the key is - it has to be done over the USB cable.
+For a model that isn't in the databases, the network brute-forcer
+(find_key.py) is useless: these Epsons refuse the '||' factory commands on
+SNMP and answer ":NA;" no matter what the key is. It has to be done over
+the USB cable.
+
+TRANSPORT (this is the part that matters)
+-----------------------------------------
+Factory commands do NOT travel down the raw USB print pipe. reinkpy
+negotiates IEEE 1284.4 and opens a dedicated 'EPSON-CTRL' D4 socket, and
+that is where '||' commands are answered. Writing them to the raw pipe
+instead is silently swallowed by the print engine on at least some models -
+the printer stays chatty (it keeps pushing unsolicited '@BDC ST2' status
+packets back) while never answering a single EEPROM read, which looks
+exactly like a dead cable but isn't.
+
+So this tool drives the same transport padzero.py uses: WinUsbPrintIO ->
+reinkpy.UsbDevice -> EpsonD4.ctrl_channel. The old raw path is kept behind
+--raw because it is known to work on the ET-4800 and is useful for
+comparison, but it is not the default and should not be trusted on a model
+you haven't confirmed.
 
 How it tells a wrong key from a right one:
   * wrong key  -> the printer replies ":NA;" (not available)
   * right key  -> the printer replies "EE:AAAAVV" (address echo + value)
-So we sweep candidate keys and stop at the first that yields an EE: payload.
 
-Before sweeping anything, it runs a PREFLIGHT: it sends the plain 'st'
-status query, which every Epson answers regardless of read key. If the
-printer answers, the channel is proven good and any later silence is a real
-result. If it does not answer, we are holding a handle onto the wrong
-device and no key would ever have worked - so we move on and try the next
-USB interface instead of burning an hour on a dead pipe.
+PREFLIGHT
+---------
+Before sweeping, it asks for printer status over the same D4 control
+channel the key search will use. If that answers, the channel is proven and
+any later silence is a real result about the printer rather than about our
+plumbing. If it doesn't, we move to the next USB interface rather than
+burning an hour on a pipe nothing is listening to.
 
-Interface selection is automatic. Multifunction printers publish more than
-one USB printer interface (the print function and the scan function), and
-other USB printers may be attached as well, so "the first one Windows lists"
-is frequently not your Epson. Epson interfaces (VID 04B8) are tried first.
-Override with -d N if you want a specific one.
+Interface selection is automatic. Multifunction Epsons publish several USB
+interfaces and only one speaks D4. Epson devices (VID 04B8) are tried
+first. Override with -d N.
 
 Two modes:
   (default)  try the ~170 read keys already known from the reinkpy and
-             epson_print_conf databases - about a minute. If the model is
-             simply mis-/un-catalogued but reuses a sibling's key, this
-             finds it.
-  --full     sweep the whole 16-bit key space 0x0000-0xFFFF (roughly an
-             hour, resumable with --start).
+             epson_print_conf databases - about a minute.
+  --full     sweep the whole 16-bit key space (roughly an hour, resumable
+             with --start).
 
 Read-only: only ever sends read ('A') commands. Never writes EEPROM.
 
-Requirements: the genuine Epson driver installed (not the generic Windows
-"IPP Class Driver"), and a USB cable. No pysnmp, no Wi-Fi needed.
+Requirements: the genuine Epson driver (not the generic Windows "IPP Class
+Driver") and a USB cable. No pysnmp, no Wi-Fi.
 """
 import argparse
 import re
 import struct
 import sys
 import time
+
+# Importing padzero puts the bundled reinkpy on sys.path and silences its
+# very chatty D4 handshake logging. Do this before importing reinkpy.
+import padzero
+from padzero import open_transport, quiet
 
 from usb_direct import (list_usb_printers, UsbPrinter, factory, wrap, exchange,
                         check_channel, describe, is_epson)
@@ -72,12 +88,11 @@ KNOWN_KEYS = [
     0x5E0A, 0x5F11, 0x600F, 0x6241, 0x6300, 0x6311, 0x884A, 0xE6B5,
 ]
 
+READ_CMD = ("|", "A")   # reinkpy spells the '||' factory read this way
 
-def probe(dev, rkey, addr):
-    """Send one read with `rkey`. Return ('hit', payload) / ('na', None) /
-    ('empty', None) / ('other', text)."""
-    cmd = wrap(factory("A", struct.pack("<H", addr), rkey=rkey))
-    reply = exchange(dev, cmd, want=b"EE:")
+
+def classify(reply):
+    """Turn a raw control-channel reply into a verdict."""
     if not reply:
         return "empty", None
     txt = reply.decode("ascii", "replace")
@@ -89,12 +104,89 @@ def probe(dev, rkey, addr):
     return "other", txt.strip()[:60]
 
 
-def enumerate_candidates(index):
-    """List the USB printer interfaces and decide which to try, in order.
+# ------------------------------------------------------------ D4 (default)
+class D4Probe:
+    """Key probe over reinkpy's EPSON-CTRL D4 socket - the transport that
+    padzero.py itself uses, and the only one factory commands are actually
+    answered on."""
 
-    Returns a list of (index, path), Epson first, or None if there is
-    nothing to try at all.
-    """
+    label = "D4 control channel"
+
+    def __init__(self, path):
+        import reinkpy
+        self.path = path
+        self.io = open_transport(path)
+        self.dev = reinkpy.UsbDevice(self.io)
+        self.ep = self.dev.epson
+        self._held = None
+
+    def preflight(self):
+        """Ask for status over the same channel the sweep will use."""
+        try:
+            with quiet():
+                st = self.ep.do_status()
+        except Exception as e:
+            return False, "%s: %s" % (type(e).__name__, e)
+        if st and b"@BDC" in st:
+            return True, "printer answered status on the control channel"
+        return False, "no status reply over D4 (%d bytes)" % len(st or b"")
+
+    def __enter__(self):
+        # Hold the control channel open across the whole sweep so we
+        # negotiate D4 once instead of once per key.
+        self._held = self.ep.ctrl_channel
+        self._held.__enter__()
+        return self
+
+    def __exit__(self, *exc):
+        try:
+            self._held.__exit__(*exc)
+        except Exception:
+            pass
+        self._held = None
+
+    def probe(self, rkey, addr):
+        self.ep.spec.rkey = rkey
+        try:
+            with quiet():
+                reply = self.ep.ctrl((READ_CMD, struct.pack("<H", addr)))[0]
+        except Exception as e:
+            return "other", "%s: %s" % (type(e).__name__, e)
+        return classify(reply)
+
+
+# ---------------------------------------------------------------- raw path
+class RawProbe:
+    """The original transport: remote-mode bytes written straight to the USB
+    printer interface, no D4 negotiation. Known to work on the ET-4800.
+    Known to be silently ignored on the EP-M476T. Kept for comparison."""
+
+    label = "raw USB pipe (no D4)"
+
+    def __init__(self, path):
+        self.path = path
+        self.dev = UsbPrinter(path)
+
+    def preflight(self):
+        alive, reply = check_channel(self.dev)
+        if alive:
+            return True, "printer answered the raw status query"
+        return False, "no reply to raw status query (%d bytes)" % len(reply)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.dev.close()
+
+    def probe(self, rkey, addr):
+        cmd = wrap(factory("A", struct.pack("<H", addr), rkey=rkey))
+        return classify(exchange(self.dev, cmd, want=b"EE:"))
+
+
+# ------------------------------------------------------------------ picking
+def enumerate_candidates(index):
+    """List USB printer interfaces and decide which to try, Epson first."""
     try:
         paths = list_usb_printers()
     except OSError as e:
@@ -104,11 +196,11 @@ def enumerate_candidates(index):
     if not paths:
         print("No USB printers found at all.")
         print("")
-        print("  * Is the USB cable plugged into both ends?")
+        print("  * Is the USB cable plugged in at both ends?")
         print("  * Is the printer installed as a USB printer rather than a")
         print("    network / WSD one? A network queue publishes no USB")
         print("    interface for this tool to open.")
-        print("  * Is the genuine Epson driver installed, rather than the")
+        print("  * Is the genuine Epson driver installed rather than the")
         print("    generic Windows 'IPP Class Driver'? Check with:")
         print("      Get-Printer | Select-Object Name, DriverName")
         return None
@@ -134,31 +226,28 @@ def enumerate_candidates(index):
     return epson + other
 
 
-def open_live(order, skip_preflight=False):
-    """Open the first interface that actually answers. Returns (dev, index)
-    or (None, None)."""
+def open_live(order, cls, skip_preflight=False):
+    """Open the first interface whose control channel actually answers."""
     for i, path in order:
         print("Trying interface [%d]  %s" % (i, describe(path)))
+        print("  transport: %s" % cls.label)
         try:
-            dev = UsbPrinter(path)
-        except OSError as e:
-            print("  cannot open: %s" % e)
-            print("  (another printer app may be holding it open)")
+            with quiet():
+                probe = cls(path)
+        except Exception as e:
+            print("  cannot open: %s: %s" % (type(e).__name__, e))
             continue
 
         if skip_preflight:
             print("  preflight skipped by request.")
-            return dev, i
+            return probe, i
 
-        alive, reply = check_channel(dev)
-        if alive:
-            print("  preflight OK - the printer answered the status query.")
+        ok, why = probe.preflight()
+        print("  preflight: %s" % why)
+        if ok:
             print("")
-            return dev, i
-
-        print("  no answer to the status query (%d bytes back) - not it."
-              % len(reply))
-        dev.close()
+            return probe, i
+        print("  -> not it, moving on.")
 
     return None, None
 
@@ -175,6 +264,9 @@ def main():
                     help="sweep all 65536 keys instead of the known list")
     ap.add_argument("--start", type=lambda s: int(s, 0), default=0,
                     help="with --full, resume from this key")
+    ap.add_argument("--raw", action="store_true",
+                    help="use the old non-D4 raw pipe instead of the "
+                         "control channel (ET-4800 era behaviour)")
     ap.add_argument("--skip-preflight", action="store_true",
                     help="do not require a status reply before sweeping")
     args = ap.parse_args()
@@ -183,23 +275,25 @@ def main():
     if not order:
         return 1
 
-    dev, which = open_live(order, args.skip_preflight)
-    if dev is None:
+    cls = RawProbe if args.raw else D4Probe
+    probe, which = open_live(order, cls, args.skip_preflight)
+    if probe is None:
         print("=" * 62)
-        print("NO USABLE INTERFACE - nothing answered the status query.")
+        print("NO USABLE INTERFACE - nothing answered on %s." % cls.label)
         print("")
-        print("The status query is not key-protected; every Epson replies to")
-        print("it. So this is NOT a 'wrong key' result and running --full")
-        print("would not help - there is nothing on the other end listening.")
+        print("Status is not key-protected, so this is NOT a 'wrong key'")
+        print("result and --full would not help.")
         print("")
-        print("Most likely, in order:")
-        print("  1. The printer is not among the interfaces listed above.")
-        print("     Check the VID: yours should say EPSON / VID 04B8.")
-        print("  2. The generic Windows 'IPP Class Driver' is installed")
-        print("     instead of Epson's own. It prints fine and looks correct")
-        print("     in Device Manager, but carries no back-channel. Check:")
-        print("       Get-Printer | Select-Object Name, DriverName")
-        print("  3. The printer is connected over the network, not USB.")
+        if not args.raw:
+            print("Worth trying once, for information:")
+            print("    python find_key_usb.py --raw")
+            print("If the raw pipe answers but the control channel doesn't,")
+            print("D4 negotiation is being blocked - tell me, that's a")
+            print("finding worth having.")
+        else:
+            print("Check that the interface list above shows EPSON / VID")
+            print("04B8, and that Get-Printer shows Epson's own driver")
+            print("rather than the 'IPP Class Driver'.")
         print("=" * 62)
         return 1
 
@@ -208,17 +302,19 @@ def main():
 
     print("=" * 62)
     print("USB READ KEY SEARCH   interface [%d]   addr %d" % (which, args.addr))
+    print("transport: %s" % cls.label)
     print("mode: %s   candidates: %d"
           % ("FULL SWEEP" if args.full else "known keys", total))
     print("=" * 62)
 
-    with dev:
+    with probe:
         hits = []
         na_count = 0
         empty_count = 0
+        other = None
         t0 = time.time()
         for i, rkey in enumerate(keys):
-            kind, data = probe(dev, rkey, args.addr)
+            kind, data = probe.probe(rkey, args.addr)
             if kind == "hit":
                 print("")
                 print("*** HIT ***  read_key = 0x%04X  ->  EE:%s" % (rkey, data))
@@ -231,6 +327,8 @@ def main():
                 na_count += 1
             elif kind == "empty":
                 empty_count += 1
+            elif other is None:
+                other = data
 
             if args.full and i and i % 250 == 0:
                 el = time.time() - t0
@@ -249,11 +347,14 @@ def main():
             print("")
             print("Post this key on the thread so the model can be added.")
         elif empty_count and empty_count >= na_count:
-            print("The printer passed the status preflight but then went")
-            print("silent for %d of %d key probes." % (empty_count, total))
-            print("It is talking, but it is not answering the EEPROM command")
-            print("at all - which usually means firmware has that command")
-            print("switched off rather than that the key is wrong.")
+            print("Passed the status preflight, then went silent for %d of"
+                  % empty_count)
+            print("%d key probes." % total)
+            print("The printer is talking but not answering the EEPROM read")
+            print("at all - which points at firmware having that command")
+            print("switched off rather than at a wrong key.")
+            if other:
+                print("First unusual reply: %s" % other)
         else:
             print("NO WORKING KEY FOUND among %d candidates (%d refused)."
                   % (total, na_count))
