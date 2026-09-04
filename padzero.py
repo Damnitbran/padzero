@@ -166,21 +166,30 @@ class WinUsbPrintIO:
         return "WinUsbPrintIO(%r)" % self.path
 
 
-def load_models():
-    """models.json, with models_extra.json layered on top.
+def load_models_extra():
+    """Models characterised on real hardware, absent from reinkpy.
 
-    models.json is regenerated wholesale by build_modeldb.py from
-    epson_print_conf, so anything hand-added there is lost on the next
-    rebuild. models_extra.json is where models characterised on real
-    hardware live, and it wins on conflict.
+    Separate from models.json for two reasons. models.json is regenerated
+    wholesale by build_modeldb.py from epson_print_conf, so a hand-added
+    entry there would vanish on the next rebuild. And only entries from
+    THIS file are allowed to supply keys to a printer reinkpy doesn't know
+    (see Printer._adopt_extra_spec) - models.json carries keys for models
+    nobody here has ever plugged in, and "unknown models are read-only"
+    is a rail worth keeping.
     """
+    if not os.path.exists(MODELS_EXTRA):
+        return {}
+    with open(MODELS_EXTRA, encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def load_models():
+    """models.json, with models_extra.json layered on top."""
     models = {}
     if os.path.exists(MODELS_JSON):
         with open(MODELS_JSON, encoding="utf-8") as fh:
             models = json.load(fh)
-    if os.path.exists(MODELS_EXTRA):
-        with open(MODELS_EXTRA, encoding="utf-8") as fh:
-            models.update(json.load(fh))
+    models.update(load_models_extra())
     return models
 
 
@@ -266,7 +275,7 @@ class Printer:
         if getattr(self.ep.spec, "model", None):
             return                       # reinkpy already knows this one
         name = self.ep.detected_model
-        entry = self.models.get(name or "")
+        entry = load_models_extra().get(name or "")
         if not entry or not entry.get("read_key"):
             return
 

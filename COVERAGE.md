@@ -2,7 +2,7 @@
 
 Search this page for your model (Ctrl+F).
 
-**1423 Epson models can be reset.** The percentage display varies, but that is cosmetic: the reset is the part that gets your printer printing again.
+**1424 Epson models can be reset.** The percentage display varies, but that is cosmetic: the reset is the part that gets your printer printing again.
 
 
 ## What the columns mean
@@ -15,24 +15,25 @@ Search this page for your model (Ctrl+F).
 | **Reset only** | Reset works, no percentage available |
 | **Read only** | Recognised, but no reset data, so writing is refused |
 
-**Listed is not the same as verified.** Only 4 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
+**Listed is not the same as verified.** Only 5 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
 
 
 ## Totals
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 4 |
+| Verified on hardware | 5 |
 | Reset + exact % | 102 |
 | Reset + estimated % | 219 |
 | Reset only | 1098 |
 | Read only | 165 |
-| **Total recognised** | **1588** |
+| **Total recognised** | **1589** |
 
 ## Verified on real hardware
 
 | Model | Key | Notes |
 |---|---|---|
+| **EP-M476T** | `0x364A` | characterised from scratch with its owner - read key, address layout, dividers and write key all confirmed on the printer, then reset successfully |
 | **ET-2710** | `0x0797` | reported working by a user |
 | **ET-2800** | `0x364A` | reported working by two users independently |
 | **ET-4800** | `0x364A` | reset verified 79.85% to 0.00%; also confirmed by a user whose firmware defeated the other reset tools |
@@ -44,6 +45,7 @@ Search this page for your model (Ctrl+F).
 |---|---|---|---|
 | Artisan 720 | `0x0636` | yes | yes |
 | Artisan 730 | `0x0877` | yes | yes |
+| EP-M476T ✅ | `0x364A` | yes | yes |
 | ET-2400 | `0x364A` | yes | yes |
 | ET-2401 | `0x364A` | yes | yes |
 | ET-2403 | `0x364A` | yes | yes |

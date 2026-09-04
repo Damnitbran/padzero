@@ -104,7 +104,7 @@ Windows only, for now. Linux users can use
 
 **[Check the coverage list](COVERAGE.md)** and search for your model.
 
-**1,423 Epson models can be reset.** Some also show a percentage, some
+**1,424 Epson models can be reset.** Some also show a percentage, some
 don't, but that part is cosmetic: the reset is what gets your printer
 printing again.
 
@@ -135,6 +135,7 @@ Verified on real hardware:
 | ET-4810 | `0x574B` | approx | detected, read, write path verified |
 | ET-2800 | `0x364A` | full | reported working by two users independently |
 | ET-2710 | `0x0797` | partial | reported working by a user |
+| EP-M476T | `0x364A` | full | characterised from scratch with its owner and reset successfully; in neither upstream database, see `models_extra.json` |
 
 `models.json` carries data for 110 models, but **listed is not the same as
 verified**. If yours works, please open an issue and say so. That's how this

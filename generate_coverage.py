@@ -32,6 +32,9 @@ VERIFIED = {
     "ET-4810": "detected, read, write path verified",
     "ET-2800": "reported working by two users independently",
     "ET-2710": "reported working by a user",
+    "EP-M476T": "characterised from scratch with its owner - read key, "
+                "address layout, dividers and write key all confirmed on "
+                "the printer, then reset successfully",
 }
 
 TOML = os.path.join(HERE, "reinkpy", "reinkpy", "epson.toml")
@@ -75,6 +78,23 @@ for spec in specs:
             "pct": pct,
             "verified": VERIFIED.get(name),
         }
+
+# Models characterised on real hardware live in models_extra.json and are
+# absent from epson.toml, so the loop above never sees them. Without this
+# they would be missing from the coverage list despite being fully
+# supported - which is exactly the "my model isn't listed" complaint that
+# put them in models_extra.json in the first place.
+for name, entry in padzero.load_models_extra().items():
+    rk = entry.get("read_key")
+    if name in rows or not rk:
+        continue
+    rkey = rk if isinstance(rk, int) else (rk[0] | (rk[1] << 8))
+    rows[name] = {
+        "rkey": "0x%04X" % rkey,
+        "tier": "exact" if entry.get("waste") else "reset",
+        "pct": "yes" if entry.get("waste") else "no",
+        "verified": VERIFIED.get(name),
+    }
 
 order = {"verified": 0, "exact": 1, "approx": 2, "reset": 3, "read-only": 4}
 counts = {}
