@@ -193,19 +193,33 @@ pip install pyinstaller pywin32
 pip install "reinkpy @ git+https://codeberg.org/atufi/reinkpy"
 
 REM window version
-python -m PyInstaller --onefile --windowed --name PadZero ^
+python -m PyInstaller --onefile --windowed --noupx --name PadZero ^
   --add-data "models.json;." ^
   --add-data "reinkpy\reinkpy\epson.toml;reinkpy" ^
   --hidden-import reinkpy --hidden-import reinkpy.epson ^
   --hidden-import reinkpy.d4 --hidden-import padzero padzero_gui.py
 
 REM command line version
-python -m PyInstaller --onefile --console --name padzero-cli ^
+python -m PyInstaller --onefile --console --noupx --name padzero-cli ^
   --add-data "models.json;." ^
   --add-data "reinkpy\reinkpy\epson.toml;reinkpy" ^
   --hidden-import reinkpy --hidden-import reinkpy.epson ^
   --hidden-import reinkpy.d4 padzero.py
+
+REM read-key finder for unlisted models
+python -m PyInstaller --onefile --console --noupx --name find_key_usb ^
+  --add-data "models.json;." ^
+  --add-data "reinkpy\reinkpy\epson.toml;reinkpy" ^
+  --hidden-import reinkpy --hidden-import reinkpy.epson ^
+  --hidden-import reinkpy.d4 find_key_usb.py
 ```
+
+`find_key_usb` needs the same payload as the others because it imports
+`padzero` for the transport. It did not always - if you are looking at an
+older build recipe that omits `--add-data`, that is why it fails.
+
+`--noupx` is deliberate. UPX packing measurably increases antivirus false
+positives on PyInstaller output and buys nothing at this size.
 
 `epson.toml` must land *inside* the `reinkpy` package directory, because
 reinkpy loads it through `importlib.resources` rather than a relative path.
@@ -219,7 +233,8 @@ reinkpy loads it through `importlib.resources` rather than a relative path.
 | `usb_direct.py` | SetupAPI enumeration and `CreateFileW` transport |
 | `models.json` | per-model waste counter data |
 | `build_modeldb.py` | regenerates `models.json` from epson_print_conf |
-| `find_key.py` | brute-force search for an unknown model's read key |
+| `find_key.py` | brute-force read-key search over SNMP (legacy) |
+| `find_key_usb.py` | brute-force read-key search over USB - use this one |
 
 ---
 

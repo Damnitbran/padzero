@@ -34,14 +34,14 @@ something absorbent under the printer meanwhile.
 | **PadZero.zip** | Everyone. Unzip, double-click. Avoids browser warnings. 12.6 MB |
 | PadZero.exe | Same program, no zip. 12.8 MB |
 | `padzero-cli.exe` | Command line, for people who want one. 9.8 MB |
-| `find_key_usb.exe` | Only if your model isn't listed yet. Finds its key over USB. 9.0 MB |
+| `find_key_usb.exe` | Only if your model isn't listed yet. Finds its key over USB. 9.8 MB |
 
 No installer, no Python, nothing to set up.
 
     PadZero.zip       0A4398825936489475131702A3F75640C5E593DF3739550CA0D1554008FB826C
     PadZero.exe       EA5487BBD15D638861C7BB44F9AA541F66A3AAEA264B27DCAA5CD6D3976E669E
     padzero-cli.exe   FA10D8307C15DFC7F63F538C155A2F80A51C0DA47D5E494B18654EF0CC0A3ED2
-    find_key_usb.exe  A3E5F3C165577C1747291006A3875C85E9D15802932AAB76B133EB1815AF4845
+    find_key_usb.exe  919B16180E532370BA428291C4B7D9446A894A8675982D9C5A149BD009C50F70
 
 Verify before running:
 
