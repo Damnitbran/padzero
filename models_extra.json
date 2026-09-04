@@ -1,0 +1,53 @@
+{
+ "EP-M476T": {
+  "_provenance": "Characterised on real hardware 2026-09-04 with the owner of a Japan-market EP-M476T (Reddit). Confirmed: read_key 0x364A over the D4 control channel; a full 0-255 EEPROM dump matching the ET-4800 layout, with main_waste [48,49,47]/63.46 reading 100.11% on a printer that was in fact reporting end of life, and addr 55 already holding 0x5E. write_key is NOT confirmed: rkey 0x364A spans groups using both Maribaya and Arantifo, and a no-op write probe was inconclusive because this firmware answers OK to a write whose value already matches, without checking the key. Maribaya is the ET-4800 family's and is tried first; if writes are refused, switch to Arantifo.",
+  "read_key": [
+   74,
+   54
+  ],
+  "write_key": "Maribaya",
+  "write_key_alt": "Arantifo",
+  "waste": {
+   "borderless_waste": {
+    "divider": 34.16,
+    "oids": [
+     50,
+     51,
+     47
+    ]
+   },
+   "main_waste": {
+    "divider": 63.46,
+    "oids": [
+     48,
+     49,
+     47
+    ]
+   },
+   "third_waste": {
+    "divider": 13.0,
+    "oids": [
+     252,
+     253,
+     254
+    ]
+   }
+  },
+  "raw_waste_reset": {
+   "252": 0,
+   "253": 0,
+   "254": 0,
+   "255": 94,
+   "28": 0,
+   "47": 0,
+   "48": 0,
+   "49": 0,
+   "50": 0,
+   "51": 0,
+   "52": 0,
+   "53": 0,
+   "54": 94,
+   "55": 94
+  }
+ }
+}

@@ -195,6 +195,7 @@ pip install "reinkpy @ git+https://codeberg.org/atufi/reinkpy"
 REM window version
 python -m PyInstaller --onefile --windowed --noupx --name PadZero ^
   --add-data "models.json;." ^
+  --add-data "models_extra.json;." ^
   --add-data "reinkpy\reinkpy\epson.toml;reinkpy" ^
   --hidden-import reinkpy --hidden-import reinkpy.epson ^
   --hidden-import reinkpy.d4 --hidden-import padzero padzero_gui.py
@@ -202,6 +203,7 @@ python -m PyInstaller --onefile --windowed --noupx --name PadZero ^
 REM command line version
 python -m PyInstaller --onefile --console --noupx --name padzero-cli ^
   --add-data "models.json;." ^
+  --add-data "models_extra.json;." ^
   --add-data "reinkpy\reinkpy\epson.toml;reinkpy" ^
   --hidden-import reinkpy --hidden-import reinkpy.epson ^
   --hidden-import reinkpy.d4 padzero.py
@@ -209,6 +211,7 @@ python -m PyInstaller --onefile --console --noupx --name padzero-cli ^
 REM read-key finder for unlisted models
 python -m PyInstaller --onefile --console --noupx --name find_key_usb ^
   --add-data "models.json;." ^
+  --add-data "models_extra.json;." ^
   --add-data "reinkpy\reinkpy\epson.toml;reinkpy" ^
   --hidden-import reinkpy --hidden-import reinkpy.epson ^
   --hidden-import reinkpy.d4 find_key_usb.py

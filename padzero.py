@@ -92,6 +92,7 @@ else:
         return []
 
 MODELS_JSON = os.path.join(BUNDLE, "models.json")
+MODELS_EXTRA = os.path.join(BUNDLE, "models_extra.json")
 DUMP_DIR = os.path.join(APPDIR, "dumps")
 
 
@@ -166,10 +167,21 @@ class WinUsbPrintIO:
 
 
 def load_models():
-    if not os.path.exists(MODELS_JSON):
-        return {}
-    with open(MODELS_JSON, encoding="utf-8") as fh:
-        return json.load(fh)
+    """models.json, with models_extra.json layered on top.
+
+    models.json is regenerated wholesale by build_modeldb.py from
+    epson_print_conf, so anything hand-added there is lost on the next
+    rebuild. models_extra.json is where models characterised on real
+    hardware live, and it wins on conflict.
+    """
+    models = {}
+    if os.path.exists(MODELS_JSON):
+        with open(MODELS_JSON, encoding="utf-8") as fh:
+            models = json.load(fh)
+    if os.path.exists(MODELS_EXTRA):
+        with open(MODELS_EXTRA, encoding="utf-8") as fh:
+            models.update(json.load(fh))
+    return models
 
 
 def infer_waste(reset_addrs, models):
@@ -235,6 +247,43 @@ class Printer:
         self.dev = reinkpy.UsbDevice(self.io)
         self.ep = self.dev.epson
         self.models = models
+        self._adopt_extra_spec()
+
+    def _adopt_extra_spec(self, wkey=None):
+        """Give reinkpy a spec for a model it doesn't know, from our data.
+
+        reinkpy supplies the read/write keys, so a model absent from
+        epson.toml gets no spec at all, and Pad Zero correctly reports
+        coverage 'none' and refuses to write. That is the right default for
+        a model nobody has characterised - but wrong for one we HAVE
+        characterised on real hardware and recorded in models_extra.json.
+
+        Only fires when reinkpy has no spec of its own, so it can never
+        override upstream data. The write key goes on the wire Caesar
+        shifted up one byte, which is how epson.toml stores `wkey` versus
+        the readable `wkey1`.
+        """
+        if getattr(self.ep.spec, "model", None):
+            return                       # reinkpy already knows this one
+        name = self.ep.detected_model
+        entry = self.models.get(name or "")
+        if not entry or not entry.get("read_key"):
+            return
+
+        from reinkpy.epson import Spec
+        rk = entry["read_key"]
+        rkey = rk if isinstance(rk, int) else (rk[0] | (rk[1] << 8))
+        readable = wkey or entry.get("write_key")
+        wire = (bytes(0 if b == 0 else b + 1 for b in readable.encode("ascii"))
+                if readable else None)
+
+        addrs = sorted(int(a) for a in (entry.get("raw_waste_reset") or {}))
+        mem = [{"addr": addrs, "desc": "waste counter (models_extra.json)"}] \
+            if addrs else []
+
+        self.ep.spec = Spec(rkey=rkey, wkey=wire, wkey1=readable,
+                            model=name, models=[name], mem=mem)
+        self._from_extra = True
 
     @property
     def model(self):
@@ -498,6 +547,10 @@ def main():
     ap.add_argument("--reset", action="store_true", help="reset the waste counters")
     ap.add_argument("--yes", action="store_true", help="required to actually write")
     ap.add_argument("--explain", action="store_true", help="what a reset does and does not fix")
+    ap.add_argument("--wkey", metavar="NAME",
+                    help="override the write key for a model carried in "
+                         "models_extra.json, e.g. --wkey Arantifo. Only "
+                         "used when reinkpy has no spec of its own.")
     ap.add_argument("-v", "--verbose", action="store_true", help="show protocol logging")
     args = ap.parse_args()
 
@@ -542,6 +595,8 @@ def main():
         return 1
 
     pr = Printer(paths[args.device], models)
+    if args.wkey:
+        pr._adopt_extra_spec(wkey=args.wkey)
 
     print("=" * 62)
     print("  %s" % (pr.model or "UNKNOWN MODEL"))
