@@ -285,6 +285,111 @@ def dump_block(probe, rkey, lo, hi, which):
     return name
 
 
+WRITE_CMD = ("|", "B")
+
+
+def candidate_wkeys(rkey, everything=False):
+    """Write keys worth trying for a model whose read key is `rkey`.
+
+    epson.toml stores both `wkey` (what goes on the wire) and `wkey1` (the
+    same string shifted down a byte, which is the readable Indonesian word).
+    Groups that share a read key do NOT necessarily share a write key - the
+    0x364A family alone contains both Maribaya and Arantifo - which is the
+    whole reason this probe exists.
+    """
+    import importlib.resources as ir
+    import tomllib
+    data = tomllib.loads(
+        ir.files("reinkpy").joinpath("epson.toml").read_bytes().decode("utf-8"))
+
+    same, other = [], []
+    for g in data.get("EPSON", []):
+        wk = g.get("wkey")
+        if not wk:
+            continue
+        entry = (wk, g.get("wkey1") or "?", (g.get("models") or ["?"])[0])
+        (same if g.get("rkey") == rkey else other).append(entry)
+
+    seen, out = set(), []
+    for wk, wk1, model in same + (other if everything else []):
+        if wk in seen:
+            continue
+        seen.add(wk)
+        out.append((wk, wk1, model))
+    return out
+
+
+def try_wkeys(probe, rkey, addr, everything=False):
+    """Identify the write key with a no-op write.
+
+    Reads `addr`, then writes the SAME value back under each candidate key.
+    A wrong key is refused and changes nothing; a right key returns ':OK;'
+    and writes the value that was already there. Either way the printer is
+    left exactly as found, which is what makes this safe to run on someone
+    else's printer.
+    """
+    print("=" * 62)
+    print("WRITE KEY PROBE   key 0x%04X   addr %d" % (rkey, addr))
+    print("=" * 62)
+
+    kind, data = probe.probe(rkey, addr)
+    if kind != "hit":
+        print("Could not read addr %d first (%s). Aborting - this probe only"
+              % (addr, kind))
+        print("writes a value back that it has already read.")
+        return None
+    current = int(data[4:], 16)
+    print("addr %d currently reads %d (0x%02X)." % (addr, current, current))
+    print("Each candidate writes that same value back, so a successful")
+    print("write is a no-op and a failed one changes nothing.")
+    print("")
+
+    cands = candidate_wkeys(rkey, everything)
+    if not cands:
+        print("No candidate write keys found for read key 0x%04X." % rkey)
+        return None
+    print("Trying %d candidate key(s)." % len(cands))
+    print("")
+
+    accepted = []
+    for wk, wk1, model in cands:
+        payload = struct.pack("<HB", addr, current) + wk.encode("ascii")
+        try:
+            with quiet():
+                reply = probe.ep.ctrl((WRITE_CMD, payload))[0]
+        except Exception as e:
+            print("  %-10s (%-10s) error: %s" % (wk1, model, type(e).__name__))
+            continue
+        ok = b":OK;" in (reply or b"")
+        print("  %-10s (as used by %-10s) -> %s"
+              % (wk1, model, "ACCEPTED" if ok else "refused"))
+        if ok:
+            accepted.append((wk, wk1))
+
+    print("")
+    after, data2 = probe.probe(rkey, addr)
+    if after == "hit":
+        back = int(data2[4:], 16)
+        print("addr %d now reads %d (was %d) - %s"
+              % (addr, back, current,
+                 "unchanged, as intended" if back == current
+                 else "CHANGED, this is unexpected, stop and report it"))
+    else:
+        print("Could not re-read addr %d to confirm (%s)." % (addr, after))
+
+    print("=" * 62)
+    if accepted:
+        print("WRITE KEY: %s" % ", ".join(
+            "%s (wire: %s)" % (w1, w) for w, w1 in accepted))
+        print("")
+        print("Post this on the thread along with the read key.")
+    else:
+        print("No candidate was accepted.")
+        print("Either this model uses a write key not in the database, or")
+        print("writes are disabled in firmware. Not a reason to guess.")
+    return accepted
+
+
 def reinkpy_missing():
     """The source ZIP does not ship reinkpy - it is vendored at build time
     (see .gitignore / requirements.txt). Running find_key_usb.py straight
@@ -412,7 +517,26 @@ def main():
                     help="read key for --dump, e.g. --key 0x364A")
     ap.add_argument("--range", default="0-255", metavar="LO-HI",
                     help="address range for --dump (default 0-255)")
+    ap.add_argument("--try-wkey", action="store_true",
+                    help="identify the write key by writing a value back to "
+                         "the address it was just read from (a no-op). "
+                         "Needs --key.")
+    ap.add_argument("--wkey-addr", type=int, default=47,
+                    help="address for --try-wkey (default 47)")
+    ap.add_argument("--all-wkeys", action="store_true",
+                    help="with --try-wkey, also try keys from groups with a "
+                         "different read key")
     args = ap.parse_args()
+
+    if args.try_wkey and args.key is None:
+        print("--try-wkey needs a key. Find it first, then pass it back:")
+        print("    python find_key_usb.py --try-wkey --key 0x364A")
+        return 1
+
+    if args.try_wkey and args.raw:
+        print("--try-wkey will not run on the raw pipe. Writes must go over")
+        print("the D4 control channel.")
+        return 1
 
     if args.dump and args.key is None:
         print("--dump needs a key. Run without --dump first to find it,")
@@ -458,6 +582,11 @@ def main():
             print("rather than the 'IPP Class Driver'.")
         print("=" * 62)
         return 1
+
+    if args.try_wkey:
+        with probe:
+            try_wkeys(probe, args.key, args.wkey_addr, args.all_wkeys)
+        return 0
 
     if args.dump:
         lo, hi = parse_range(args.range)
