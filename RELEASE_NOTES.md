@@ -34,14 +34,14 @@ something absorbent under the printer meanwhile.
 | **PadZero.zip** | Everyone. Unzip, double-click. Avoids browser warnings. 12.6 MB |
 | PadZero.exe | Same program, no zip. 12.8 MB |
 | `padzero-cli.exe` | Command line, for people who want one. 9.8 MB |
-| `find_key_usb.exe` | Only if your model isn't listed yet. Finds its key over USB. 9.8 MB |
+| `find_key_usb.exe` | Only if your model isn't listed yet. Finds its key over USB. 9.9 MB |
 
 No installer, no Python, nothing to set up.
 
-    PadZero.zip       0A4398825936489475131702A3F75640C5E593DF3739550CA0D1554008FB826C
-    PadZero.exe       EA5487BBD15D638861C7BB44F9AA541F66A3AAEA264B27DCAA5CD6D3976E669E
-    padzero-cli.exe   FA10D8307C15DFC7F63F538C155A2F80A51C0DA47D5E494B18654EF0CC0A3ED2
-    find_key_usb.exe  9F229C2E822A3EE9F62A00B921EC88147FE0EE818D53BD7273E1A72EB79CDDB7
+    PadZero.zip       42887CFE1C718087C9F5E7719529872F6A648CEB52B0E01B09DB215F3D782243
+    PadZero.exe       AE2F9B9A1274DF5FFC2FD2A813AFD18C37C4EDC1BF77BE27AC14A63ACFA3694D
+    padzero-cli.exe   D2615690583071D028B19144A53F57B86082BDD950EA54145E846D2FE3F8AB93
+    find_key_usb.exe  BD3A1A3AEE5ECBCB275EE0203A5773F08C906AC982D339D8450CF5EDE9B51A92
 
 Verify before running:
 
@@ -65,6 +65,22 @@ Models that report raw values instead of percentages mark the addresses that
 changed:
 
     Platen pad counters    : 28:0  47:0  50:0  51:0  55:94  252:25->0  253:0
+
+## What's new in v0.4.0
+
+- **Printers that report their full name now get recognised.** A Stylus
+  TX200 tells the computer it is a "Stylus TX200". The model database calls
+  the same printer "TX200". Those two strings aren't equal, so Pad Zero said
+  it didn't know the printer and refused to write to it, even though every
+  bit of data it needed was sitting right there. It now drops the range name
+  and looks again. This affected Stylus, Stylus Photo, WorkForce and
+  Expression models. Reported by a TX200 owner.
+- **Three more models confirmed on real hardware.** ET-2860 and L3111, both
+  reported reset by their owners, plus an ET-4800 done from Linux.
+- **Linux and macOS answered properly in the README.** Short version: you
+  don't need Pad Zero. reinkpy, which does all the real work here, runs
+  natively on Linux and performs the same reset. Two commands, they're in
+  the README now.
 
 ## What's new in v0.3.0
 
@@ -105,16 +121,20 @@ shipped firmware that permanently blocks resets, and it can't be rolled back.
 
 ## Verified hardware
 
-| Model | Key group | Coverage | Status |
-|---|---|---|---|
-| ET-4800 | `0x364A` | exact | reset verified 79.85% to 0.00% |
-| ET-4810 | `0x574B` | approx | detected, read, write path verified |
-| ET-2800 | `0x364A` | exact | reported working by a user |
+| Model | Key group | Status |
+|---|---|---|
+| ET-4800 | `0x364A` | reset verified 79.85% to 0.00% |
+| ET-4810 | `0x574B` | detected, read, write path verified |
+| ET-2800 | `0x364A` | reported working by two owners |
+| ET-2710 | `0x0797` | reported working by an owner |
+| ET-2860 | `0x364A` | reported working by an owner |
+| L3111 | `0x0797` | reported working by an owner |
+| EP-M476T | `0x364A` | worked out from scratch with the owner, then reset |
 
-**1,423 Epson models can be reset.** Check yours in
+**1,424 Epson models can be reset.** Check yours in
 [COVERAGE.md](../../blob/main/COVERAGE.md).
 
-Listed is not the same as verified: only the three above have been confirmed
+Listed is not the same as verified: only the seven above have been confirmed
 on real hardware. If yours works, please open an issue and it moves up. If it
 reports `coverage: none`, click **Save a backup** and attach the file.
 
@@ -129,5 +149,9 @@ a dry run.
 Standing on [reinkpy](https://codeberg.org/atufi/reinkpy),
 [epson_print_conf](https://github.com/Ircama/epson_print_conf), and
 [ReInk](https://github.com/lion-simba/reink).
+
+Free, and staying that way. If it saved your printer there's a coffee tip
+jar at [ko-fi.com/gangstabran](https://ko-fi.com/gangstabran), but nothing
+here depends on it.
 
 AGPL-3.0-or-later. Not affiliated with Seiko Epson Corporation.
