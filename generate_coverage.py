@@ -32,6 +32,8 @@ VERIFIED = {
     "ET-4810": "detected, read, write path verified",
     "ET-2800": "reported working by two users independently",
     "ET-2710": "reported working by a user",
+    "ET-2860": "reported working by a user - counters reset, printing restored",
+    "L3111": "reported working by a user",
     "EP-M476T": "characterised from scratch with its owner - read key, "
                 "address layout, dividers and write key all confirmed on "
                 "the printer, then reset successfully",

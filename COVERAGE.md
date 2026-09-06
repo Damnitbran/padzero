@@ -15,17 +15,17 @@ Search this page for your model (Ctrl+F).
 | **Reset only** | Reset works, no percentage available |
 | **Read only** | Recognised, but no reset data, so writing is refused |
 
-**Listed is not the same as verified.** Only 5 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
+**Listed is not the same as verified.** Only 7 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
 
 
 ## Totals
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 5 |
+| Verified on hardware | 7 |
 | Reset + exact % | 102 |
-| Reset + estimated % | 219 |
-| Reset only | 1098 |
+| Reset + estimated % | 218 |
+| Reset only | 1097 |
 | Read only | 165 |
 | **Total recognised** | **1589** |
 
@@ -36,8 +36,10 @@ Search this page for your model (Ctrl+F).
 | **EP-M476T** | `0x364A` | characterised from scratch with its owner - read key, address layout, dividers and write key all confirmed on the printer, then reset successfully |
 | **ET-2710** | `0x0797` | reported working by a user |
 | **ET-2800** | `0x364A` | reported working by two users independently |
+| **ET-2860** | `0x364A` | reported working by a user - counters reset, printing restored |
 | **ET-4800** | `0x364A` | reset verified 79.85% to 0.00%; also confirmed by a user whose firmware defeated the other reset tools |
 | **ET-4810** | `0x574B` | detected, read, write path verified |
+| **L3111** | `0x0797` | reported working by a user |
 
 ## Every recognised model
 
@@ -189,7 +191,7 @@ Search this page for your model (Ctrl+F).
 | ET-2851 | `0x364A` | yes | estimated |
 | ET-2853 | `0x364A` | yes | estimated |
 | ET-2855 | `0x364A` | yes | estimated |
-| ET-2860 | `0x364A` | yes | estimated |
+| ET-2860 ✅ | `0x364A` | yes | estimated |
 | ET-2861 | `0x364A` | yes | estimated |
 | ET-2863 | `0x364A` | yes | estimated |
 | ET-2865 | `0x364A` | yes | estimated |
@@ -681,7 +683,7 @@ Search this page for your model (Ctrl+F).
 | L3108 | `0x0797` | yes | no |
 | L3109 | `0x0797` | yes | no |
 | L3110 | `0x0797` | yes | no |
-| L3111 | `0x0797` | yes | no |
+| L3111 ✅ | `0x0797` | yes | no |
 | L3114 | `0x0797` | yes | no |
 | L3115 | `0x0797` | yes | no |
 | L3116 | `0x0797` | yes | no |

@@ -193,6 +193,31 @@ def load_models():
     return models
 
 
+def resolve_alias(detected, known):
+    """Map a printer's self-reported name onto a database key.
+
+    reinkpy matches the USB `MDL` string against epson.toml exactly (it
+    only strips a trailing " Series"), but older printers put the product
+    family in that string: a Stylus TX200 reports itself as
+    "Stylus TX200" while every database calls it "TX200". The model is
+    fully supported - the name just does not line up - so the printer
+    comes back unrecognised and the reset is refused for nothing.
+
+    Drop leading words one at a time and take the first exact hit. Leading
+    words only, and an exact key match only, so this can reach the same
+    physical printer under its catalogue name but can never land on a
+    different model.
+    """
+    if not detected:
+        return None
+    parts = detected.split()
+    for i in range(1, len(parts)):
+        candidate = " ".join(parts[i:])
+        if candidate in known:
+            return candidate
+    return None
+
+
 def infer_waste(reset_addrs, models):
     """Work out a probable waste layout for a model with no divider data.
 
@@ -256,7 +281,24 @@ class Printer:
         self.dev = reinkpy.UsbDevice(self.io)
         self.ep = self.dev.epson
         self.models = models
+        self.alias = None
+        self._match_alias()
         self._adopt_extra_spec()
+
+    def _match_alias(self):
+        """Retry the database lookup under the printer's catalogue name.
+
+        Only runs when reinkpy found nothing, so it can never override an
+        upstream match. See resolve_alias for why the names differ.
+        """
+        if getattr(self.ep.spec, "model", None):
+            return
+        from reinkpy.epson import get_db
+        detected = self.ep.detected_model
+        alias = resolve_alias(detected, get_db())
+        if alias:
+            self.ep.configure(alias)
+            self.alias = (detected, alias)
 
     def _adopt_extra_spec(self, wkey=None):
         """Give reinkpy a spec for a model it doesn't know, from our data.
@@ -612,6 +654,8 @@ def main():
     print("=" * 62)
     print("  serial     : %s" % (pr.serial or "?"))
     print("  presents as: %s" % (pr.detected or "?"))
+    if pr.alias:
+        print("  matched as : %s (family name dropped)" % pr.alias[1])
     rk = getattr(pr.ep.spec, "rkey", None)
     print("  key group  : %s / %r" % (hex(rk) if rk else "?",
                                       getattr(pr.ep.spec, "wkey", None)))

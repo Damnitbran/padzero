@@ -95,8 +95,28 @@ The cable is only needed while the reset runs. It does not change how you
 print. If you printed over wi-fi before, you still will afterwards, and you
 only need to plug in again if the counter ever has to be reset a second time.
 
-Windows only, for now. Linux users can use
-[reinkpy](https://codeberg.org/atufi/reinkpy) directly.
+### Linux and macOS
+
+Windows only, for now - but you do not need Pad Zero on Linux. Everything
+that does the actual work is [reinkpy](https://codeberg.org/atufi/reinkpy),
+which runs natively there and does the same reset. Pad Zero exists because
+Windows will not hand a normal program the printer device; Linux will.
+
+```
+pip install "reinkpy[ui,usb]@git+https://codeberg.org/atufi/reinkpy"
+python -m reinkpy.ui          # GUI
+```
+
+or from Python:
+
+```python
+import reinkpy
+e = reinkpy.Device.from_usb(manufacturer='EPSON').epson
+print(e.spec.model)           # empty means it did not recognise your printer
+e.reset_waste()
+```
+
+Confirmed by a user on an ET-4800 this way.
 
 ---
 
