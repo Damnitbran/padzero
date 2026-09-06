@@ -273,6 +273,13 @@ Standing entirely on:
 - [ReInk](https://github.com/lion-simba/reink), the original work, roughly 15
   years ago
 
+## Support
+
+Pad Zero is free and always will be - no paid tier, no nag screens, nothing
+held back. If it saved you a printer and you feel like buying me a coffee,
+[ko-fi.com/gangstabran](https://ko-fi.com/gangstabran). Entirely optional and
+it changes nothing about the tool.
+
 ## Licence
 
 AGPL-3.0-or-later. See [LICENSE](LICENSE).
