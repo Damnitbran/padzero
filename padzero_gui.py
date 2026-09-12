@@ -146,6 +146,7 @@ class App:
     def __init__(self, root):
         self.root = root
         self.q = queue.Queue()
+        self._last_step = ""
         self.models = core.load_models()
         self.printer = None
         self.busy = False
@@ -256,6 +257,19 @@ class App:
 
         threading.Thread(target=worker, daemon=True).start()
 
+    def _post(self, text):
+        """Status text from the worker thread. Queued, not set directly:
+        tkinter may only be touched from the UI thread."""
+        self._last_step = text
+        self.q.put(("progress", text, None))
+
+    def _progress(self, doing):
+        """A progress callback for save_dump that keeps the status line
+        moving, so a slow printer is not mistaken for a stuck one."""
+        def report(done, total):
+            self._post("%s, %d of %d..." % (doing, done, total))
+        return report
+
     @staticmethod
     def _is_comms_glitch(err):
         """A cold or stuck USB channel makes reinkpy's D4 handshake return
@@ -272,9 +286,30 @@ class App:
         try:
             while True:
                 tag, res, err = self.q.get_nowait()
+                if tag == "progress":
+                    self.status(res)
+                    continue
                 self.busy = False
                 self._buttons(True)
-                if err and self._is_comms_glitch(err):
+                if isinstance(err, core.PrinterSilent):
+                    self.status("The printer stopped answering", BAD)
+                    messagebox.showwarning(
+                        "Pad Zero",
+                        "The printer went quiet partway through and did not "
+                        "answer for %d seconds, so Pad Zero stopped waiting."
+                        "\n\nLast step: %s\n\n"
+                        "If that was still the backup, nothing on the "
+                        "printer was changed.\n\n"
+                        "Try this:\n"
+                        "1. Turn the printer off, wait ten seconds, turn it "
+                        "back on and let it finish starting up.\n"
+                        "2. Unplug the USB cable and plug it back in.\n"
+                        "3. Click Check, then try again.\n\n"
+                        "If it stops at the same point every time, open an "
+                        "issue on GitHub with your exact model name."
+                        % (core.UsbPrinter.timeout if core.UsbPrinter else 15,
+                           self._last_step or "starting"))
+                elif err and self._is_comms_glitch(err):
                     self.status("Lost the connection to the printer", BAD)
                     messagebox.showwarning(
                         "Pad Zero",
@@ -746,7 +781,8 @@ class App:
         if not self.printer:
             return
         self.status("Reading the printer's memory, this takes a moment...")
-        self._run(self.printer.save_dump, "backup")
+        report = self._progress("Reading the printer's memory")
+        self._run(lambda: self.printer.save_dump(progress=report), "backup")
 
     def after_backup(self, path):
         self.status("Backup saved", GOOD)
@@ -791,10 +827,13 @@ class App:
 
     def _reset_work(self, plan):
         before = self.printer.counters()
-        path = self.printer.save_dump(tag="pre-reset")
+        path = self.printer.save_dump(
+            tag="pre-reset", progress=self._progress("Saving a backup"))
+        self._post("Backup saved, resetting...")
         ok = True
         for addr, value in plan:
             ok = bool(self.printer.ep.write_eeprom((addr, value))) and ok
+        self._post("Reset written, reading the counters back...")
         return path, ok, self.printer.counters(), before
 
     def after_reset(self, res):

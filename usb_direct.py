@@ -23,6 +23,7 @@ import ctypes
 import re
 import struct
 import sys
+import threading
 from ctypes import wintypes
 
 # ---------------------------------------------------------------- Win32
@@ -88,6 +89,31 @@ kernel32.ReadFile.argtypes = [
     wintypes.HANDLE, ctypes.c_void_p, wintypes.DWORD,
     ctypes.POINTER(wintypes.DWORD), ctypes.c_void_p]
 kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+kernel32.GetCurrentThreadId.restype = wintypes.DWORD
+kernel32.OpenThread.restype = wintypes.HANDLE
+kernel32.OpenThread.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+kernel32.CancelSynchronousIo.restype = wintypes.BOOL
+kernel32.CancelSynchronousIo.argtypes = [wintypes.HANDLE]
+
+THREAD_TERMINATE = 0x0001          # the access CancelSynchronousIo needs
+ERROR_OPERATION_ABORTED = 995
+
+# How long one ReadFile/WriteFile may sit with no answer from the printer
+# before it is abandoned. A healthy printer answers a D4 packet in
+# milliseconds; the slowest reply seen on real hardware is well under a
+# second. Fifteen seconds is long enough that a sleepy printer waking up
+# is not mistaken for a dead one.
+IO_TIMEOUT = 15.0
+
+
+class PrinterSilent(Exception):
+    """The printer stopped answering and the wait was abandoned.
+
+    Deliberately not an OSError. The transport wrapper in padzero.py turns
+    OSError into an empty read so reinkpy can retry, and reinkpy retries
+    in nested loops. A timeout that came back as OSError would be waited
+    out dozens of times over. This one goes straight up to the caller.
+    """
 
 
 EPSON_VID = "04b8"
@@ -160,10 +186,28 @@ def list_usb_printers():
 
 
 class UsbPrinter:
-    """Bidirectional handle onto a USB printer device interface."""
+    """Bidirectional handle onto a USB printer device interface.
+
+    Every read and write is synchronous, and usbprint.sys puts no time
+    limit on either: a ReadFile against a printer that has stopped
+    replying never returns. Seen in the wild as Pad Zero sitting on
+    "Saving a backup" forever. So each call is guarded by a timer on
+    another thread that calls CancelSynchronousIo on this one when the
+    limit passes, which makes the stuck call fail with
+    ERROR_OPERATION_ABORTED, and that is reported as PrinterSilent.
+
+    The handle stays plain synchronous. Overlapped I/O would also give a
+    timeout, but it changes every call's signature and cannot be tested
+    here without the printer. The watchdog leaves the working path
+    byte-for-byte as it was.
+    """
+
+    timeout = IO_TIMEOUT
 
     def __init__(self, path):
         self.path = path
+        self._seq = 0
+        self._dead = False
         self.h = kernel32.CreateFileW(
             path, GENERIC_READ | GENERIC_WRITE,
             FILE_SHARE_READ | FILE_SHARE_WRITE, None,
@@ -171,18 +215,62 @@ class UsbPrinter:
         if self.h == INVALID_HANDLE_VALUE:
             raise ctypes.WinError(ctypes.get_last_error())
 
+    def _guarded(self, what, call):
+        """Run call() (a ReadFile or WriteFile) under the watchdog.
+
+        Returns True if the Win32 call succeeded. Raises PrinterSilent if
+        the watchdog had to abort it, and OSError for any other failure.
+        Once the printer has gone silent every later call fails at once:
+        reinkpy's channel teardown does one more exchange on the way out,
+        and it should not be waited for a second time.
+        """
+        if self._dead:
+            raise PrinterSilent(
+                "The printer stopped answering and has not come back.")
+
+        self._seq += 1
+        seq = self._seq
+        fired = threading.Event()
+        thread = kernel32.OpenThread(THREAD_TERMINATE, False,
+                                     kernel32.GetCurrentThreadId())
+
+        def abandon():
+            # A timer that fires late, after this call has already
+            # returned, must not abort whatever call comes next.
+            if self._seq == seq and not self._dead:
+                fired.set()
+                kernel32.CancelSynchronousIo(thread)
+
+        timer = threading.Timer(self.timeout, abandon)
+        timer.daemon = True
+        timer.start()
+        try:
+            ok = call()
+            err = ctypes.get_last_error()
+        finally:
+            timer.cancel()
+            if thread:
+                kernel32.CloseHandle(thread)
+        if ok:
+            return True
+        if fired.is_set() or err == ERROR_OPERATION_ABORTED:
+            self._dead = True
+            raise PrinterSilent(
+                "The printer stopped answering: no reply to a %s for %d "
+                "seconds." % (what, self.timeout))
+        raise ctypes.WinError(err)
+
     def write(self, data: bytes) -> int:
         wrote = wintypes.DWORD(0)
-        if not kernel32.WriteFile(self.h, data, len(data),
-                                  ctypes.byref(wrote), None):
-            raise ctypes.WinError(ctypes.get_last_error())
+        self._guarded("write", lambda: kernel32.WriteFile(
+            self.h, data, len(data), ctypes.byref(wrote), None))
         return wrote.value
 
     def read(self, size=4096) -> bytes:
         buf = ctypes.create_string_buffer(size)
         got = wintypes.DWORD(0)
-        if not kernel32.ReadFile(self.h, buf, size, ctypes.byref(got), None):
-            raise ctypes.WinError(ctypes.get_last_error())
+        self._guarded("read", lambda: kernel32.ReadFile(
+            self.h, buf, size, ctypes.byref(got), None))
         return buf.raw[: got.value]
 
     def close(self):

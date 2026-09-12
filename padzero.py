@@ -82,11 +82,16 @@ def quiet():
 WINDOWS = sys.platform == "win32"
 
 if WINDOWS:
-    from usb_direct import UsbPrinter, list_usb_printers
+    from usb_direct import UsbPrinter, list_usb_printers, PrinterSilent
 else:
     # usb_direct binds setupapi/kernel32, so it cannot even be imported
     # elsewhere. See list_printers() / open_transport() below.
     UsbPrinter = None
+
+    class PrinterSilent(Exception):
+        """Raised by the Windows transport when the printer stops
+        answering. Never raised on other platforms, defined so callers
+        can catch it unconditionally."""
 
     def list_usb_printers():
         return []
@@ -448,10 +453,44 @@ class Printer:
                         "percent": None})
         return out
 
-    def dump(self, first=0, last=255):
-        return self.read(range(first, last + 1))
+    DUMP_CHUNK = 32
 
-    def save_dump(self, tag=""):
+    def dump_addrs(self, first=0, last=255):
+        """Every address a backup should hold.
+
+        The first 256 bytes, plus any address the reset touches that lies
+        outside them. The XP-960 family resets 0x1ED, and a backup that
+        stops at 0xFF would be missing the one value it exists to keep.
+        Models that address memory with a single byte cannot reach past
+        0xFF, so nothing is added for them.
+        """
+        addrs = list(range(first, last + 1))
+        if getattr(self.ep.spec, "rlen", 2) == 1:
+            return addrs
+        touched = set(self.reset_addrs)
+        try:
+            touched.update(a for a, _ in self.reset_plan()[0])
+        except Exception:
+            pass
+        addrs += sorted(a for a in touched if a < first or a > last)
+        return addrs
+
+    def dump(self, first=0, last=255, progress=None):
+        """Read the backup addresses, in chunks so progress can be shown.
+
+        progress(done, total) is called after each chunk. Without it a
+        256-address read is one silent stretch, and someone watching the
+        window cannot tell slow from stuck.
+        """
+        addrs = self.dump_addrs(first, last)
+        out = {}
+        for i in range(0, len(addrs), self.DUMP_CHUNK):
+            out.update(self.read(addrs[i:i + self.DUMP_CHUNK]))
+            if progress:
+                progress(min(i + self.DUMP_CHUNK, len(addrs)), len(addrs))
+        return out
+
+    def save_dump(self, tag="", progress=None):
         os.makedirs(DUMP_DIR, exist_ok=True)
         stamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
         name = "%s_%s%s.json" % (self.model or "unknown", stamp,
@@ -459,7 +498,8 @@ class Printer:
         path = os.path.join(DUMP_DIR, name)
         data = {"model": self.model, "detected": self.detected,
                 "serial": self.serial, "timestamp": stamp,
-                "eeprom": {str(k): v for k, v in self.dump().items()}}
+                "eeprom": {str(k): v
+                           for k, v in self.dump(progress=progress).items()}}
         with open(path, "w", encoding="utf-8") as fh:
             json.dump(data, fh, indent=1)
         return path
@@ -492,6 +532,14 @@ class Printer:
 
 
 # ------------------------------------------------------------------- views
+def cli_progress(done, total):
+    """One line that overwrites itself while a backup is read."""
+    print("\r  reading %3d of %d addresses..." % (done, total), end="",
+          flush=True)
+    if done >= total:
+        print()
+
+
 def bar(pct, width=34):
     filled = max(0, min(int(round(pct / 100 * width)), width))
     return "#" * filled + "." * (width - filled)
@@ -677,7 +725,7 @@ def main():
         show_counters(before)
 
     if args.dump:
-        path = pr.save_dump()
+        path = pr.save_dump(progress=cli_progress)
         print("\nEEPROM dump -> %s" % path)
 
     if args.reset:
@@ -703,7 +751,7 @@ def main():
             print("\n  Dry run. Nothing was written. Add --yes to apply.")
             return 0
 
-        path = pr.save_dump(tag="pre-reset")
+        path = pr.save_dump(tag="pre-reset", progress=cli_progress)
         print("\n  backup -> %s" % path)
         print("  writing...")
         ok = pr.apply(plan)
@@ -719,4 +767,10 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except PrinterSilent as exc:
+        print("\n  %s" % exc)
+        print("  Turn the printer off and on, reseat the USB cable, and "
+              "run this again.")
+        sys.exit(2)
