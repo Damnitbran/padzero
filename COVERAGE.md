@@ -15,15 +15,15 @@ Search this page for your model (Ctrl+F).
 | **Reset only** | Reset works, no percentage available |
 | **Read only** | Recognised, but no reset data, so writing is refused |
 
-**Listed is not the same as verified.** Only 7 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
+**Listed is not the same as verified.** Only 8 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
 
 
 ## Totals
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 7 |
-| Reset + exact % | 102 |
+| Verified on hardware | 8 |
+| Reset + exact % | 101 |
 | Reset + estimated % | 218 |
 | Reset only | 1097 |
 | Read only | 165 |
@@ -40,6 +40,7 @@ Search this page for your model (Ctrl+F).
 | **ET-4800** | `0x364A` | reset verified 79.85% to 0.00%; also confirmed by a user whose firmware defeated the other reset tools |
 | **ET-4810** | `0x574B` | detected, read, write path verified |
 | **L3111** | `0x0797` | reported working by a user |
+| **L4150** | `0x0849` | reported working by a user |
 
 ## Every recognised model
 
@@ -93,7 +94,7 @@ Search this page for your model (Ctrl+F).
 | L386 | `0x0810` | yes | yes |
 | L395 | `0x0810` | yes | yes |
 | L405 | `0x0395` | yes | yes |
-| L4150 | `0x0849` | yes | yes |
+| L4150 ✅ | `0x0849` | yes | yes |
 | L4152 | `0x0849` | yes | yes |
 | L4154 | `0x0849` | yes | yes |
 | L4156 | `0x0849` | yes | yes |
