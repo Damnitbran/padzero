@@ -158,6 +158,7 @@ Verified on real hardware:
 | ET-2860 | `0x364A` | full | reported working by a user |
 | L3111 | `0x0797` | partial | reported working by a user |
 | L4150 | `0x0849` | full | reported working by a user |
+| XP-960 | `0x0928` | full | reported working by a user |
 | EP-M476T | `0x364A` | full | characterised from scratch with its owner and reset successfully; in neither upstream database, see `models_extra.json` |
 
 `models.json` carries data for 110 models, but **listed is not the same as

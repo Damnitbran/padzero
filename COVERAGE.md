@@ -15,15 +15,15 @@ Search this page for your model (Ctrl+F).
 | **Reset only** | Reset works, no percentage available |
 | **Read only** | Recognised, but no reset data, so writing is refused |
 
-**Listed is not the same as verified.** Only 8 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
+**Listed is not the same as verified.** Only 9 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
 
 
 ## Totals
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 8 |
-| Reset + exact % | 101 |
+| Verified on hardware | 9 |
+| Reset + exact % | 100 |
 | Reset + estimated % | 218 |
 | Reset only | 1097 |
 | Read only | 165 |
@@ -41,6 +41,7 @@ Search this page for your model (Ctrl+F).
 | **ET-4810** | `0x574B` | detected, read, write path verified |
 | **L3111** | `0x0797` | reported working by a user |
 | **L4150** | `0x0849` | reported working by a user |
+| **XP-960** | `0x0928` | reported working by a user; a first attempt sat on the backup step until the program was restarted, which is what prompted the read watchdog |
 
 ## Every recognised model
 
@@ -150,7 +151,7 @@ Search this page for your model (Ctrl+F).
 | XP-821 | `0x0557` | yes | yes |
 | XP-830 | `0x0928` | yes | yes |
 | XP-850 | `0x0028` | yes | yes |
-| XP-960 | `0x0928` | yes | yes |
+| XP-960 ✅ | `0x0928` | yes | yes |
 | Artisan 837 | `0x0877` | yes | estimated |
 | BX935FWD | `0x0338` | yes | estimated |
 | EP-804A | `0x0877` | yes | estimated |

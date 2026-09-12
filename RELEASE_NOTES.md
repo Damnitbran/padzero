@@ -130,6 +130,7 @@ shipped firmware that permanently blocks resets, and it can't be rolled back.
 | ET-2860 | `0x364A` | reported working by an owner |
 | L3111 | `0x0797` | reported working by an owner |
 | L4150 | `0x0849` | reported working by an owner |
+| XP-960 | `0x0928` | reported working by an owner |
 | EP-M476T | `0x364A` | worked out from scratch with the owner, then reset |
 
 **1,424 Epson models can be reset.** Check yours in
