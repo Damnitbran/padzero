@@ -41,6 +41,7 @@ import json
 import logging
 import os
 import sys
+from collections.abc import Mapping
 from datetime import datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -212,6 +213,13 @@ def resolve_alias(detected, known):
     words only, and an exact key match only, so this can reach the same
     physical printer under its catalogue name but can never land on a
     different model.
+
+    Some printers name a whole range instead: an XP-405 reports
+    "XP-402 403 405 406" and an XP-213 reports "XP-212 213". No database
+    uses that string, so each number is expanded under the first model's
+    prefix (XP-402, XP-403, ...). This is only accepted when every name
+    that exists in the database carries the same keys and addresses, so
+    it cannot pick one model out of a range that disagrees.
     """
     if not detected:
         return None
@@ -220,7 +228,39 @@ def resolve_alias(detected, known):
         candidate = " ".join(parts[i:])
         if candidate in known:
             return candidate
+    for i in range(len(parts)):
+        candidate = expand_range(parts[i:], known)
+        if candidate:
+            return candidate
     return None
+
+
+def expand_range(parts, known):
+    """Resolve ["XP-402", "403", "405"] to one database key, or None.
+
+    Returns the first name found, but only if every name found in `known`
+    has an identical spec apart from its own model name.
+    """
+    if len(parts) < 2 or "-" not in parts[0]:
+        return None
+    prefix = parts[0].rsplit("-", 1)[0] + "-"
+    if not all(p.isalnum() for p in parts[1:]):
+        return None
+    names = [parts[0]] + [prefix + p for p in parts[1:]]
+    hits = [n for n in names if n in known]
+    if not hits:
+        return None
+
+    def spec_of(name):
+        entry = known[name]
+        if not isinstance(entry, Mapping):  # reinkpy's db holds ChainMaps
+            return None
+        return {k: v for k, v in entry.items() if k != "model"}
+
+    first = spec_of(hits[0])
+    if first is None or any(spec_of(n) != first for n in hits[1:]):
+        return None
+    return hits[0]
 
 
 def infer_waste(reset_addrs, models):
@@ -703,7 +743,7 @@ def main():
     print("  serial     : %s" % (pr.serial or "?"))
     print("  presents as: %s" % (pr.detected or "?"))
     if pr.alias:
-        print("  matched as : %s (family name dropped)" % pr.alias[1])
+        print("  matched as : %s" % pr.alias[1])
     rk = getattr(pr.ep.spec, "rkey", None)
     print("  key group  : %s / %r" % (hex(rk) if rk else "?",
                                       getattr(pr.ep.spec, "wkey", None)))
