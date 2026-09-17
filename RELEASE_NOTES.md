@@ -38,10 +38,10 @@ something absorbent under the printer meanwhile.
 
 No installer, no Python, nothing to set up.
 
-    PadZero.zip       42887CFE1C718087C9F5E7719529872F6A648CEB52B0E01B09DB215F3D782243
-    PadZero.exe       AE2F9B9A1274DF5FFC2FD2A813AFD18C37C4EDC1BF77BE27AC14A63ACFA3694D
-    padzero-cli.exe   D2615690583071D028B19144A53F57B86082BDD950EA54145E846D2FE3F8AB93
-    find_key_usb.exe  BD3A1A3AEE5ECBCB275EE0203A5773F08C906AC982D339D8450CF5EDE9B51A92
+    PadZero.zip       71B666A849B6D62526787F2112D000D804A1D7E5C469A35D0A7D45C1A96F516D
+    PadZero.exe       AA1CB144A19BC8CE11EFFD141BC30F3867AB643F5361B3BA8F84246CA238DA6B
+    padzero-cli.exe   1E2A6A0D389CF1F5786B48A17166A326A7255F1798073236FC87D63289CFBF19
+    find_key_usb.exe  7DA50EB3AC5FC8659472BEC51A1E2620263F359960CD266320EC0628B04D891D
 
 Verify before running:
 
@@ -66,7 +66,26 @@ changed:
 
     Platen pad counters    : 28:0  47:0  50:0  51:0  55:94  252:25->0  253:0
 
-## What's new in v0.4.0
+## What's new in v0.4.1
+
+- **XP-405, XP-212 and similar models now get recognised.** Some printers
+  report their whole product range as their name: an XP-405 says it is an
+  "XP-402 403 405 406". No database uses that name, so Pad Zero didn't know
+  the key, and every reading and backup came back empty. It now tries each
+  model in the range and uses them only if they all share the same keys and
+  addresses. Reported by an XP-405 owner and an XP-212 owner.
+- **The window is now in Spanish** when Windows is set to Spanish. Everything
+  else stays in English. Translated by
+  [DSGM-GMSD](https://github.com/DSGM-GMSD).
+- **No more hanging on a printer that stops answering.** If the printer goes
+  quiet for 15 seconds, Pad Zero stops waiting and tells you what to try. If
+  it was still making the backup, nothing on the printer was changed. The
+  backup also shows how far along it is. Reported by an XP-960 owner whose
+  window sat on "Saving a backup" forever.
+- **Two more models confirmed on real hardware**: L4150 and XP-960, both
+  reported working by their owners.
+
+## What was new in v0.4.0
 
 - **Printers that report their full name now get recognised.** A Stylus
   TX200 tells the computer it is a "Stylus TX200". The model database calls
@@ -136,7 +155,7 @@ shipped firmware that permanently blocks resets, and it can't be rolled back.
 **1,424 Epson models can be reset.** Check yours in
 [COVERAGE.md](../../blob/main/COVERAGE.md).
 
-Listed is not the same as verified: only the seven above have been confirmed
+Listed is not the same as verified: only the nine above have been confirmed
 on real hardware. If yours works, please open an issue and it moves up. If it
 reports `coverage: none`, click **Save a backup** and attach the file.
 
