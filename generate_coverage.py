@@ -35,6 +35,8 @@ VERIFIED = {
     "ET-2860": "reported working by a user - counters reset, printing restored",
     "L3111": "reported working by a user",
     "L4150": "reported working by a user",
+    "WorkForce 840": "reported working by a user on Windows 10",
+    "XP-810": "reported working by a user",
     "XP-960": "reported working by a user; a first attempt sat on the backup step until the program was restarted, which is what prompted the read watchdog",
     "EP-M476T": "characterised from scratch with its owner - read key, "
                 "address layout, dividers and write key all confirmed on "

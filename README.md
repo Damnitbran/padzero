@@ -46,7 +46,9 @@ Put something absorbent under the printer in the meantime.
 
 ## Download
 
-Go to the [Releases page](../../releases) and download **`PadZero.exe`**.
+**[Download PadZero.exe](../../releases/latest/download/PadZero.exe)** (direct
+link to the latest version). On the [Releases page](../../releases) it's under
+**Assets** at the bottom of each release, which is easy to miss.
 
 That's the one you want. Double-click it, a window opens, done. No installer,
 no Python, nothing to set up, run it from anywhere.
@@ -62,6 +64,11 @@ Windows will likely show **"Windows protected your PC"**, because the binary
 is unsigned and counter-resetting is exactly the behaviour antivirus
 heuristics look for. Click *More info*, then *Run anyway*. Or verify the
 SHA-256 published with each release. Or build it from source yourself, below.
+
+Windows Defender sometimes goes further and quarantines the file outright,
+so it just disappears. To get it back: open **Windows Security**, go to
+**Virus & threat protection**, then **Protection history**. Click the entry
+for PadZero, then **Actions** and **Allow on device**.
 
 ---
 

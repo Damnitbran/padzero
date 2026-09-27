@@ -15,17 +15,17 @@ Search this page for your model (Ctrl+F).
 | **Reset only** | Reset works, no percentage available |
 | **Read only** | Recognised, but no reset data, so writing is refused |
 
-**Listed is not the same as verified.** Only 9 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
+**Listed is not the same as verified.** Only 11 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
 
 
 ## Totals
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 9 |
+| Verified on hardware | 11 |
 | Reset + exact % | 100 |
 | Reset + estimated % | 218 |
-| Reset only | 1097 |
+| Reset only | 1095 |
 | Read only | 165 |
 | **Total recognised** | **1589** |
 
@@ -41,6 +41,8 @@ Search this page for your model (Ctrl+F).
 | **ET-4810** | `0x574B` | detected, read, write path verified |
 | **L3111** | `0x0797` | reported working by a user |
 | **L4150** | `0x0849` | reported working by a user |
+| **WorkForce 840** | `0x0565` | reported working by a user on Windows 10 |
+| **XP-810** | `0x0479` | reported working by a user |
 | **XP-960** | `0x0928` | reported working by a user; a first attempt sat on the backup step until the program was restarted, which is what prompted the read watchdog |
 
 ## Every recognised model
@@ -1337,7 +1339,7 @@ Search this page for your model (Ctrl+F).
 | WorkForce 620 | `0x0855` | yes | no |
 | WorkForce 630 | `0x0855` | yes | no |
 | WorkForce 645 | `0x0837` | yes | no |
-| WorkForce 840 | `0x0565` | yes | no |
+| WorkForce 840 ✅ | `0x0565` | yes | no |
 | Workforce ST-2000 | `0x0849` | yes | no |
 | Workforce ST-3000 | `0x0849` | yes | no |
 | Workforce ST-4000 | `0x0849` | yes | no |
@@ -1460,7 +1462,7 @@ Search this page for your model (Ctrl+F).
 | XP-800 | `0x0028` | yes | no |
 | XP-801 | `0x0028` | yes | no |
 | XP-802 | `0x0028` | yes | no |
-| XP-810 | `0x0479` | yes | no |
+| XP-810 ✅ | `0x0479` | yes | no |
 | XP-8500 | `0x0614` | yes | no |
 | XP-8505 | `0x0614` | yes | no |
 | XP-8506 | `0x0614` | yes | no |

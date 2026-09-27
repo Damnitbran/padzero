@@ -56,7 +56,10 @@ even though it's plugged in.
 
 ## Step 3: download Pad Zero
 
-Get **PadZero.exe** from the [Releases page](../../releases).
+**[Click here to download PadZero.exe](../../releases/latest/download/PadZero.exe).**
+
+If you end up on the Releases page instead, scroll down to the section called
+**Assets** under the newest release. PadZero.exe is in that list.
 
 There's nothing to install. It's a single file. Put it on your Desktop.
 
@@ -72,6 +75,12 @@ with an expensive certificate, and resetting printer counters looks
 suspicious to antivirus software by its nature.
 
 To continue: click **More info**, then **Run anyway**.
+
+**If the file vanished** or Windows says it found a threat, Defender has
+quarantined it. Open **Windows Security** (search for it in the Start menu),
+go to **Virus & threat protection**, then **Protection history**. Click the
+PadZero entry, then **Actions**, then **Allow on device**. Download it again
+if it's still missing.
 
 If you'd rather check first, every release publishes a SHA-256 fingerprint
 you can verify, and all the source code is right here in this repository.
