@@ -15,15 +15,15 @@ Search this page for your model (Ctrl+F).
 | **Reset only** | Reset works, no percentage available |
 | **Read only** | Recognised, but no reset data, so writing is refused |
 
-**Listed is not the same as verified.** Only 11 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
+**Listed is not the same as verified.** Only 14 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
 
 
 ## Totals
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 11 |
-| Reset + exact % | 100 |
+| Verified on hardware | 14 |
+| Reset + exact % | 97 |
 | Reset + estimated % | 218 |
 | Reset only | 1095 |
 | Read only | 165 |
@@ -35,7 +35,10 @@ Search this page for your model (Ctrl+F).
 |---|---|---|
 | **EP-M476T** | `0x364A` | characterised from scratch with its owner - read key, address layout, dividers and write key all confirmed on the printer, then reset successfully |
 | **ET-2710** | `0x0797` | reported working by a user |
+| **ET-2720** | `0x0797` | reported working by a user |
+| **ET-2750** | `0x0849` | reported working by a user |
 | **ET-2800** | `0x364A` | reported working by two users independently |
+| **ET-2803** | `0x364A` | reported working by a user |
 | **ET-2860** | `0x364A` | reported working by a user - counters reset, printing restored |
 | **ET-4800** | `0x364A` | reset verified 79.85% to 0.00%; also confirmed by a user whose firmware defeated the other reset tools |
 | **ET-4810** | `0x574B` | detected, read, write path verified |
@@ -65,16 +68,16 @@ Search this page for your model (Ctrl+F).
 | ET-2703 | `0x0849` | yes | yes |
 | ET-2705 | `0x0849` | yes | yes |
 | ET-2714 | `0x0797` | yes | yes |
-| ET-2720 | `0x0797` | yes | yes |
+| ET-2720 ✅ | `0x0797` | yes | yes |
 | ET-2721 | `0x0797` | yes | yes |
 | ET-2723 | `0x0797` | yes | yes |
 | ET-2725 | `0x0797` | yes | yes |
-| ET-2750 | `0x0849` | yes | yes |
+| ET-2750 ✅ | `0x0849` | yes | yes |
 | ET-2751 | `0x0849` | yes | yes |
 | ET-2756 | `0x0849` | yes | yes |
 | ET-2800 ✅ | `0x364A` | yes | yes |
 | ET-2801 | `0x364A` | yes | yes |
-| ET-2803 | `0x364A` | yes | yes |
+| ET-2803 ✅ | `0x364A` | yes | yes |
 | ET-2805 | `0x364A` | yes | yes |
 | ET-2810 | `0x364A` | yes | yes |
 | ET-2811 | `0x364A` | yes | yes |
