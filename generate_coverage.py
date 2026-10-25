@@ -41,6 +41,10 @@ VERIFIED = {
     "WorkForce 840": "reported working by a user on Windows 10",
     "XP-810": "reported working by a user",
     "XP-960": "reported working by a user; a first attempt sat on the backup step until the program was restarted, which is what prompted the read watchdog",
+    "XP-305": "reported working by a user on v0.4.1; the printer names itself \"XP-302 303 305 306\", which older versions did not recognise",
+    "ET-2821": "reported working by a user",
+    "L4260": "reported working by a user",
+    "L1800": "reported working by a user; no percentage data for this model, so the reset was confirmed on raw values",
     "EP-M476T": "characterised from scratch with its owner - read key, "
                 "address layout, dividers and write key all confirmed on "
                 "the printer, then reset successfully",

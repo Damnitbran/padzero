@@ -15,17 +15,17 @@ Search this page for your model (Ctrl+F).
 | **Reset only** | Reset works, no percentage available |
 | **Read only** | Recognised, but no reset data, so writing is refused |
 
-**Listed is not the same as verified.** Only 14 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
+**Listed is not the same as verified.** Only 18 models below have been confirmed on real hardware. The rest come from the upstream databases and should work, but nobody has proven it. If yours works, [open an issue](../../issues) and it moves to Verified.
 
 
 ## Totals
 
 | Level | Models |
 |---|---:|
-| Verified on hardware | 14 |
+| Verified on hardware | 18 |
 | Reset + exact % | 97 |
-| Reset + estimated % | 218 |
-| Reset only | 1095 |
+| Reset + estimated % | 216 |
+| Reset only | 1093 |
 | Read only | 165 |
 | **Total recognised** | **1589** |
 
@@ -39,12 +39,16 @@ Search this page for your model (Ctrl+F).
 | **ET-2750** | `0x0849` | reported working by a user |
 | **ET-2800** | `0x364A` | reported working by two users independently |
 | **ET-2803** | `0x364A` | reported working by a user |
+| **ET-2821** | `0x364A` | reported working by a user |
 | **ET-2860** | `0x364A` | reported working by a user - counters reset, printing restored |
 | **ET-4800** | `0x364A` | reset verified 79.85% to 0.00%; also confirmed by a user whose firmware defeated the other reset tools |
 | **ET-4810** | `0x574B` | detected, read, write path verified |
+| **L1800** | `0x0551` | reported working by a user; no percentage data for this model, so the reset was confirmed on raw values |
 | **L3111** | `0x0797` | reported working by a user |
 | **L4150** | `0x0849` | reported working by a user |
+| **L4260** | `0x364A` | reported working by a user |
 | **WorkForce 840** | `0x0565` | reported working by a user on Windows 10 |
+| **XP-305** | `0x0719` | reported working by a user on v0.4.1; the printer names itself "XP-302 303 305 306", which older versions did not recognise |
 | **XP-810** | `0x0479` | reported working by a user |
 | **XP-960** | `0x0928` | reported working by a user; a first attempt sat on the backup step until the program was restarted, which is what prompted the read watchdog |
 
@@ -179,7 +183,7 @@ Search this page for your model (Ctrl+F).
 | ET-2806 | `0x364A` | yes | estimated |
 | ET-2808 | `0x364A` | yes | estimated |
 | ET-2820 | `0x364A` | yes | estimated |
-| ET-2821 | `0x364A` | yes | estimated |
+| ET-2821 ✅ | `0x364A` | yes | estimated |
 | ET-2822 | `0x364A` | yes | estimated |
 | ET-2823 | `0x364A` | yes | estimated |
 | ET-2824 | `0x364A` | yes | estimated |
@@ -287,7 +291,7 @@ Search this page for your model (Ctrl+F).
 | L3550 | `0x574B` | yes | estimated |
 | L3556 | `0x574B` | yes | estimated |
 | L3558 | `0x574B` | yes | estimated |
-| L4260 | `0x364A` | yes | estimated |
+| L4260 ✅ | `0x364A` | yes | estimated |
 | L4261 | `0x364A` | yes | estimated |
 | L4263 | `0x364A` | yes | estimated |
 | L4265 | `0x364A` | yes | estimated |
@@ -667,7 +671,7 @@ Search this page for your model (Ctrl+F).
 | L15168 | `0x0533` | yes | no |
 | L15180 | `0x0533` | yes | no |
 | L15188 | `0x0533` | yes | no |
-| L1800 | `0x0551` | yes | no |
+| L1800 ✅ | `0x0551` | yes | no |
 | L18050 | `0x334B` | yes | no |
 | L18058 | `0x334B` | yes | no |
 | L210 | `0x0941` | yes | no |
@@ -1385,7 +1389,7 @@ Search this page for your model (Ctrl+F).
 | XP-301 | `0x0719` | yes | no |
 | XP-302 | `0x0719` | yes | no |
 | XP-303 | `0x0719` | yes | no |
-| XP-305 | `0x0719` | yes | no |
+| XP-305 ✅ | `0x0719` | yes | no |
 | XP-306 | `0x0719` | yes | no |
 | XP-310 | `0x0881` | yes | no |
 | XP-311 | `0x0881` | yes | no |
